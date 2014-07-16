@@ -1,0 +1,3 @@
+class Table_SvpVocab extends Omeka_Db_Table
+{
+}
