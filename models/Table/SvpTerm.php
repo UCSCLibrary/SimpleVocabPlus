@@ -60,7 +60,6 @@ class Table_SvpTerm extends Omeka_Db_Table
     $text = str_replace("\r","",$text);
     $terms = explode("\n",$text);
     $terms = array_map('trim',$terms);
-    //fill terms explode or smth
     return($terms);
   }
 

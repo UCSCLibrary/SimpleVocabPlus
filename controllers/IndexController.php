@@ -192,15 +192,20 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
 	$name = $_REQUEST['nv-name'];
       if($_REQUEST['nv-local']=='local') {
 	$text = $_REQUEST['nv-definetext'];
-	$vocab_id = $this->_helper->db->getTable('SvpVocab')->createVocab($name,'local');
-	$success = $this->_helper->db->getTable('SvpTerm')->addFromText($vocab_id,$text);
+	$vocab = $this->_helper->db->getTable('SvpVocab')->createVocab($name,'local');
+	
+	$success = $this->_helper->db->getTable('SvpTerm')->addFromText($vocab->id,$text);
 
       } else if($_REQUEST['nv-local']=='remote') {
 	$url = $_REQUEST['nv-url'];
 	$vocab = $this->_helper->db->getTable('SvpVocab')->createVocab($name,$url);
 	$vocab->updateNow();
       }
+      $flash = $this->_helper->FlashMessenger;
+      $flash->addMessage('Your vocabulary has been created successfully. You may now assign it to metadata elements.','success');
+
       $this->_helper->redirector('index');
+
 	
     }
 
