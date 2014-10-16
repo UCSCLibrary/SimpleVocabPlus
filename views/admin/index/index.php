@@ -1,4 +1,5 @@
 <?php echo head(array('title' => 'Simple Vocabulary Plus')); ?>
+
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
 jQuery(document).ready(function() {
@@ -16,21 +17,21 @@ jQuery(document).ready(function() {
 
 });
 //]]>
-
-
 </script>
+
 <?php echo flash(); ?>
+
 <form method="post" action="<?php echo url('simple-vocab-plus/index/edit-element-suggest'); ?>">
 
-<div id="tabs">
-<ul>
-<li><a href="#tab1">Assign Vocabularies to Metadata</a></li>
-<li><a href="#tab2">Create Vocabularies</a></li>
-<li><a href="#tab3">View/Edit Vocabularies</a></li>
-</ul>
+ <div id="tabs">
+    <ul>
+      <li><a href="#tab1">Assign Vocabularies to Metadata</a></li>
+      <li><a href="#tab2">Create Vocabularies</a></li>
+      <li><a href="#tab3">View/Edit Vocabularies</a></li>
+    </ul>
 
-<div id="tab1" style="height:1%; overflow:hidden">
-<section class="seven columns alpha">
+   <div id="tab1" style="height:1%; overflow:hidden">
+    <section class="seven columns alpha">
 
     <h2><?php echo __('Assign Vocabulary to Metadata Element'); ?></h2>
 
@@ -216,7 +217,5 @@ jQuery(document).ready(function() {
 </div>
 </div>
 <?php 
-
-
-
-echo foot(); ?>
+echo foot(); 
+?>

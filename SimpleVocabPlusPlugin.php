@@ -2,7 +2,7 @@
 /**
  * Simple Vocabulary Plus
  * 
- * @copyright Copyright 2007-2012 Roy Rosenzweig Center for History and New Media
+ * @copyright Copyright 2007-2012 UCSC Library Digital Initiatives
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU GPLv3
  */
 
@@ -13,6 +13,9 @@
  */
 class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 {
+  /**
+   * @var array Hooks for the plugin.
+   */
     protected $_hooks = array(
 			     'install', 
 			     'uninstall', 
@@ -20,7 +23,10 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 			    'define_acl', 
 			    'admin_head'
 			      );
-    
+
+  /**
+   * @var array Filters for the plugin.
+   */
     protected $_filters = array(
         'admin_navigation_main', 
     );
@@ -72,26 +78,38 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
       
     }
 
+    /**
+     * Queue the javascript and css files to help the form work.
+     *
+     * This function runs before the admin section of the sit loads.
+     * It queues the javascript and css files which help the form work,
+     * so that they are loaded before any html output.
+     *
+     * @return void
+     */
     public function hookAdminHead() {
-      queue_js_file('SimpleVocabPlus');
-      queue_css_string('.ui-tabs-active.ui-state-active {background: none repeat scroll 0 0 #f9f9f9;}');
+        queue_js_file('SimpleVocabPlus');
+        queue_css_string('.ui-tabs-active.ui-state-active {background: none repeat scroll 0 0 #f9f9f9;}');
     }
     
     /**
-     * Initialize the plugin.
+     * Initialize the plugin. Register Autosuggest controller plugin.
+     *
+     * @return void
      */
     public function hookInitialize()
     {
         // Register the SelectFilter controller plugin.
         $front = Zend_Controller_Front::getInstance();
         $front->registerPlugin(new SimpleVocabPlus_Controller_Plugin_Autosuggest);
-        
         // Add translation.
-        add_translation_source(dirname(__FILE__) . '/languages');
+        //add_translation_source(dirname(__FILE__) . '/languages');
     }
     
     /**
      * Define the plugin's access control list.
+     *
+     * @return void
      */
     public function hookDefineAcl($args)
     {
@@ -99,7 +117,11 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
     }
     
     /**
-     * Add the LC Suggest page to the admin navigation.
+     * Add the Simple Vocab Plus page to the admin navigation.
+     *
+     *@param array $nav The admin nav array to be filtered
+     *
+     *@return array $nav The filtered nav array
      */
     public function filterAdminNavigationMain($nav)
     {
