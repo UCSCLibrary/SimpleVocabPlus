@@ -5,7 +5,7 @@
 jQuery(document).ready(function() {
     jQuery('#element-id').change(function() {
         jQuery.post(
-            <?php echo js_escape(url('simple-vocab-plus/index/suggest-endpoint')); ?>, 
+            <?php echo js_escape(url('simple-vocab-plus/endpoint/vocab')); ?>, 
             {element_id: jQuery('#element-id').val()}, 
             function(data) {
                 jQuery('#suggest-endpoint').val(data);
@@ -21,7 +21,7 @@ jQuery(document).ready(function() {
 
 <?php echo flash(); ?>
 
-<form method="post" action="<?php echo url('simple-vocab-plus/index/edit-element-suggest'); ?>">
+<form method="post" action="<?php echo url('simple-vocab-plus/suggest/edit'); ?>">
 
  <div id="tabs">
     <ul>
@@ -76,6 +76,7 @@ jQuery(document).ready(function() {
             <th><?php echo __('Element Set'); ?></th>
             <th><?php echo __('Element'); ?></th>
             <th><?php echo __('Vocabulary'); ?></th>
+            <th style="width:10%;"></th>
         </tr>
         </thead>
         <tbody>
@@ -84,6 +85,7 @@ jQuery(document).ready(function() {
             <td><?php echo $assignment['element_set_name']; ?></td>
             <td><?php echo $assignment['element_name']; ?></td>
             <td><?php echo $assignment['authority_vocabulary']; ?></td>
+            <td><a href="<?php echo url('simple-vocab-plus/suggest/delete/element_id/'.$assignment['element_id']); ?>"><button style="margin:0px" type="button">Delete</button></a></td>
         </tr>
         <?php endforeach; ?>
         </tbody>
@@ -100,7 +102,7 @@ jQuery(document).ready(function() {
 <section class="ten columns alpha" id="tab2" style="height:1%; overflow:hidden">
     <h2><?php echo __('Create New Vocabulary'); ?></h2>
     
-    <form method="post" action="<?php echo url('simple-vocab-plus/index/new-vocabulary'); ?>">
+    <form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/add'); ?>">
 
     <div class="field" id="nv-namefield">
         <div id="nv-name-label" class="two columns alpha">
@@ -170,7 +172,7 @@ jQuery(document).ready(function() {
 <section class="ten columns alpha">
     <h2><?php echo __('Edit Existing Vocabulary'); ?></h2>
    
-    <form method="post" action="<?php echo url('simple-vocab-plus/index/edit-vocabulary'); ?>">
+    <form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/edit'); ?>">
     <div class="field">
         <div id="vocab-edit-label" class="two columns alpha">
             <label for="vocab-edit"><?php echo __('Choose Vocabulary'); ?></label>

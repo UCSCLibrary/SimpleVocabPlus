@@ -16,7 +16,7 @@ jQuery(document).ready(function() {
 	jQuery('#createbutton').prop('disabled',false);
     });
 
-    var url = 'simple-vocab-plus/index/get-vocab/vocab/';
+    var url = 'simple-vocab-plus/vocabulary/get/vocab/';
 
     jQuery('#edit-vocab').change(function() {
 	jQuery.ajax({
