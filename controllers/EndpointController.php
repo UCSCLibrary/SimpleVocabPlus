@@ -38,15 +38,16 @@ class SimpleVocabPlus_EndpointController extends Omeka_Controller_AbstractAction
 
         // Get the suggest record.
       $elementId = $this->getRequest()->getParam('element-id');
-      $svAssign = $this->_helper->db->getTable('SvpAssign')->findByElementId($elementId);
-      $results = $this->_helper->db->getTable('SvpTerm')->findBySql('vocab_id = ? and term like ?',array($svAssign->vocab_id,$term.'%'));
-
-	$return = array();
-	foreach($results as $result) {
-	  $return[] = $result->term;
-	}
-	
-        $this->_helper->json($return);
+      $svAssigns = $this->_helper->db->getTable('SvpAssign')->findByElementId($elementId);
+      $return = array();
+      $termTable = $this->_helper->db->getTable('SvpTerm');
+      foreach($svAssigns as $svAssign) {
+          $results = $termTable->findBySql('vocab_id = ? and term like ?',array($svAssign->vocab_id,$term.'%'));
+          foreach($results as $result) {
+              $return[] = $result->term;
+          }
+      }
+      $this->_helper->json($return);
     }
 
 

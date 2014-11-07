@@ -16,7 +16,7 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
     public function indexAction()
     {
       $this->view->form_element_options = $this->_getFormElementOptions();
-      $this->view->form_suggest_options = $this->_getFormSuggestOptions();
+      $this->view->form_vocab_options = $this->_getFormSuggestOptions();
       $this->view->assignments = $this->_getAssignments();
       //echo 'updating:<br>';
       foreach(get_db()->getTable('SvpVocab')->findAll() as $vocab) {
@@ -36,12 +36,12 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
         $db = $this->_helper->db->getDb();
         $sql = "
         SELECT es.name AS element_set_name, e.id AS element_id, e.name AS element_name, 
-        it.name AS item_type_name, ls.id AS lc_suggest_id 
+        it.name AS item_type_name, gv.id AS gv_suggest_id 
         FROM {$db->ElementSet} es 
         JOIN {$db->Element} e ON es.id = e.element_set_id 
         LEFT JOIN {$db->ItemTypesElements} ite ON e.id = ite.element_id 
         LEFT JOIN {$db->ItemType} it ON ite.item_type_id = it.id 
-        LEFT JOIN {$db->SvpAssign} ls ON e.id = ls.element_id 
+        LEFT JOIN {$db->SvpAssign} gv ON e.id = gv.element_id 
         WHERE es.record_type IS NULL OR es.record_type = 'Item' 
         ORDER BY es.name, it.name, e.name";
         $elements = $db->fetchAll($sql);
@@ -51,7 +51,7 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
                       ? __('Item Type') . ': ' . __($element['item_type_name']) 
                       : __($element['element_set_name']);
             $value = __($element['element_name']);
-            if ($element['lc_suggest_id']) {
+            if ($element['gv_suggest_id']) {
                 $value .= ' *';
             }
             $options[$optGroup][$element['element_id']] = $value;
@@ -90,15 +90,25 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
         $svpVocabTable = $this->_helper->db->getTable('SvpVocab');
         $elementTable = $this->_helper->db->getTable('Element');
         $elementSetTable = $this->_helper->db->getTable('ElementSet');
+        $itemTypeTable = $this->_helper->db->getTable('ItemType');
+        $itemTypesElementsTable = $this->_helper->db->getTable('ItemTypesElements');
         
         $assignments = array();
         foreach ($svSuggestTable->findAll() as $svSuggest) {
             $element = $elementTable->find($svSuggest->element_id);
             $elementSet = $elementSetTable->find($element->element_set_id);
+            $elementSetName = $elementSet->name;
+            if( $itemTypesElements = $itemTypesElementsTable->findByElement($element->id)) {
+                $itemTypesElement = $itemTypesElements[0];
+                $itemType = $itemTypeTable->find($itemTypesElement->item_type_id);
+                $elementSetName.=': '.$itemType->name;
+            }
             $authorityVocabulary = $svpVocabTable->find($svSuggest->vocab_id)['name'];
+
             $assignments[] = array(
-                'element_set_name' => __($elementSet->name), 
-                'element_name' => __($element->name), 
+                'suggest_id' => $svSuggest->id,
+                'element_set_name' => $elementSetName, 
+                'element_name' => $element->name, 
                 'authority_vocabulary' => __($authorityVocabulary),
                 'element_id' => $svSuggest->element_id
             );

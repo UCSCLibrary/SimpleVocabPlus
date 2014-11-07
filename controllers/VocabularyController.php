@@ -45,7 +45,7 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
           $this->_helper->flashMessenger(__('There was a problem editing your vocabulary.'), 'error');
           //throw new Exception('no vocab chosen');
 
-      if(isset($_REQUEST['ev-url']) && $_REQUEST['ev-url'] !='local') {
+      if(isset($_REQUEST['ev-url']) && ($url=$_REQUEST['ev-url']) !='local') {
 
 	$vocab = $this->_helper->db->getTable('SvpVocab')->find($vocab_id);
 	$vocab->url = $url;

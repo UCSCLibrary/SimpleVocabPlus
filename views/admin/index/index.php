@@ -21,7 +21,7 @@ jQuery(document).ready(function() {
 
 <?php echo flash(); ?>
 
-<form method="post" action="<?php echo url('simple-vocab-plus/suggest/edit'); ?>">
+<form method="post" action="<?php echo url('simple-vocab-plus/suggest/add'); ?>">
 
  <div id="tabs">
     <ul>
@@ -54,7 +54,7 @@ jQuery(document).ready(function() {
             <p class="explanation"><?php echo __('Choose a vocabulary ' 
             . 'to enable the autosuggest feature for the above element. To disable ' 
             . 'the feature just deselect the option.', '</a>'); ?></p>
-            <?php echo $this->formSelect('vocab', null, array('id' => 'assign-vocab'), $this->form_suggest_options); ?>
+            <?php echo $this->formSelect('vocab_id', null, array('id' => 'assign-vocab'), $this->form_vocab_options); ?>
         </div>
     </div>
 
@@ -76,16 +76,16 @@ jQuery(document).ready(function() {
             <th><?php echo __('Element Set'); ?></th>
             <th><?php echo __('Element'); ?></th>
             <th><?php echo __('Vocabulary'); ?></th>
-            <th style="width:10%;"></th>
+            <th style="width:22%;"></th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($this->assignments as $assignment): ?>
         <tr>
-            <td><?php echo $assignment['element_set_name']; ?></td>
-            <td><?php echo $assignment['element_name']; ?></td>
-            <td><?php echo $assignment['authority_vocabulary']; ?></td>
-            <td><a href="<?php echo url('simple-vocab-plus/suggest/delete/element_id/'.$assignment['element_id']); ?>"><button style="margin:0px" type="button">Delete</button></a></td>
+            <td class="element_set_name"><?php echo $assignment['element_set_name']; ?></td>
+            <td class="element_name"><?php echo $assignment['element_name']; ?></td>
+            <td class="authority_vocabulary"><?php echo $assignment['authority_vocabulary']; ?></td>
+            <td><button id="<?php echo $assignment['suggest_id'];?>" class="svp-edit-suggest-button" style="margin:0px 5px 0px 0px;">Edit</button><a href="<?php echo url('simple-vocab-plus/suggest/delete/suggest_id/'.$assignment['suggest_id']); ?>"><button style="margin:0px" type="button">Delete</button></a></td>
         </tr>
         <?php endforeach; ?>
         </tbody>
@@ -179,7 +179,7 @@ jQuery(document).ready(function() {
         </div>
         <div class="inputs five columns omega">
             <p class="explanation"><?php echo __('Choose a Vocabulary'); ?></p>
-            <?php echo $this->formSelect('vocab', null, array('id' => 'edit-vocab'), $this->form_suggest_options); ?>
+            <?php echo $this->formSelect('vocab', null, array('id' => 'edit-vocab'), $this->form_vocab_options); ?>
         </div>
 </div>
 
@@ -216,6 +216,40 @@ jQuery(document).ready(function() {
 </form>
 
 </section>
+<script>
+    jQuery(document).ready(function() {
+      var svpflag=false;
+      jQuery('.svp-edit-suggest-button').click(function(e){
+          e.preventDefault();
+	if(svpflag) {
+            if(jQuery(this).attr("id")==svpflag) {
+                var element_id = jQuery('#edit-element-id').val();
+                var vocab_id = jQuery('#edit-vocab-id').val();
+                var form = jQuery("<form action='<?php echo url('simple-vocab-plus/suggest/edit/suggest_id/');  ?>"+svpflag+"'></form>");
+                form.append('<input type="hidden" name="element_id" value="'
++element_id+'" />');
+                form.append('<input type="hidden" name="vocab_id" value="'+vocab_id+'" />');
+                form.appendTo(jQuery('body'));
+                form.submit();
+            } else {
+                alert('Please edit one suggest assignment at a time');
+            }
+	    //prepare and submit form with params from boxes created below
+	}else{
+            var form_element_options = <?php echo json_encode($this->formSelect('element_id', null, array('id' => 'edit-element-id'), $this->form_element_options)); ?>;
+            var suggest_options = <?php echo json_encode($this->formSelect('element_id', null, array('id' => 'edit-vocab-id'), $this->form_vocab_options)); ?>;
+	    jQuery(this).parent().parent().children('.element_set_name').html(form_element_options);
+	    jQuery(this).parent().parent().children('.element_name').html('');
+	    jQuery(this).parent().parent().children('.authority_vocabulary').html(suggest_options);
+            jQuery(this).html("Save");
+
+            jQuery("#edit-element-id").css('max-width','250px');
+	    svpflag=jQuery(this).attr("id");
+            }
+      });
+    });
+    
+</script>
 </div>
 </div>
 <?php 
