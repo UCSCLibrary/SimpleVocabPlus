@@ -16,30 +16,31 @@ class SvpVocab extends Omeka_Record_AbstractRecord
       $url = $this->url;
       if($url == "local")
 	return;
-      
-      $newText = $this->_curlFetch($url);
+      $newText = $this->_streamFetch($url);
       //die($newText);
       $newTerms = get_db()->getTable('SvpTerm')->updateFromText($id,$newText);
     }
     
 
+    private function _streamFetch($Url) {
+        $context_options = array(
+            'http' => array(
+                'method'=>'GET',
+                'header'=>'Accept-language: en\r\n'
+            )
+        );
+        $context = stream_context_create($context_options);
+        $contents = file_get_contents($Url,NULL,$context);
+        return $contents;
+    }
+
     private function _curlFetch($url) {
-      // create curl resource
         $ch = curl_init();
-
-        // set url
         curl_setopt($ch, CURLOPT_URL, $url);
-
-        //return the transfer as a string
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-
-        // $output contains the output string
         $output = curl_exec($ch);
-
-        // close curl resource to free up system resources
         curl_close($ch);  
 	return($output);
-
     }
 }
 
