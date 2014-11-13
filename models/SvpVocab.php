@@ -16,13 +16,15 @@ class SvpVocab extends Omeka_Record_AbstractRecord
       $url = $this->url;
       if($url == "local")
 	return;
-      $newText = $this->_streamFetch($url);
+      //$newText = $this->_streamFetch($url);
+      $newText = $this->_curlFetch($url);
       //die($newText);
       $newTerms = get_db()->getTable('SvpTerm')->updateFromText($id,$newText);
     }
     
 
     private function _streamFetch($Url) {
+        ob_start();
         $context_options = array(
             'http' => array(
                 'method'=>'GET',
@@ -31,6 +33,8 @@ class SvpVocab extends Omeka_Record_AbstractRecord
         );
         $context = stream_context_create($context_options);
         $contents = file_get_contents($Url,NULL,$context);
+        ob_end_clean();
+        //$contents = file_get_contents($Url);
         return $contents;
     }
 
