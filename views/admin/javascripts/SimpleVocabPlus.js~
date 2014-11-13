@@ -1,6 +1,0 @@
-jQuery.onLoad(function() {
-
-    jQuery('#definetext-field').hide();
-    jQuery('#driveurl-field').hide();
-
-});
