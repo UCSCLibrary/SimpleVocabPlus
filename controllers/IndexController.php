@@ -103,13 +103,14 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
                 $itemType = $itemTypeTable->find($itemTypesElement->item_type_id);
                 $elementSetName.=': '.$itemType->name;
             }
-            $authorityVocabulary = $svpVocabTable->find($svSuggest->vocab_id)['name'];
+            $authorityVocabulary = $svpVocabTable->find($svSuggest->vocab_id);
+            $authorityVocabularyName = $authorityVocabulary['name'];
 
             $assignments[] = array(
                 'suggest_id' => $svSuggest->id,
                 'element_set_name' => $elementSetName, 
                 'element_name' => $element->name, 
-                'authority_vocabulary' => __($authorityVocabulary),
+                'authority_vocabulary' => __($authorityVocabularyName),
                 'element_id' => $svSuggest->element_id
             );
         }
