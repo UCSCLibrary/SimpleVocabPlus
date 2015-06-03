@@ -18,6 +18,10 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
       $this->view->form_element_options = $this->_getFormElementOptions();
       $this->view->form_vocab_options = $this->_getFormSuggestOptions();
       $this->view->assignments = $this->_getAssignments();
+      
+      $csrf = new Omeka_Form_SessionCsrf;
+      $this->view->csrf = $csrf;
+
       //echo 'updating:<br>';
       foreach(get_db()->getTable('SvpVocab')->findAll() as $vocab) {
       	$vocab->updateNow();
