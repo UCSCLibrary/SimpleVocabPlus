@@ -64,6 +64,7 @@ jQuery(document).ready(function() {
         <?php echo $this->formSubmit('edit-element-suggest', __('Assign Vocabulary'), array('class' => 'submit big green button')); ?>
     </div>
 </section>
+   <?php echo $this->csrf;?>
 </form>
 <section class="nine columns alpha">
 
@@ -95,7 +96,7 @@ jQuery(document).ready(function() {
     <?php endif; ?>
     </div>
 </section>
-</form>
+
 
 </div>
 <div  id="tab2" style="height:1%; overflow:hidden" >
@@ -161,6 +162,8 @@ jQuery(document).ready(function() {
    <div id="create" class="field">
    <?php echo $this->formSubmit('new-vocabulary', __('Create Vocabulary'), array('class' => 'submit green button', 'id'=>'createbutton')); ?>
     </div>
+
+   <?php echo $this->csrf;?>
    
    </form>
 
@@ -212,6 +215,8 @@ jQuery(document).ready(function() {
    <div id="editfield" class="field">
    <?php echo $this->formSubmit('edit-vocabulary', __('Edit Vocabulary'), array('class' => 'submit green button', 'id'=>'edit-button')); ?>
     </div>
+
+   <?php echo $this->csrf;?>
    
 </form>
 
@@ -229,6 +234,7 @@ jQuery(document).ready(function() {
                 form.append('<input type="hidden" name="element_id" value="'
 +element_id+'" />');
                 form.append('<input type="hidden" name="vocab_id" value="'+vocab_id+'" />');
+		form.append('<?php echo $this->csrf;?>');
                 form.appendTo(jQuery('body'));
                 form.submit();
             } else {

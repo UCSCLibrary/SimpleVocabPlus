@@ -15,7 +15,9 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 {
 
     public function addAction() {
-      //todo: form validation
+
+      $this->_validatePost();
+
 	$name = $_REQUEST['nv-name'];
       if($_REQUEST['nv-local']=='local') {
 	$text = $_REQUEST['nv-definetext'];
@@ -38,6 +40,8 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 
 
     public function editAction() {
+
+      $this->validatePost();
       
       if(isset($_REQUEST['vocab']) && $_REQUEST['vocab'] !='')
           $vocab_id=$_REQUEST['vocab'];
@@ -129,6 +133,14 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 	return true;
       }
       return false;
+    }
+
+    private function validatePost(){
+      $csrf = new Omeka_Form_SessionCsrf;
+      if(!$csrf->isValid($_POST)){
+	$flash->addMessage('There was an error processing your request.','error');
+	$this->_helper->redirector('index','index');
+      }
     }
     
 
