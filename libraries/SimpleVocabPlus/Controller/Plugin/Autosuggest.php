@@ -63,7 +63,7 @@ class SimpleVocabPlus_Controller_Plugin_Autosuggest extends Zend_Controller_Plug
     jQuery(document).bind('omeka:elementformload', function(event) {
         jQuery('#element-<?php echo $element->id; ?> textarea').autocomplete({
             minLength: 2,
-            source: <?php echo json_encode($view->url('simple-vocab-plus/index/suggest-endpoint-proxy/element-id/' . $element->id)); ?>
+            source: <?php echo json_encode($view->url('simple-vocab-plus/endpoint/suggest-proxy/element-id/' . $element->id)); ?>
         });
     });
 <?php
