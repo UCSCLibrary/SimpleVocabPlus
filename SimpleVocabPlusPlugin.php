@@ -78,6 +78,11 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
       
     }
 
+    public function markSuggestField($components, $args) {
+        $components['description'] = $components['description']." (This element has autosuggest activated using the Simple Vocab Plus plugin)";
+        return($components);
+    }
+
     /**
      * Queue the javascript and css files to help the form work.
      *
@@ -90,6 +95,12 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
     public function hookAdminHead() {
         queue_js_file('SimpleVocabPlus');
         queue_css_string('.ui-tabs-active.ui-state-active {background: none repeat scroll 0 0 #f9f9f9;}');
+
+        $suggests = get_db()->getTable('SvpAssign')->findAll();
+        foreach($suggests as $suggest) {
+            $element = get_db()->getTable('Element')->find($suggest->element_id);
+            add_filter(array('ElementForm', 'Item', $element->getElementSet()->name, $element->name),array($this,'markSuggestField'));
+        }
     }
     
     /**
