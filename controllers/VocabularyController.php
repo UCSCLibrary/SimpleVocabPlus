@@ -41,7 +41,7 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 
     public function editAction() {
 
-      $this->validatePost();
+      $this->_validatePost();
       
       if(isset($_REQUEST['vocab']) && $_REQUEST['vocab'] !='')
           $vocab_id=$_REQUEST['vocab'];
@@ -135,7 +135,7 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
       return false;
     }
 
-    private function validatePost(){
+    private function _validatePost(){
       $csrf = new Omeka_Form_SessionCsrf;
       if(!$csrf->isValid($_POST)){
 	$flash->addMessage('There was an error processing your request.','error');
