@@ -112,10 +112,12 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
 
             $assignments[] = array(
                 'suggest_id' => $svSuggest->id,
-                'element_set_name' => $elementSetName, 
-                'element_name' => $element->name, 
+                'element_set_name' => $elementSetName,
+                'element_set_id' => $elementSet->id,
+                'element_name' => $element->name,
+                'element_id' => $svSuggest->element_id,
                 'authority_vocabulary' => __($authorityVocabularyName),
-                'element_id' => $svSuggest->element_id
+                'authority_vocabulary_id' => $authorityVocabulary->id,
             );
         }
         return $assignments;
