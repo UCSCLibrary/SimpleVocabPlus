@@ -18,9 +18,9 @@ jQuery(document).ready(function() {
 <?php echo flash(); ?>
 <div id="tabs">
     <ul>
-        <li><a href="#tab1">Assign Vocabularies to Metadata</a></li>
-        <li><a href="#tab2">Create Vocabularies</a></li>
-        <li><a href="#tab3">View/Edit Vocabularies</a></li>
+        <li><a href="#tab1"><?php echo __('Assign Vocabularies to Metadata'); ?></a></li>
+        <li><a href="#tab2"><?php echo __('Create Vocabularies'); ?></a></li>
+        <li><a href="#tab3"><?php echo __('View/Edit Vocabularies'); ?></a></li>
     </ul>
     <div id="tab1" style="height:1%; overflow:hidden">
         <form method="post" action="<?php echo url('simple-vocab-plus/suggest/add'); ?>">
@@ -211,7 +211,7 @@ jQuery(document).ready(function() {
                 form.appendTo(jQuery('body'));
                 form.submit();
             } else {
-                alert('Please edit one suggest assignment at a time');
+                alert(<?php echo json_encode(__('Please edit one suggest assignment at a time')); ?>);
             }
         }
         // Prepare and submit form with params from boxes created below.
@@ -226,7 +226,7 @@ jQuery(document).ready(function() {
             element_row.children('.element_name').html('');
             element_row.children('.authority_vocabulary').html(suggest_options);
             element_row.find('.authority_vocabulary select').val(vocab_id);
-            jQuery(this).html("Save");
+            jQuery(this).html(<?php echo json_encode(__('Save')); ?>);
             jQuery("#edit-element-id").css('max-width', '250px');
             svpflag = jQuery(this).attr('id');
         }

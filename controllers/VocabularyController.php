@@ -31,7 +31,7 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 	$vocab->updateNow();
       }
       $flash = $this->_helper->FlashMessenger;
-      $flash->addMessage('Your vocabulary has been created successfully. You may now assign it to metadata elements.','success');
+      $flash->addMessage(__('Your vocabulary has been created successfully. You may now assign it to metadata elements.'), 'success');
 
       $this->_helper->redirector('index','index');
 
@@ -107,7 +107,8 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
       return($updates);
     }
 
-    private function _updateRecords($vocab_id,$updates) {
+    private function _updateRecords($vocab_id,$updates)
+    {
       //find all assignments for this vocab
       //run a sql query to update the element texts table
       //for these elements when the old term is matched
@@ -127,21 +128,16 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
      */
     private function _vocabExists($vocab)
     {
-      $vocab = $this->_helper->db->getTable('SvpVocab')->find($vocab);
-      
-      if ($vocab) {
-	return true;
-      }
-      return false;
+        $vocab = $this->_helper->db->getTable('SvpVocab')->find($vocab);
+        return !empty($vocab);
     }
 
-    private function _validatePost(){
-      $csrf = new Omeka_Form_SessionCsrf;
-      if(!$csrf->isValid($_POST)){
-	$flash->addMessage('There was an error processing your request.','error');
-	$this->_helper->redirector('index','index');
-      }
+    private function _validatePost()
+    {
+        $csrf = new Omeka_Form_SessionCsrf;
+        if (!$csrf->isValid($_POST)) {
+            $flash->addMessage(__('There was an error processing your request.'), 'error');
+            $this->_helper->redirector('index', 'index');
+        }
     }
-    
-
 }
