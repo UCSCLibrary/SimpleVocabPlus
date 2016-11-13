@@ -121,10 +121,10 @@ jQuery(document).ready(function() {
             <label for="nv-local"><?php echo __('Vocabulary location:'); ?></label>
         </div>
         <div class="inputs five columns omega">
-            <p class="explanation"><?php echo __('Choose whether you would like' 
-            . 'Omeka to store the terms for your new vocabulary, or whether you' 
+            <p class="explanation"><?php echo __('Choose whether you would like '
+            . 'Omeka to store the terms for your new vocabulary, or whether you '
             . 'would prefer to store the vocaulary '
-	    . 'in the cloud using Google Drive'); 
+            . 'in the cloud using Google Drive');
          ?></p>
 
           <input type="radio" name="nv-local" value="local" id="localradio">
@@ -150,9 +150,9 @@ jQuery(document).ready(function() {
             <label for="nv-definetext"><?php echo __('Vocabulary Terms:'); ?></label>
         </div>
         <div class="inputs five columns omega">
-            <p class="explanation"><?php echo __('Input all terms below, one per line.' 
-            . 'You can also drag and drop text files here to paste their contents automatically.' 
-            ); 
+            <p class="explanation"><?php echo __('Input all terms below, one per line. '
+            . 'You can also drag and drop text files here to paste their contents automatically.'
+            );
          ?></p>
           <textarea rows="15" name="nv-definetext"></textarea>
         </div>
@@ -258,6 +258,5 @@ jQuery(document).ready(function() {
 </script>
 </div>
 </div>
-<?php 
-echo foot(); 
-?>
+<?php
+echo foot();
