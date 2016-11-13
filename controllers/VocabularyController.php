@@ -75,18 +75,16 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 
     public function getAction()
     {
+        $db = $this->_helper->db;
+        $vocabId = $this->getParam('vocab');
+        $vocab = $db->getTable('SvpVocab')->find($vocabId);
+        $terms = $db->getTable('SvpTerm')->findBy(array('vocab_id' => $vocabId));
+        $return = array('url' => $vocab->url, 'terms' => array());
+        foreach ($terms as $term) {
+            $return['terms'][] = $term->term;
+        }
         $this->_helper->viewRenderer->setNoRender();
-	$vocabId = $this->getParam('vocab');
-	$vocab = $this->_helper->db->getTable('SvpVocab')->find($vocabId);
-	$termTable = $this->_helper->db->getTable('SvpTerm');
-	$select = $termTable->getSelect()->where('vocab_id = ?',$vocabId);
-	$terms = $termTable->fetchObjects($select);
-	//$terms = $termTable->fetchObjects('select * from omeka_svp_terms where vocab_id = '.$vocabId);
-	$return = array('url'=>$vocab->url,'terms'=>array());
-	foreach($terms as $term) {
-	  $return['terms'][]=$term->term;
-	}
-	echo(json_encode($return));
+        echo json_encode($return);
     }
 
 
@@ -109,15 +107,21 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 
     private function _updateRecords($vocab_id,$updates)
     {
-      //find all assignments for this vocab
-      //run a sql query to update the element texts table
-      //for these elements when the old term is matched
-      //should be able to get it in a single query.
-      foreach($updates as $old=>$new) {
-	$sql = 'update omeka_element_texts as et left join omeka_svp_assigns as sa on (et.element_id = sa.element_id) set et.text=REPLACE(et.text,"'.$old.'","'.$new.'") where sa.vocab_id='.$vocab_id;
-	get_db()->query($sql);
-      }
-      
+        // find all assignments for this vocab
+        // run a sql query to update the element texts table
+        // for these elements when the old term is matched
+        // should be able to get it in a single query.
+        $db = $this->_helper->db;
+        foreach ($updates as $old => $new) {
+            $sql = "UPDATE `{$db->ElementText}` AS et
+                LEFT JOIN `{$db->SvpAssign}` AS sa
+                    ON et.element_id = sa.element_id
+                SET et.text = REPLACE(et.text, ?, ?)
+                WHERE sa.vocab_id = ?
+            ";
+            $bind = array($old, $new, (integer) $vocab_id);
+            $db->query($sql, $bind);
+        }
     }
 
     /**
