@@ -231,10 +231,9 @@ jQuery(document).ready(function() {
                 var element_id = jQuery('#edit-element-id').val();
                 var vocab_id = jQuery('#edit-vocab-id').val();
                 var form = jQuery("<form action='<?php echo url('simple-vocab-plus/suggest/edit/suggest_id/');  ?>"+svpflag+"'></form>");
-                form.append('<input type="hidden" name="element_id" value="'
-+element_id+'" />');
+                form.append('<input type="hidden" name="element_id" value="'+element_id+'" />');
                 form.append('<input type="hidden" name="vocab_id" value="'+vocab_id+'" />');
-		form.append('<?php echo $this->csrf;?>');
+                form.append('<?php echo trim($this->csrf);?>');
                 form.appendTo(jQuery('body'));
                 form.submit();
             } else {
