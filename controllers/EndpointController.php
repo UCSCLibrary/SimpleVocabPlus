@@ -24,7 +24,7 @@ class SimpleVocabPlus_EndpointController extends Omeka_Controller_AbstractAction
         $elementId = $this->getRequest()->getParam('element_id');
         $svAssign = $this->_helper->db->getTable('SvpAssign')->findByElementId($elementId);
         $vocab = $this->_helper->db->getTable('SvpAssign')->find($svAssign->vocab_id);
-	echo  $vocab->url;
+        echo $vocab ? $vocab->url : null;
     }
 
     /**
