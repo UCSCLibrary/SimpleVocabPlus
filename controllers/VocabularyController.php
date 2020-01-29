@@ -126,12 +126,12 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
     /**
      * Check if the specified vocabulary exists.
      *
-     * @param string $vocab
+     * @param string $vocab_name
      * @return bool
      */
-    private function _vocabExists($vocab)
+    private function _vocabExists($vocab_name)
     {
-        $vocab = $this->_helper->db->getTable('SvpVocab')->find($vocab);
+        $vocab = $this->_helper->db->getTable('SvpVocab')->find(array('name'=>$vocab_name));
         return !empty($vocab);
     }
 
