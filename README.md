@@ -1,14 +1,12 @@
-Simple Vocab Plus (plugin for Omeka)
+Simple Vocab Plus 2 (plugin for Omeka)
 ====================================
 
 This [Omeka] 2.1+ plugin allows administrators to create, edit, and update 
-controlled vocabularies either defined in Omeka or in the cloud. 
+controlled vocabularies either defined in Omeka (brand new term lists, or
+values already stored) or in the cloud. 
 
-[Simple Vocab Plus] is an improved fork of the official [Simple Vocab].
-The user interface is optimized too.
-
-If you use this plugin, please take a moment to submit feedback about your 
-experience, so we can keep making Omeka better: [User Survey].
+[Simple Vocab Plus 2] is an improved fork of the [Simple Vocab Plus] pugin, 
+based on the official [Simple Vocab]. The user interface is optimized too.
 
 
 Installation
@@ -59,12 +57,4 @@ Copyright
 
 * Copyright UCSC Library Digital Initiatives, 2014-2016
 * Copyright Daniel Berthereau, 2016 (see [Daniel-KM] on GitHub)
-
-
-[Simple Vocab Plus]: https://github.com/UCSCLibrary/SimpleVocabPlus
-[Simple Vocab]: https://github.com/omeka/plugin-SimpleVocab
-[Omeka]: https://omeka.org
-[User Survey]: https://docs.google.com/forms/d/17kHFdT-cx7K7ihrpGsSkCNytoHPDP7bc6OmavLbFe0w/viewform?usp=send_form
-[plugin issues]: https://github.com/UCSCLibrary/SimpleVocabPlus/issues
-[GNU/GPL v3]: https://www.gnu.org/licenses/gpl-3.0.html
-[Daniel-KM]: https://github.com/Daniel-KM
+* Copyright Daniele Binaghi, 2020 (see [DBinaghi] on GitHub)
