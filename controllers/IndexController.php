@@ -13,111 +13,173 @@
  */
 class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionController
 {
-    public function indexAction()
+    /**
+     * Initialize this controller.
+     */
+    public function init()
     {
-        $this->view->form_element_options = $this->_getFormElementOptions();
-        $this->view->form_vocab_options = $this->_getFormSuggestOptions();
-        $this->view->assignments = $this->_getAssignments();
-
-        $csrf = new Omeka_Form_SessionCsrf;
-        $this->view->csrf = $csrf;
-
-        foreach(get_db()->getTable('SvpVocab')->findAll() as $vocab) {
-            $vocab->updateNow();
-        }
+        // Restrict actions to AJAX requests.
+        $this->_helper->getHelper('AjaxContext')
+                      ->addActionContexts(array('element-texts' => 'html'))
+                      ->initContext();
     }
 
+	public function indexAction()
+	{
+		$this->view->form_element_options = $this->_getFormElementOptions();
+		$this->view->form_vocab_options = $this->_getFormSuggestOptions();
+		$this->view->assignments = $this->_getAssignments();
+
+		$csrf = new Omeka_Form_SessionCsrf;
+		$this->view->csrf = $csrf;
+
+		foreach(get_db()->getTable('SvpVocab')->findAll() as $vocab) {
+			$vocab->updateNow();
+		}
+	}
+
+	/**
+	 * Get an array to be used in formSelect() containing all elements.
+	 *
+	 * @return array
+	 */
+	private function _getFormElementOptions()
+	{
+		$db = $this->_helper->db->getDb();
+		$sql = "
+		SELECT es.name AS element_set_name,
+			e.id AS element_id,
+			e.name AS element_name,
+			it.name AS item_type_name,
+			gv.id AS gv_suggest_id
+		FROM {$db->ElementSet} es
+		JOIN {$db->Element} e ON es.id = e.element_set_id
+		LEFT JOIN {$db->ItemTypesElements} ite ON e.id = ite.element_id
+		LEFT JOIN {$db->ItemType} it ON ite.item_type_id = it.id
+		LEFT JOIN {$db->SvpAssign} gv ON e.id = gv.element_id
+		WHERE es.record_type IS NULL OR es.record_type = 'Item'
+		ORDER BY es.name, it.name, e.name";
+		$elements = $db->fetchAll($sql);
+		$options = array('' => __('Select Below'));
+		foreach ($elements as $element) {
+			$optGroup = $element['item_type_name']
+				? __('Item Type') . ': ' . __($element['item_type_name'])
+				: __($element['element_set_name']);
+			$value = __($element['element_name']);
+			if ($element['gv_suggest_id']) {
+				$value .= ' *';
+			}
+			$options[$optGroup][$element['element_id']] = $value;
+		}
+		return $options;
+	}
+
+	/**
+	 * Get an array to be used in formSelect() containing all suggest endpoints.
+	 *
+	 * @return array
+	 */
+	private function _getFormSuggestOptions()
+	{
+		$vocabs = $this->_helper->db->getTable('SvpVocab')->findAll();
+
+		$options = array('' => __('Select Below'));
+
+		foreach ($vocabs as $vocab) {
+			$options[$vocab['id']] = $vocab['name'];
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Get all the authority/vocabulary assignments.
+	 *
+	 * @return array
+	 */
+	private function _getAssignments()
+	{
+		$svSuggestTable = $this->_helper->db->getTable('SvpAssign');
+		$svpVocabTable = $this->_helper->db->getTable('SvpVocab');
+		$elementTable = $this->_helper->db->getTable('Element');
+		$elementSetTable = $this->_helper->db->getTable('ElementSet');
+		$itemTypeTable = $this->_helper->db->getTable('ItemType');
+		$itemTypesElementsTable = $this->_helper->db->getTable('ItemTypesElements');
+
+		$assignments = array();
+		foreach ($svSuggestTable->findAll() as $svSuggest) {
+			$element = $elementTable->find($svSuggest->element_id);
+			$elementSet = $elementSetTable->find($element->element_set_id);
+			$elementSetName = $elementSet->name;
+			if( $itemTypesElements = $itemTypesElementsTable->findByElement($element->id)) {
+				$itemTypesElement = $itemTypesElements[0];
+				$itemType = $itemTypeTable->find($itemTypesElement->item_type_id);
+				$elementSetName.=': '.$itemType->name;
+			}
+			$authorityVocabulary = $svpVocabTable->find($svSuggest->vocab_id);
+			$authorityVocabularyName = $authorityVocabulary['name'];
+
+			$assignments[] = array(
+				'suggest_id' => $svSuggest->id,
+				'element_set_name' => $elementSetName,
+				'element_set_id' => $elementSet->id,
+				'element_name' => $element->name,
+				'element_id' => $svSuggest->element_id,
+				'authority_vocabulary' => __($authorityVocabularyName),
+				'authority_vocabulary_id' => $authorityVocabulary->id,
+				'type' => $svSuggest->type,
+				'enforced' => $svSuggest->enforced
+			);
+		}
+		return $assignments;
+	}
+	
     /**
-     * Get an array to be used in formSelect() containing all elements.
-     *
-     * @return array
+     * Render the element texts.
+     * 
+     * Available only via an AJAX request.
      */
-    private function _getFormElementOptions()
+    public function elementTextsAction()
     {
-        $db = $this->_helper->db->getDb();
-        $sql = "
-        SELECT es.name AS element_set_name,
-            e.id AS element_id,
-            e.name AS element_name,
-            it.name AS item_type_name,
-            gv.id AS gv_suggest_id
-        FROM {$db->ElementSet} es
-        JOIN {$db->Element} e ON es.id = e.element_set_id
-        LEFT JOIN {$db->ItemTypesElements} ite ON e.id = ite.element_id
-        LEFT JOIN {$db->ItemType} it ON ite.item_type_id = it.id
-        LEFT JOIN {$db->SvpAssign} gv ON e.id = gv.element_id
-        WHERE es.record_type IS NULL OR es.record_type = 'Item'
-        ORDER BY es.name, it.name, e.name";
-        $elements = $db->fetchAll($sql);
-        $options = array('' => __('Select Below'));
-        foreach ($elements as $element) {
-            $optGroup = $element['item_type_name']
-                ? __('Item Type') . ': ' . __($element['item_type_name'])
-                : __($element['element_set_name']);
-            $value = __($element['element_name']);
-            if ($element['gv_suggest_id']) {
-                $value .= ' *';
+        $elementId = $this->getRequest()->getParam('element_id');
+        $warningMessages = array('longText' => __('Long text'), 
+                                 'containsNewlines' => __('Contains newlines'));
+        
+        // Get the element's element texts, if any
+        $elementTexts = array();
+        foreach ($this->findElementTexts($elementId) as $elementText) {
+            $warnings = array();
+            if (100 < strlen($elementText->text)) {
+                $warnings[] = $warningMessages['longText'];
             }
-            $options[$optGroup][$element['element_id']] = $value;
-        }
-        return $options;
-    }
-
-    /**
-     * Get an array to be used in formSelect() containing all sugggest endpoints.
-     *
-     * @return array
-     */
-    private function _getFormSuggestOptions()
-    {
-        $vocabs = $this->_helper->db->getTable('SvpVocab')->findAll();
-
-        $options = array('' => __('Select Below'));
-
-        foreach ($vocabs as $vocab) {
-            $options[$vocab['id']] = $vocab['name'];
-        }
-
-        return $options;
-    }
-
-    /**
-     * Get all the authority/vocabulary assignments.
-     *
-     * @return array
-     */
-    private function _getAssignments()
-    {
-        $svSuggestTable = $this->_helper->db->getTable('SvpAssign');
-        $svpVocabTable = $this->_helper->db->getTable('SvpVocab');
-        $elementTable = $this->_helper->db->getTable('Element');
-        $elementSetTable = $this->_helper->db->getTable('ElementSet');
-        $itemTypeTable = $this->_helper->db->getTable('ItemType');
-        $itemTypesElementsTable = $this->_helper->db->getTable('ItemTypesElements');
-
-        $assignments = array();
-        foreach ($svSuggestTable->findAll() as $svSuggest) {
-            $element = $elementTable->find($svSuggest->element_id);
-            $elementSet = $elementSetTable->find($element->element_set_id);
-            $elementSetName = $elementSet->name;
-            if( $itemTypesElements = $itemTypesElementsTable->findByElement($element->id)) {
-                $itemTypesElement = $itemTypesElements[0];
-                $itemType = $itemTypeTable->find($itemTypesElement->item_type_id);
-                $elementSetName.=': '.$itemType->name;
+            if (strstr($elementText->text, "\n")) {
+                $warnings[] = $warningMessages['containsNewlines'];
             }
-            $authorityVocabulary = $svpVocabTable->find($svSuggest->vocab_id);
-            $authorityVocabularyName = $authorityVocabulary['name'];
-
-            $assignments[] = array(
-                'suggest_id' => $svSuggest->id,
-                'element_set_name' => $elementSetName,
-                'element_set_id' => $elementSet->id,
-                'element_name' => $element->name,
-                'element_id' => $svSuggest->element_id,
-                'authority_vocabulary' => __($authorityVocabularyName),
-                'authority_vocabulary_id' => $authorityVocabulary->id,
-            );
+            
+            $elementTexts[] = array('element_id' => $elementId, 
+                                    'count' => $elementText->count, 
+                                    'warnings' => $warnings, 
+                                    'text' => $elementText->text);
         }
-        return $assignments;
+        
+        $this->view->element_texts = $elementTexts;
+    }
+	
+    /**
+     * Find distinct element texts for a specific element.
+     * 
+     * @param int $elementId
+     * @return array
+     */
+    public function findElementTexts($elementId)
+    {
+        $db = get_db(); 
+        $select = $db->select()
+                     ->from($db->ElementText, array('text', 'COUNT(*) AS count'))
+                     ->group('text')
+                     ->where('element_id = ?', $elementId)
+                     ->where('record_type = ?', 'Item')
+                     ->order(array('count DESC', 'text ASC'));
+		return $db->getTable('ElementText')->fetchObjects($select);
     }
 }

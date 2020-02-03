@@ -14,81 +14,90 @@
 class SimpleVocabPlus_SuggestController extends Omeka_Controller_AbstractActionController
 {
 
-    public function deleteAction() 
+    public function init()
     {
-        $suggestId = $this->getRequest()->getParam('suggest_id');
-        $svAssign = $this->_helper->db->getTable('SvpAssign')->find($suggestId);
-        $svAssign->delete();
-        $this->_helper->flashMessenger(__('Successfully disabled the element\'s suggest feature.'), 'success');
-        $this->_helper->redirector('index','index');
+        // Set the model class so this controller can perform some functions, 
+        // such as $this->findById()
+        $this->_helper->db->setDefaultModelName('SvpAssign');
     }
 
-    public function editAction()
+	public function deleteAction() 
+	{
+		$id = $this->getRequest()->getParam('id');
+		$svAssign = $this->_helper->db->getTable('SvpAssign')->find($id);
+		$svAssign->delete();
+		$this->_helper->flashMessenger(__('The element\'s suggest feature was successfully deleted.'), 'success');
+		$this->_helper->redirector('index','index');
+	}
+
+	protected function _getDeleteConfirmMessage($record)
     {
-        $suggestId = $this->getRequest()->getParam('suggest_id');
-        $elementId = $this->getRequest()->getParam('element_id');
-        $vocabId = $this->getRequest()->getParam('vocab_id');
-        // Don't process empty select options.
-        if ('' == $elementId) {
-            $this->_helper->redirector('index','index');
-        }
-
-        // Don't process an invalid suggest endpoint.
-        if (!$this->_vocabExists($vocabId)) {
-            $this->_helper->flashMessenger(__('Invalid suggest endpoint. No changes have been made.'), 'error');
-            $this->_helper->redirector('index','index');
-        }
-
-        $svAssign = $this->_helper->db->getTable('SvpAssign')->find($suggestId);
-
-        $svAssign->element_id = $elementId;
-        $svAssign->vocab_id = $vocabId;
-        $svAssign->save();
-        $this->_helper->flashMessenger(__('Successfully edited the element\'s suggest feature.'), 'success');
-        $this->_helper->redirector('index','index');
+        return __('This will delete this Assignment, but not the assigned Vocabulary.');
     }
 
-    /**
-     * Adds a connection between an element and a vocabulary
-     *
-     * Overwrites existing connection for that element, if one exists
-     *
-     * @return void
-     */
-    public function addAction() {
+	/**
+	 * Adds a connection between an element and a vocabulary
+	 *
+	 * Overwrites existing connection for that element, if one exists
+	 *
+	 * @return void
+	 */
+	public function addAction() {
 
-        $elementId = $this->getRequest()->getParam('element_id');
-        $vocabId = $this->getRequest()->getParam('vocab_id');
+		$element_id = $this->getRequest()->getParam('element_id');
+		$enforced = $this->getRequest()->getParam('enforced');
+		if ($this->getRequest()->getParam('self-assign')) {
+			$vocab_id = 0;
+			$type = __('self');
+			$enforced = false;
+		} else {
+			$vocab_id = $this->getRequest()->getParam('vocab_id');
+			$type = ($this->_vocabIsLocal($vocab_id) ? __('local') : __('remote'));
+		}
 
-        // Don't process empty select options.
-        if ('' == $elementId) {
-                $this->_helper->flashMessenger(__('Please select an element to assign'), 'success');
-            $this->_helper->redirector('index','index');
-        }
+		// Do not process empty select options.
+		if ($element_id == '') {
+			$this->_helper->flashMessenger(__('Please select an element to assign.'), 'success');
+			$this->_helper->redirector('index','index');
+		}
 
-        // Don't process an invalid suggest endpoint.
-        if (!$this->_vocabExists($vocabId)) {
-            $this->_helper->flashMessenger(__('Invalid suggest endpoint. No changes have been made.'), 'error');
-            $this->_helper->redirector('index','index');
-        }
+		// Do not process an invalid suggest endpoint.
+		if (!$this->_vocabExists($vocab_id) && $type != 'self') {
+			$this->_helper->flashMessenger(__('Invalid suggest endpoint. No changes have been made.'), 'error');
+			$this->_helper->redirector('index','index');
+		}
+		
+		$svAssign = new SvpAssign;
+		$svAssign->element_id = $element_id;
+		$svAssign->type = $type;
+		$svAssign->enforced = $enforced;
+		$svAssign->vocab_id = $vocab_id;
+		$svAssign->save();
+		$this->_helper->flashMessenger(__('The element\'s suggest feature was successfully added.'), 'success');
+		$this->_helper->redirector('index','index');
+	}
 
-        $svAssign = new SvpAssign;
-        $svAssign->element_id = $elementId;
-        $svAssign->vocab_id = $vocabId;
-        $svAssign->save();
-        $this->_helper->flashMessenger(__('Successfully enabled the element\'s suggest feature.'), 'success');
-        $this->_helper->redirector('index','index');
-    }
-
-    /**
-     * Check if the specified vocabulary exists.
-     *
-     * @param integer $vocabId
-     * @return bool
-     */
-    private function _vocabExists($vocabId)
-    {
-        $vocab = $this->_helper->db->getTable('SvpVocab')->find($vocabId);
-        return !empty($vocab);
-    }
+	/**
+	 * Check if the specified vocabulary exists.
+	 *
+	 * @param integer $vocab_id
+	 * @return bool
+	 */
+	private function _vocabExists($vocab_id)
+	{
+		$vocab = $this->_helper->db->getTable('SvpVocab')->find($vocab_id);
+		return !empty($vocab);
+	}
+	
+	/**
+	 * Check if the specified vocabulary is local or remote.
+	 *
+	 * @param integer $vocab_id
+	 * @return bool
+	 */
+	private function _vocabIsLocal($vocab_id)
+	{
+		$vocab = $this->_helper->db->getTable('SvpVocab')->find($vocab_id);
+		return ($vocab['url'] == 'local');
+	}
 }
