@@ -1,0 +1,407 @@
+# Translation for the Simple Vocab Plus plugin for Omeka.
+# Copyright (C) 2020 Daniele Binaghi
+# This file is distributed under the same license as the Omeka package.
+# Daniele Binaghi <admin@bitoteko.it>, 2020
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Vocab Plus\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-01 11:54+0200\n"
+"PO-Revision-Date: 2020-02-01 12:06+0200\n"
+"Last-Translator: Daniele Binaghi <admin@bitoteko.it>\n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: SimpleVocabPlusPlugin.php:200
+msgid "Simple Vocab Plus"
+msgstr "Simple Vocab Plus"
+
+#: SimpleVocabPlusPlugin.php:216
+msgid "
+"(Please note: this element has autosuggest activated using the Simple "
+"Vocab Plus plugin)"
+msgstr ""
+"(Attenzione: questo elemento ha la funzione di suggerimento attivata "
+"usando il plugin Simple Vocab Plus)"
+
+#: config_form.php:8
+msgid "Application scope"
+msgstr "Intervallo di applicazione"
+
+#: config_form.php:12
+msgid "Apply to Files"
+msgstr "Applica a file"
+
+#: config_form.php:16
+msgid ""
+"If checked, plugin will be applied to Files metadata too "
+"(by default, this plugin only applies to Items metadata)."
+msgstr ""
+"Se selezionata, il plugin verrà applicato anche ai metadata dei file (per "
+"impostazione predefinita, questo plugin viene applicato solo ai metadati documenti)."
+
+#: config_form.php:22
+msgid "Warnings"
+msgstr "Notifiche"
+
+#: config_form.php:26
+msgid "Highlight autosuggest fields"
+msgstr "Evidenzia campi autosuggerimento"
+
+#: config_form.php:30
+msgid "
+"Color hex code (e.g.: #ff0000) to highlight the fields that have autosuggest feature "
+"applied (blank means no highlight)."
+msgstr ""
+"Codice esadecimale (p.e.: #ff0000) del colore da usarsi per evidenziare i campi che "
+"hanno la funzionalità di autosuggerimento applicata (vuoto significa nessuna evidenziazione)."
+
+#: config_form.php:38
+msgid "Add autosuggest reminder"
+msgstr "Aggiungi nota autosuggerimento"
+
+#: config_form.php:42
+msgid ""
+"Adds a notice to the description of fields that have autosuggest feature "
+"applied."
+msgstr ""
+"Aggiunge una notifica alla descrizione dei campi che hanno la funzionalità "
+"di autosuggerimento applicata."
+
+#: index.php:37
+#: index.php:92
+msgid "Assign Vocabulary"
+msgstr "Assegna vocabolario"
+
+#: index.php:38
+#: index.php:189
+msgid "Create Vocabulary"
+msgstr "Crea vocabolario"
+
+#: index.php:39
+msgid "Edit Vocabulary"
+msgstr "Modifica vocabolario"
+
+#: index.php:40
+msgid "Examine Element"
+msgstr "Esamina elemento"
+
+#: index.php:46
+msgid "Assign Vocabulary to Metadata Element"
+msgstr "Assegna vocabolario ad un elemento dei metadati"
+
+#: index.php:49
+#: index.php:106
+#: index.php:256
+msgid "Element"
+msgstr "Elemento"
+
+#: index.php:53
+msgid ""
+"Select an element to assign it a Simple Vocabulary. Elements already assigned 
+"an authority/vocabulary are marked with an asterisk (*)."
+msgstr ""
+"Selezionare un elemento al quale assegnare un Vocabolario Semplice. Gli elementi "
+"ai quali è già assegnata un'autorità/vocabolario sono indicati con un asterisco (*)."
+
+#: index.php:60
+msgid "Enforce values"
+msgstr "Forza valori"
+
+#: index.php:64
+msgid ""
+"If selected, user will see a dropdown box and will have to choose one of the suggested values. "
+"Works only with local/remote vocabularies. Deselect the option to disable the feature."
+msgstr ""
+"Se selezionata, l'utente vedrà una casella a discesa e dovrà scegliere uno dei valori suggeriti. "
+"Funziona solo con vocabolari locali/remoti. Deselezionare l'opzione per disabilitare la funzionalità."
+
+#: index.php:71
+msgid "Self assign"
+msgstr "Autoassegna"
+
+#: index.php:75
+msgid "
+"If selected, values are retrieved from repository instead of vocabulary; if uncertain of values\' "
+"consistency, you might want to <a href="#tab4"><strong>examine them first</strong></a>. Deselect "
+"the option to disable the feature."
+msgstr ""
+"Se selezionata, i valori saranno estratti dall'archivio invece che da un vocabolario; se si hanno "
+"delle riserve sulla consistenza dei valori, è meglio <a href="#tab4"><strong>esaminarli prima</strong></a>. "
+"Deselezionare l'opzione per disabilitare la funzionalità."
+
+#: index.php:86
+msgid "Select a vocabulary to enable the autosuggest feature for the above element."
+msgstr "Seleziona un vocabolario per abilitare la funzionalità di autosuggerimento per l'elemento indicato sopra."
+
+#: index.php:100
+msgid "Current Assignments"
+msgstr "Assegnazioni correnti"
+
+#: index.php:105
+msgid "Element Set"
+msgstr "Insieme di elementi"
+
+#: index.php:107
+msgid "Type"
+msgstr "Tipologia"
+
+#: index.php:108
+msgid "Enforced"
+msgstr "Forzato"
+
+#: index.php:109
+msgid "Vocabulary"
+msgstr "Vocabolario"
+
+#: index.php:131
+msgid "There are no suggest assignments."
+msgstr "Non esistono assegnazioni di suggerimenti."
+
+#: index.php:140
+msgid "Create new Vocabulary"
+msgstr "Crea un nuovo vocabolario"
+
+#: index.php:144
+#: index.php:202
+msgid "Name"
+msgstr "Nome"
+
+#: index.php:147
+msgid "Provide a name for your new vocabulary."
+msgstr "Fornisci un nome per il tuo nuovo vocabolario."
+
+#: index.php:153
+msgid "Location"
+msgstr "Collocazione"
+
+#: index.php:157
+msgid ""
+"Choose whether you would like the repository to store your new vocabulary\'s terms, "
+"or rather to store the vocabulary in the cloud (using Google Drive or GitPages or "
+"other similar services.)."
+msgstr ""
+"Scegli se vuoi che l'archivio conservi i termini del tuo nuovo vocabolario, oppure "
+"se vuoi conservare il vocabolario nel cloud (usando Google Drive o GitPages o altri "
+"servizi similari."
+
+#: index.php:160
+msgid "Define vocabulary and manually edit it here"
+msgstr "Definisci il vocabolario e modificalo manualmente qui"
+
+#: index.php:163
+msgid "Syncronize vocabulary with cloud"
+msgstr "Sincronizza il vocabolario con il cloud"
+
+#: index.php:168
+#: index.php:211
+msgid "URL"
+msgstr "URL"
+
+#: index.php:172
+msgid ""
+"If the vocabulary is stored in the cloud, this field shows the file URL for the "
+"vocabulary. Any web server or cloud service can host this file (we "
+"recommend GitPages). A plain text file is expected with one term per line."
+msgstr ""
+"Se il vocabolario è conservato nel cloud, questo campo mostra l'URL del file "
+"vocabolario. Ogni server web o servizio cloud può ospitare questo file (noi "
+"raccomandiamo GitPages). È atteso un file di testo semplice, con un termine per "
+"riga."
+
+#: index.php:179
+#: index.php:222
+msgid "Terms list"
+msgstr "Lista termini"
+
+#: index.php:183
+msgid ""
+"Input all terms below, one term per line. You can also drag and drop text "
+"files here, to paste their contents automatically."
+msgstr ""
+"Inserisci tutti i termini qui sotto, un termine per riga. Puoi anche trascinare "
+"dei file di testo qui, per incollare automaticamente il loro contenuto."
+
+#: index.php:198
+msgid "Edit existing Vocabulary"
+msgstr "Modifica vocabolario esistente"
+
+#: index.php:205
+msgid "Select a Vocabulary to edit."
+msgstr "Seleziona un vocabolario da modificare."
+
+#: index.php:215
+msgid ""
+"If the vocabulary is stored in the cloud, this field shows the file URL for the "
+"vocabulary. Any web server or cloud service can host this file (we "
+"recommend GitPages). A plain text file is expected, with one term per line. "
+"To delete this vocabulary, empty the URL field and save."
+msgstr ""
+"Se il vocabolario è conservato nel cloud, questo campo mostra l'URL del file "
+"vocabolario. Ogni server web o servizio cloud può ospitare questo file (noi "
+"raccomandiamo GitPages). È atteso un file di testo semplice, con un termine per "
+"riga. Per cancellare questo vocabolario, svuotare il campo URL e salvare le modifiche."
+
+#: index.php:226
+msgid ""
+"The vocabulary\'s terms are displayed here, one term per line. To delete "
+"this vocabulary, empty terms list and save."
+msgstr ""
+"I termini del vocabolario vengono mostrati qui, un termine per riga. Per cancellare "
+"questo vocabolario, svuotare la lista termini e salvare le modifiche."
+
+#: index.php:232
+msgid "Save Changes"
+msgstr "Salva le modifiche"
+
+#: index.php:241
+msgid "Examine Element\'s values"
+msgstr "Esamina i valori di un elemento"
+
+#: index.php:245
+msgid ""
+"Before creating a vocabulary with values retrieved from the ones stored in the "
+"repository for a particular element, you might want to examine their consistency. "
+"Consider in fact the following caveats:"
+msgstr ""
+"Prima di creare un vocabolario con valori ottenuti da quelli presenti nell'archivio "
+"per un dato elemento, potresti voler esaminare la loro consistenza. Considera infatti "
+"le seguenti indicazioni:" 
+
+#: index.php:248
+msgid "Vocabulary terms must not contain newlines (line breaks)."
+msgstr "Un vocabolario non deve contenere rimandi a capo (interruzioni di riga)."
+
+#: index.php:249
+msgid ""
+"Vocabulary terms are typically short and concise. If your existing texts are "
+"otherwise, avoid using a controlled vocabulary for this element."
+msgstr ""
+"I termini del vocabolario sono solitamente corti e concisi. Se i testi preesistenti "
+"non lo sono, si suggerisce di non utilizzare un vocabolario controllato per questo elemento."
+
+#: index.php:250
+msgid ""
+"Existing texts that are not in the vocabulary will be preserved — however, they "
+"cannot be selected in the item edit page, and will be deleted once you save the item."
+msgstr ""
+"I testi preesistenti che non sono nel vocabolario verranno preservati - però, non "
+"potranno essere selezionati nella pagina di modifica, e saranno cancellati una volta che "
+"si salverà il documento."
+
+#: index.php:260
+msgid "Select an element to examine."
+msgstr "Seleziona un elemento da esaminare."
+
+# IndexController.php:86
+msgid "Select Below"
+msgstr "Seleziona sotto"
+
+# IndexController.php:145
+msgid "Long text"
+msgstr "Testo lungo"
+
+# IndexController.php:146
+msgid "Contains newlines"
+msgstr "Contiene rimandi a capo"
+
+# SuggestController.php:29
+msgid "The element\'s suggest feature was successfully deleted."
+msgstr "La funzionalità di suggerimento per l'elemento è stata eliminata correttamente."
+
+# SuggestController.php:35
+msgid "This will delete this Assignment, but not the assigned Vocabulary."
+msgstr "Questo cancellerà questa assegnazione, ma non il vocabolario associato"
+
+# SuggestController.php:60
+msgid "Please select an element to assign."
+msgstr "Si prega di selezionare un elemento da assegnare."
+
+# SuggestController.php:66
+msgid "Invalid suggest endpoint. No changes have been made."
+msgstr "Parametro di suggerimento invalido. Nessuna modifica è stata effettuata."
+
+# SuggestController.php:76
+msgid "The element\'s suggest feature was successfully added."
+msgstr "La funzionalità di suggerimento per l'elemento è stata aggiunta correttamente."
+
+# VocabularyController.php:23
+msgid "You did not provide a name for your new vocabulary."
+msgstr "Non hai fornito un nome per il tuo nuovo vocabolario."
+
+# VocabularyController.php:26
+msgid "The name you provided for your new vocabulary is already in use."
+msgstr "Il nome fornito per il tuo nuovo vocabolario è già in uso."
+
+# VocabularyController.php:42
+msgid ""
+"Your vocabulary has been created successfully. You may now assign "
+"it to metadata elements."
+msgstr ""
+"Il tuo vocabolario è stato creato correttamente. Puoi ora assegnarlo "
+"agli elementi metadati."
+
+# VocabularyController.php:54
+msgid "No vocabulary was chosen for editing."
+msgstr "Non è stato scelto alcun vocabolario per la modifica."
+
+# VocabularyController.php:58
+msgid "There was a problem editing your vocabulary."
+msgstr "Si è verificato un problema durante la modifica del tuo vocabolario."
+
+# VocabularyController.php:68
+msgid ""
+"At least one element is still assigned to this vocabulary. Delete the "
+"assignments before trying to delete the vocabulary."
+msgstr ""
+"Almeno un elemento è ancora assegnato a questo vocabolario. Cancella la "
+"assegnazione prima di provare a cancellare il vocabolario."
+
+# VocabularyController.php:72
+msgid "Vocabulary deleted successfully."
+msgstr "Vocabolario cancellato correttamente."
+
+# VocabularyController.php:80
+msgid "Remote vocabulary edited successfully."
+msgstr "Vocabolario remoto modificato correttamente."
+
+# VocabularyController.php:92
+msgid "Local vocabulary edited successfully."
+msgstr "Vocabolario locale modificato correttamente."
+
+# VocabularyController.php:166
+msgid "There was an error processing your request."
+msgstr "Si è verificato un errore nella lavorazione della tua richiesta."
+
+# element-texts.ajax:2
+msgid "No texts for the selected element was found in the repository."
+msgstr "Non è stato trovato nell'archivio alcun testo per l'elemento selezionato."
+
+# element-texts.ajax:6
+msgid "Count"
+msgstr "Conteggio"
+
+# element-texts.ajax:7
+msgid "Warnings"
+msgstr "Avvertimenti"
+
+# element-texts.ajax:18
+msgid "click to search for"
+msgstr "clicca per cercare"
+
+# element-texts.ajax:18
+msgid "this page"
+msgstr "questa pagina"
+
+# element-texts.ajax:18
+msgid "these pages"
+msgstr "queste pagine"
+
+# element-texts.ajax:8
+msgid "Text"
+msgstr "Testo"
