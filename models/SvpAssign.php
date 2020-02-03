@@ -13,7 +13,9 @@
  */
 class SvpAssign extends Omeka_Record_AbstractRecord
 {
-    public $id;
-    public $element_id;
-    public $vocab_id;
+	public $id;
+	public $element_id;
+	public $type;
+	public $enforced;
+	public $vocab_id;
 }
