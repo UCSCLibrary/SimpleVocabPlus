@@ -13,6 +13,12 @@
  */
 class SimpleVocabPlus_Controller_Plugin_Autosuggest extends Zend_Controller_Plugin_Abstract
 {
+	/**
+	 * Cached vocab terms.
+	 */
+	protected $_svpTerms;
+	protected $_elementText;
+
     /**
      * Add autosuggest only during defined routes.
      */
@@ -39,9 +45,19 @@ class SimpleVocabPlus_Controller_Plugin_Autosuggest extends Zend_Controller_Plug
             ),
         );
 
+		$filterFiles = get_option('simple_vocab_plus_files');
+		if ($filterFiles) {
+			// Add the file add/edit route if configured to.
+			$routes[] = array(
+				'module' => 'default',
+				'controller' => 'files',
+				'actions' => array('add', 'edit')
+			);
+		}
+
         // Allow plugins to add routes that contain form inputs rendered by
         // Omeka_View_Helper_ElementForm::_displayFormInput().
-        $routes = apply_filters('sv_suggest_routes', $routes);
+        $routes = apply_filters('svp_suggest_routes', $routes);
 
         // Iterate the defined routes.
         foreach ($routes as $route) {
@@ -51,14 +67,17 @@ class SimpleVocabPlus_Controller_Plugin_Autosuggest extends Zend_Controller_Plug
                     && in_array($action, $route['actions'])
                 ) {
                 // Iterate the elements that are assigned to a suggest endpoint.
-                $svSuggests = $db->getTable('SvpAssign')->findAll();
-                foreach ($svSuggests as $svSuggest) {
-                    $element = $db->getTable('Element')->find($svSuggest->element_id);
+                $svpAssigns = $db->getTable('SvpAssign')->findAll();
+				foreach ($svpAssigns as $svpAssign) {
+                    $element = $db->getTable('Element')->find($svpAssign->element_id);
                     $elementSet = $db->getTable('ElementSet')->find($element->element_set_id);
+					$elementTextTable = $db->getTable('ElementText');
+					$svpTermTable = $db->getTable('SvpTerm');
 
-                    // Add the autosuggest JavaScript to the JS queue.
-                    $view = Zend_Registry::get('view');
-                    $view->headScript()->captureStart();
+					if (!$svpAssign->enforced) {
+						// Add the autosuggest JavaScript to the JS queue.
+						$view = Zend_Registry::get('view');
+						$view->headScript()->captureStart();
 ?>
 // Add autosuggest to <?php echo $elementSet->name . ':' . $element->name; ?>. Used by the Simple Vocab Plus plugin.
 jQuery(document).bind('omeka:elementformload', function(event) {
@@ -68,13 +87,75 @@ jQuery(document).bind('omeka:elementformload', function(event) {
     });
 });
 <?php
-                    $view->headScript()->captureEnd();
-                }
+						$view->headScript()->captureEnd();
+					} else {	
+						// Retrieve values to populate select box.
+						if ($svpAssign->type == 'self') {
+							$select = $elementTextTable->getSelect();
+							$select->from(array(), 'text')
+									->where('record_type = ?', 'Item')
+									->where('element_id = ?', $element->id)
+									->group('text')
+									->order('text ASC');
+							$this->_svpTerms[$element->id] = $elementTextTable->fetchObjects($select);
+						} else { 
+							$select = $svpTermTable->getSelect();
+							$select->from(array(), array('text' => 'term'))
+									->where('vocab_id = ?', $svpAssign->vocab_id)
+									->group('text')
+									->order('text ASC');
+							$this->_svpTerms[$element->id] = $svpTermTable->fetchObjects($select);
+						}
+					}
 
-                // Once the JavaScript is applied there is no need to continue
-                // looping the defined routes.
-                break;
-            }
-        }
-    }
+					add_filter(array('ElementInput', 'Item', $elementSet->name, $element->name),
+								array($this, 'filterElementInput'));
+					if ($filterFiles) {
+						// Add the file filter if configured to.
+						add_filter(array('ElementInput', 'File', $elementSet->name, $element->name),
+									array($this, 'filterElementInput'));
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Filter the element input.
+	 * 
+	 * @param array $components
+	 * @param array $args
+	 * @return array
+	 */
+	public function filterElementInput($components, $args)
+	{
+		// Use the cached vocab terms
+		$hcolor = get_option('simple_vocab_plus_fields_highlight');
+		$hcolor = (preg_match('/#([a-f0-9]{3}){1,2}\b/i', $hcolor) ? 'background-color: ' . $hcolor : '');
+		
+		if (empty($this->_svpTerms[$args['element']->id])) {
+			// case autosuggest, values not enforced
+			$components['input'] = get_view()->formTextarea(
+				$args['input_name_stem'] . '[text]',
+				$args['value'],
+				array('cols' => 50, 'rows' => 3, 'style' => $hcolor)
+			);
+		} else {
+			// case autosuggest, values enforced
+			$selectTerms = array('' => __('Select Below'));
+			foreach($this->_svpTerms[$args['element']->id] as $row) {
+				$selectTerms[$row['text']] = $row['text'];
+			}
+			
+			$components['input'] = get_view()->formSelect(
+				$args['input_name_stem'] . '[text]', 
+				$args['value'], 
+				array('style' => 'width: 300px; ' . $hcolor), 
+				$selectTerms
+			);
+			$components['html_checkbox'] = false;
+		}
+		
+		return $components;
+	}
 }
