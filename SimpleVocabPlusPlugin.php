@@ -137,7 +137,7 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 		queue_css_string('.ui-tabs-active.ui-state-active {background: none repeat scroll 0 0 #f9f9f9;}');
 		
 		$filesApplyToo = get_option('simple_vocab_plus_files');
-		if (get_option('simple_vocab_plus_fields_description') != '') {
+		if (get_option('simple_vocab_plus_fields_description')) {
 			$suggests = get_db()->getTable('SvpAssign')->findAll();
 			foreach($suggests as $suggest) {
 				$element = get_db()->getTable('Element')->find($suggest->element_id);
