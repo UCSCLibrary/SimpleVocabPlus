@@ -34,7 +34,7 @@ Configuration
 -------------
 
 The brand new configuration panel allows to extend the plugin's functionality to
-files metadata, and to highlight the fields that are using the autosuggest feature.
+files, collections and exhibits metadata, and to highlight the fields that are using the autosuggest feature.
 
 
 Warning
