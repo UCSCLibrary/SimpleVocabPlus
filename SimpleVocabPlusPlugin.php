@@ -69,8 +69,11 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 		$this->_db->query($sql3);
 
 		set_option('simple_vocab_plus_files', '0');
+		set_option('simple_vocab_plus_collections', '0');
+		set_option('simple_vocab_plus_exhibits', '0');
 		set_option('simple_vocab_plus_fields_highlight', '');
 		set_option('simple_vocab_plus_fields_description', '1');
+		set_option('simple_vocab_plus_values_compare', '0');
 	}
 	
     /**
@@ -98,8 +101,11 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 			$this->_db->query($sql3);
 			
 			set_option('simple_vocab_plus_files', '0');
+			set_option('simple_vocab_plus_collections', '0');
+			set_option('simple_vocab_plus_exhibits', '0');
 			set_option('simple_vocab_plus_fields_highlight', '');
 			set_option('simple_vocab_plus_fields_description', '1');
+			set_option('simple_vocab_plus_values_compare', '0');
 
             $message = __('Database has been updated correctly.');
             throw new Omeka_Plugin_Exception($message);
@@ -119,8 +125,11 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 		$this->_db->query($sql3);
 	  
 		delete_option('simple_vocab_plus_files');
+		delete_option('simple_vocab_plus_collections');
+		delete_option('simple_vocab_plus_exhibits');
 		delete_option('simple_vocab_plus_fields_highlight');
 		delete_option('simple_vocab_plus_fields_description');
+		delete_option('simple_vocab_plus_values_compare');
 	}
 
 	/**
@@ -137,6 +146,8 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 		queue_css_string('.ui-tabs-active.ui-state-active {background: none repeat scroll 0 0 #f9f9f9;}');
 		
 		$filesApplyToo = get_option('simple_vocab_plus_files');
+		$collectionsApplyToo = get_option('simple_vocab_plus_files');
+		$exhibitsApplyToo = (get_option('simple_vocab_plus_files') && plugin_is_active('ExhibitBuilder'));
 		if (get_option('simple_vocab_plus_fields_description')) {
 			$suggests = get_db()->getTable('SvpAssign')->findAll();
 			foreach($suggests as $suggest) {
@@ -144,6 +155,12 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 				add_filter(array('ElementForm', 'Item', $element->getElementSet()->name, $element->name), array($this, 'markSuggestField'));
 				if ($filesApplyToo) {
 					add_filter(array('ElementForm', 'File', $element->getElementSet()->name, $element->name), array($this, 'markSuggestField'));
+				}
+				if ($collectionsApplyToo) {
+					add_filter(array('ElementForm', 'Collection', $element->getElementSet()->name, $element->name), array($this, 'markSuggestField'));
+				}
+				if ($exhibitsApplyToo) {
+					add_filter(array('ElementForm', 'Exhibit', $element->getElementSet()->name, $element->name), array($this, 'markSuggestField'));
 				}
 			}
 		}
@@ -168,8 +185,11 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
     {
 		$post = $args['post'];
 		set_option('simple_vocab_plus_files', $post['simple_vocab_plus_files']);
+		set_option('simple_vocab_plus_collections', $post['simple_vocab_plus_collections']);
+		set_option('simple_vocab_plus_exhibits', $post['simple_vocab_plus_exhibits']);
 		set_option('simple_vocab_plus_fields_highlight', $post['simple_vocab_plus_fields_highlight']);
 		set_option('simple_vocab_plus_fields_description', $post['simple_vocab_plus_fields_description']);
+		set_option('simple_vocab_plus_values_compare', $post['simple_vocab_plus_values_compare']);
     }
     
     public function hookConfigForm()
@@ -213,7 +233,7 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 	 *@return array $components The amended component array
 	 */
 	public function markSuggestField($components, $args) {
-		$components['description'] = $components['description'] . __('(Please note: this element has autosuggest activated using the Simple Vocab Plus plugin)');
+		$components['description'] = $components['description'] . '<i>' . __('(Please note: this element has autosuggest activated using the Simple Vocab Plus plugin)') . '</i>';
 		return($components);
 	}
 }
