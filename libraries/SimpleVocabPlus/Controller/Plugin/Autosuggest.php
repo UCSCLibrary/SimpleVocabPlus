@@ -64,6 +64,26 @@ class SimpleVocabPlus_Controller_Plugin_Autosuggest extends Zend_Controller_Plug
 			);
 		}
 
+		$filterCollections = get_option('simple_vocab_plus_collections');
+		if ($filterCollections) {
+			// Add the collections add/edit route if configured to.
+			$this->_defaultRoutes[] = array(
+				'module' => 'default',
+				'controller' => 'collections',
+				'actions' => array('add', 'edit')
+			);
+		}
+
+		$filterExhibits = (get_option('simple_vocab_plus_exhibits') && plugin_is_active('ExhibitBuilder'));
+		if (filterExhibits) {
+			// Add the exhibit add/edit route if configured to.
+			$this->_defaultRoutes[] = array(
+				'module' => 'default',
+				'controller' => 'exhibits',
+				'actions' => array('add', 'edit')
+			);
+		}
+
 		// Allow plugins to add routes that contain form inputs rendered by
 		// Omeka_View_Helper_ElementForm::_displayFormInput().
 		$routes = apply_filters('svp_suggest_routes', $this->_defaultRoutes);
@@ -111,8 +131,7 @@ jQuery(document).bind('omeka:elementformload', function(event) {
 							$select = $svpTermTable->getSelect();
 							$select->from(array(), array('text' => 'term'))
 									->where('vocab_id = ?', $svpAssign->vocab_id)
-									->group('text')
-									->order('text ASC');
+									->order('id ASC');
 							$this->_svpTerms[$element->id] = $svpTermTable->fetchObjects($select);
 						}
 					}
@@ -125,6 +144,20 @@ jQuery(document).bind('omeka:elementformload', function(event) {
 					if ($filterFiles) {
 						add_filter(
 									array('ElementInput', 'File', $elementSet->name, $element->name),
+									array($this, 'filterElementInput')
+								);
+					}
+					// Add the file filter if configured to.
+					if ($filterCollections) {
+						add_filter(
+									array('ElementInput', 'Collection', $elementSet->name, $element->name),
+									array($this, 'filterElementInput')
+								);
+					}
+					// Add the file filter if configured to.
+					if ($filterExhibits) {
+						add_filter(
+									array('ElementInput', 'Exhibit', $elementSet->name, $element->name),
 									array($this, 'filterElementInput')
 								);
 					}
@@ -156,8 +189,32 @@ jQuery(document).bind('omeka:elementformload', function(event) {
 		} else {
 			// case autosuggest, values enforced
 			$selectTerms = array('' => __('Select Below'));
-			foreach($this->_svpTerms[$args['element']->id] as $row) {
-				$selectTerms[$row['text']] = $row['text'];
+			$iBlanks = 1;
+			$terms_count = count($this->_svpTerms[$args['element']->id]);
+
+			for ($i = 0; $i < $terms_count; $i++) {
+				$term = $this->_svpTerms[$args['element']->id][$i]['text'];
+				if ($term == '---') {
+					$selectTerms[str_repeat(' ', $iBlanks)] = array();
+					$iBlanks++;
+				} elseif (substr($term, 0, 3) == '***') {
+					$stem = substr($term, 3);
+					$subterms = array();
+					$i++;
+					while ($i < $terms_count) {
+						$term = $this->_svpTerms[$args['element']->id][$i]['text'];
+						if ($term != '---' && substr($term, 0, 3) != '***') {
+							$subterms[$term] = $term;
+							$i++;
+						} else {
+							$i = $i - 1;
+							break;
+						}
+					}
+					$selectTerms[$stem] = $subterms;
+				} else {
+					$selectTerms[$term] = $term;
+				}
 			}
 			
 			$components['input'] = get_view()->formSelect(
