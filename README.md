@@ -4,7 +4,7 @@ Simple Vocab Plus (plugin for Omeka)
 This [Omeka] 2.1+ plugin allows administrators to create, edit, and update 
 controlled vocabularies either defined in the repository itself or in the cloud. 
 
-This is an improved fork of the [Simple Vocab Plus] plugin, adding more functions
+This is an improved fork of the [Simple Vocab Plus] plugin, adding more functions, extending the scope 
 and with a user interface optimized too.
 
 New functions: 
@@ -13,6 +13,10 @@ suggestions;
 - chance to check the values stored for a specific element;
 - chance to force the use of a list of values (similar to the dropdown feature of the
 [Simple Vocab] original plugin.
+
+Scope extended:
+- option to enable plugin functionality for Collections too;
+- option to enable plugin functionality for Exhibits too (if relative plugin is installed and working).
 
 If you use this plugin, please take a moment to submit feedback about your 
 experience, so we can keep making Omeka better: [User Survey].
