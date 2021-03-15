@@ -33,8 +33,7 @@ Then install it like any other Omeka plugin.
 Configuration
 -------------
 
-The brand new configuration panel allows to extend the plugin's functionality to
-files, collections and exhibits metadata, and to highlight the fields that are using the autosuggest feature.
+The brand new configuration panel allows to extend the plugin's functionality to files, collections and exhibits metadata, and to highlight the fields that are using the autosuggest feature.
 
 
 Warning
