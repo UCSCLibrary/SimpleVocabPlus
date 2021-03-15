@@ -18,8 +18,13 @@ Scope extended:
 - option to enable plugin functionality for Collections too;
 - option to enable plugin functionality for Exhibits too (if relative plugin is installed and working).
 
-If you use this plugin, please take a moment to submit feedback about your 
-experience, so we can keep making Omeka better: [User Survey].
+If you use this plugin, please take a moment to submit feedback about your experience, so we can keep making Omeka better: [User Survey].
+
+
+To Do
+------------
+
+Add a chance of merging content of two or more fields into a single suggestion list (f.i.: from Creator and Contributor); list should be checked for unicity; extra control could check if similar name are duplicates (f.i.: Doe, Johh and Doe John).
 
 
 Installation
