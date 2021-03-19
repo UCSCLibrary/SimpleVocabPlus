@@ -24,7 +24,8 @@ If you use this plugin, please take a moment to submit feedback about your exper
 To Do
 ------------
 
-Add a chance of merging content of two or more fields into a single suggestion list (f.i.: from Creator and Contributor); list should be checked for unicity; extra control could check if similar name are duplicates (f.i.: Doe, Johh and Doe John).
+Add a chance of merging content of two or more fields into a single suggestion list (f.i.: from Creator and Contributor); merged list should be checked for unicity.
+An extra control could check if fields contents are too similar and maybe one of them contains typo (f.i.: Doe, John and Doe John); unfortunately, proximity function used on database risk to be quite slow.
 
 
 Installation
