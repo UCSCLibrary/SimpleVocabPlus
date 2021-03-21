@@ -140,21 +140,21 @@ jQuery(document).bind('omeka:elementformload', function(event) {
 								array('ElementInput', 'Item', $elementSet->name, $element->name),
 								array($this, 'filterElementInput')
 							);
-					// Add the file filter if configured to.
+					// Add the File filter if configured to.
 					if ($filterFiles) {
 						add_filter(
 									array('ElementInput', 'File', $elementSet->name, $element->name),
 									array($this, 'filterElementInput')
 								);
 					}
-					// Add the file filter if configured to.
+					// Add the Collection filter if configured to.
 					if ($filterCollections) {
 						add_filter(
 									array('ElementInput', 'Collection', $elementSet->name, $element->name),
 									array($this, 'filterElementInput')
 								);
 					}
-					// Add the file filter if configured to.
+					// Add the Exhibit filter if configured to.
 					if ($filterExhibits) {
 						add_filter(
 									array('ElementInput', 'Exhibit', $elementSet->name, $element->name),
