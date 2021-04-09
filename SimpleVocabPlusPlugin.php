@@ -3,6 +3,7 @@
  * Simple Vocabulary Plus
  * 
  * @copyright Copyright 2007-2012 UCSC Library Digital Initiatives
+ * @copyright Copyright 2020-2021 Daniele Binaghi
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU GPLv3
  */
 
@@ -49,6 +50,7 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 					`type` varchar(10) NOT NULL,
 					`enforced` boolean,
 					`vocab_id` int(10) unsigned NOT NULL,
+					`sources_id` varchar(100),
 					PRIMARY KEY (`id`),
 					UNIQUE KEY `element_id` (`element_id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
@@ -109,7 +111,14 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 
             $message = __('Database has been updated correctly.');
             throw new Omeka_Plugin_Exception($message);
-        }
+        } elseif (version_compare($oldVersion, '3.1', '<')) {
+			$sql1 = "ALTER TABLE `{$this->_db->SvpAssign}`
+					ADD COLUMN `sources_id` varchar(100) NOT NULL AFTER `vocab_id`"; 
+			$this->_db->query($sql1);
+
+            $message = __('Database has been updated correctly.');
+            throw new Omeka_Plugin_Exception($message);
+		}
     }
 
 	/**
@@ -233,7 +242,7 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 	 *@return array $components The amended component array
 	 */
 	public function markSuggestField($components, $args) {
-		$components['description'] = $components['description'] . '<i>' . __('(Please note: this element has autosuggest activated using the Simple Vocab Plus plugin)') . '</i>';
+		$components['description'] = $components['description'] . '<i>' . __('(Please note: autosuggest feature active - Simple Vocab Plus plugin)') . '</i><br>';
 		return($components);
 	}
 }
