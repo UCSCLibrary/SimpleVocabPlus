@@ -82,7 +82,7 @@ Copyright
 
 * Copyright UCSC Library Digital Initiatives, 2014-2016
 * Copyright Daniel Berthereau, 2016 (see [Daniel-KM] on GitHub)
-* Copyright Daniele Binaghi, 2020 (see [DBinaghi] on GitHub)
+* Copyright Daniele Binaghi, 2020-2021 (see [DBinaghi] on GitHub)
 
 
 [Simple Vocab Plus]: https://github.com/UCSCLibrary/SimpleVocabPlus
