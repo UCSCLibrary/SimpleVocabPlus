@@ -1,35 +1,70 @@
 <?php echo head(array('title' => 'Simple Vocabulary Plus')); ?>
 <script type="text/javascript" charset="utf-8">
-//<![CDATA[
-jQuery(document).ready(function() {
-	jQuery('#element-id').change(function() {
-		jQuery.post(
-			<?php echo js_escape(url('simple-vocab-plus/endpoint/vocab')); ?>,
-			{element_id: jQuery('#element-id').val()},
-			function(data) {
-				jQuery('#suggest-endpoint').val(data);
+	//<![CDATA[
+	jQuery(document).ready(function() {
+		jQuery('#av_element-id').change(function() {
+			jQuery.post(
+				<?php echo js_escape(url('simple-vocab-plus/endpoint/vocab')); ?>,
+				{element_id: jQuery('#av_element-id').val()},
+				function(data) {
+					jQuery('#suggest-endpoint').val(data);
+				}
+			);
+		});
+		
+		jQuery('#ex_element-id').change(function() {
+			jQuery.ajax({
+				url: <?php echo js_escape(url(array('action' => 'element-texts', 'format' => 'html'))); ?>,
+				data: {element_id: jQuery('#ex_element-id').val()},
+				success: function(data) {
+					jQuery('#texts').html(data);
+				}
+			});
+		});
+		
+		jQuery('#tabs').tabs({
+			create: function() {
+				var widget = jQuery(this).data('ui-tabs');
+				jQuery(window).on('hashchange', function() {
+					widget.option('active', widget._getIndex(location.hash));
+				});
 			}
-		);
-	});
-	jQuery('#ex-element-id').change(function() {
-		jQuery.ajax({
-			url: <?php echo js_escape(url(array('action' => 'element-texts', 'format' => 'html'))); ?>,
-			data: {element_id: jQuery('#ex-element-id').val()},
-			success: function(data) {
-				jQuery('#texts').html(data);
+		});
+	
+		jQuery('#nv_definetext').on({
+			'dragenter dragover': function(event) {
+				event.preventDefault();
+				event.stopPropagation();
+				jQuery(this).css({'background-color': '#eeeeee', 'border': 'inset'});
+				event.originalEvent.dataTransfer.dropEffect = 'copy';
+				return false;
+			},
+			'dragleave': function(event) {
+				event.preventDefault();
+				event.stopPropagation();
+				jQuery(this).css({'background-color': '', 'border': ''});
+				return false;
+			},
+			'drop': function(event) {
+				event.preventDefault();
+				event.stopPropagation();
+				jQuery(this).css({'background-color': '', 'border': ''});
+				
+				var file = event.originalEvent.dataTransfer.files[0];
+				if (file.type == 'text/plain' || file.type == 'text/html') {
+					var reader = new FileReader();
+					reader.onload = function(event) {
+						jQuery('#nv_definetext').val(event.target.result.trim());
+					};
+					reader.readAsText(file, 'UTF-8');
+				} else {
+					alert('<?php echo __('File format not supported.') ?>');
+				}
+				return false;
 			}
 		});
 	});
-	jQuery('#tabs').tabs({
-		create: function() {
-			var widget = jQuery(this).data('ui-tabs');
-			jQuery(window).on('hashchange', function() {
-				widget.option('active', widget._getIndex(location.hash));
-			});
-		}
-	});
-});
-//]]>
+	//]]>
 </script>
 <?php echo flash(); ?>
 <div id="tabs">
@@ -42,7 +77,7 @@ jQuery(document).ready(function() {
 	
 	<div id="tab1" style="height:1%; overflow:hidden">
 		<form method="post" action="<?php echo url('simple-vocab-plus/suggest/add'); ?>">
-			<section class="seven columns alpha">
+			<section class="nine columns alpha">
 				<h2><?php echo __('Assign Vocabulary to Metadata Element'); ?></h2>
 				<div class="field">
 					<div id="element-id-label" class="two columns alpha">
@@ -50,12 +85,52 @@ jQuery(document).ready(function() {
 					</div>
 					<div class="inputs five columns omega">
 						<p class="explanation">
-							<?php echo __('Select an element to assign it a Simple Vocabulary. Elements already assigned an authority/vocabulary are marked with an asterisk (*).'); ?>
+							<?php echo __('Select an element to assign it a vocabulary. Elements already assigned a vocabulary are marked with an asterisk (*).'); ?>
 						</p>
-						<?php echo $this->formSelect('element_id', null, array('id' => 'element-id'), $this->form_element_options) ?>
+						<?php echo $this->formSelect('av_element-id', null, array('id' => 'av_element-id'), $this->form_element_options) ?>
 					</div>
 				</div>
 				<div class="field">
+					<div id="nv_local-label" class="two columns alpha">
+						<label for="nv_local"><?php echo __('Source'); ?></label>
+					</div>
+					<div class="inputs five columns omega">
+						<p class="explanation"><?php
+							echo __("Choose the source of terms (note: if uncertain of values' consistency, you might want to <a href=\"#tab4\"><strong>examine them first</strong></a>):");
+						?></p>
+						<input type="radio" name="av_source" value="self" id="av_self-radio">
+						<?php echo __('Self assign: values are retrieved from the element\'s recorded ones'); ?>
+						<br>
+						<input type="radio" name="av_source" value="multi" id="av_multi-radio">
+						<?php echo __('Multiple assign: values are retrieved from multiple elements of the repository'); ?>
+						<br>
+						<input type="radio" name="av_source" value="vocab" id="av_vocab-radio">
+						<?php echo __('Vocabulary: values are retrieved from a local\remote custom vocabulary'); ?>
+					</div>
+				</div>
+				<div class="field" id="av_multi-field">
+					<div id="multi-id-label" class="two columns alpha">
+						<label for="multi-id"><?php echo __('Source element'); ?></label>
+					</div>
+					<div class="inputs five columns omega">
+						<p class="explanation">
+							<?php echo __('Select one or more elements to use as source.'); ?>
+						</p>
+						<?php echo $this->formSelect('av_multi-id', null, array('id' => 'av_multi-id'), $this->form_element_options) ?>
+					</div>
+				</div>
+				<div class="field" id="av_vocab-field">
+					<div id="suggest-endpoint-label" class="two columns alpha">
+						<label for="suggest-endpoint"><?php echo __('Source vocabulary'); ?></label>
+					</div>
+					<div class="inputs five columns omega">
+						<p class="explanation">
+							<?php echo __('Select a vocabulary to enable the autosuggest feature for the above element.', '</a>'); ?>
+						</p>
+						<?php echo $this->formSelect('av_vocab-id', null, array('id' => 'av_vocab-id'), $this->form_vocab_options); ?>
+					</div>
+				</div>
+				<div class="field" id="av_enforce-field">
 					<div id="enforced-label" class="two columns alpha">
 						<label for="enforced"><?php echo __('Enforce values'); ?></label>
 					</div>
@@ -63,41 +138,18 @@ jQuery(document).ready(function() {
 						<p class="explanation">
 							<?php echo __('If selected, user will see a dropdown box and will have to choose one of the suggested values. Works only with local/remote vocabularies. Deselect the option to disable the feature.'); ?>
 						</p>
-						<?php echo $this->formCheckbox('enforced', null, '0', array('1', '0')) ?>
+						<?php echo $this->formCheckbox('av_enforced', null, '0', array('1', '0')) ?>
 					</div>
 				</div>
-				<div class="field">
-					<div id="self-assign-label" class="two columns alpha">
-						<label for="self-assign"><?php echo __('Self assign'); ?></label>
-					</div>
-					<div class="inputs five columns omega">
-						<p class="explanation">
-							<?php echo __('If selected, values are retrieved from repository instead of vocabulary; if uncertain of values\' consistency, you might want to <a href="#tab4"><strong>examine them first</strong></a>. Deselect the option to disable the feature.'); ?>
-						</p>
-						<?php echo $this->formCheckbox('self-assign', null, '0', array('1', '0')) ?>
-					</div>
-				</div>
-				<div class="field">
-					<div id="suggest-endpoint-label" class="two columns alpha">
-						<label for="suggest-endpoint"><?php echo __('Vocabulary'); ?></label>
-					</div>
-					<div class="inputs five columns omega">
-						<p class="explanation">
-							<?php echo __('Select a vocabulary to enable the autosuggest feature for the above element.', '</a>'); ?>
-						</p>
-						<?php echo $this->formSelect('vocab_id', null, array('id' => 'assign-vocab'), $this->form_vocab_options); ?>
-					</div>
-				</div>
-			</section>
-			<section class="two columns omega">
-				<div id="edit" class="panel">
-					<?php echo $this->formSubmit('edit-element-suggest', __('Assign Vocabulary'), array('class' => 'submit big green button')); ?>
+				<div id="assign" class="field">
+					<?php echo $this->formSubmit('av_add-button', __('Assign Vocabulary'), array('class' => 'submit green button', 'id'=>'av_add-button')); ?>
 				</div>
 			</section>
 			<?php echo $this->csrf; ?>
 			<section class="nine columns alpha">
+			<fieldset id="fieldset-svpAssignmentsSet" class="svpFieldset" style="border: 1px solid #cccccc; padding: 15px; margin: 7px">
+				<legend style="font-weight: bold; padding: 5px"><?php echo __('Current Assignments'); ?></legend>
 				<div>
-					<h2><?php echo __('Current Assignments'); ?></h2>
 				<?php if ($this->assignments): ?>
 					<table>
 						<thead>
@@ -131,6 +183,7 @@ jQuery(document).ready(function() {
 					<p><?php echo __('There are no suggest assignments.'); ?></p>
 				<?php endif; ?>
 				</div>
+			</fieldset>
 			</section>
 		</form>
 	</div>
@@ -139,54 +192,54 @@ jQuery(document).ready(function() {
 		<section class="ten columns alpha" id="tab2" style="height:1%; overflow:hidden">
 			<h2><?php echo __('Create new Vocabulary'); ?></h2>
 			<form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/add'); ?>">
-				<div class="field" id="nv-name-field">
-					<div id="nv-name-label" class="two columns alpha">
-						<label for="nv-name"><?php echo __('Name'); ?></label>
+				<div class="field" id="nv_name-field">
+					<div id="nv_name-label" class="two columns alpha">
+						<label for="nv_name"><?php echo __('Name'); ?></label>
 					</div>
 					<div class="inputs five columns omega">
 						<p class="explanation"><?php echo __('Provide a name for your new vocabulary.'); ?></p>
-						<input type="text" name="nv-name">
+						<input type="text" name="nv_name">
 					</div>
 				</div>
 				<div class="field">
-					<div id="nv-local-label" class="two columns alpha">
-						<label for="nv-local"><?php echo __('Location'); ?></label>
+					<div id="nv_local-label" class="two columns alpha">
+						<label for="nv_local"><?php echo __('Location'); ?></label>
 					</div>
 					<div class="inputs five columns omega">
 						<p class="explanation"><?php
-							echo __('Choose whether you would like the repository to store your new vocabulary\'s terms, or rather to store the vocabulary in the cloud (using Google Drive or GitPages or other similar services.)');
+							echo __("Choose whether you would like the repository to store your new vocabulary's terms, or rather to store the vocabulary in the cloud (using Google Drive or GitPages or other similar services).");
 						?></p>
-						<input type="radio" name="nv-local" value="local" id="nv-localradio">
+						<input type="radio" name="nv_local" value="local" id="nv_local-radio">
 						<?php echo __('Define vocabulary and manually edit it here'); ?>
 						<br>
-						<input type="radio" name="nv-local" value="remote" id="nv-cloudradio">
-						<?php echo __('Syncronize vocabulary with cloud'); ?>
+						<input type="radio" name="nv_local" value="remote" id="nv_cloud-radio">
+						<?php echo __('Import vocabulary from cloud'); ?>
 					</div>
 				</div>
-				<div class="field" id="nv-url-field">
-					<div id="nv-url-label" class="two columns alpha">
-						<label for="nv-url"><?php echo __('URL'); ?></label>
+				<div class="field" id="nv_url-field">
+					<div id="nv_url-label" class="two columns alpha">
+						<label for="nv_url"><?php echo __('URL'); ?></label>
 					</div>
 					<div class="inputs five columns omega">
 						<p class="explanation">
-							<?php echo __('If the vocabulary is stored in the cloud, this field shows this field shows the file URL for the vocabulary. Any web server or cloud service can host this file (we recommend GitPages). A plain text file is expected with one term per line.'); ?>
+							<?php echo __('If the vocabulary is stored in the cloud, this field shows the file URL for the vocabulary; any web server or cloud service can host this file. A plain text file is expected with one term per line; a line consisting of a sequence of 3 hyphens will be displayed as an empty line and can be used as separator for subgroups of terms; a line starting with 3 asterisks will be displayed as an unselectable, bolded subgroup title.'); ?>
 						</p>
-					<input type="text" name="nv-url">
+					<input type="text" name="nv_url">
 					</div>
 				</div>
-				<div class="field" id="nv-definetext-field">
-					<div id="nv-definetext-label" class="two columns alpha">
-						<label for="nv-definetext"><?php echo __('Terms list'); ?></label>
+				<div class="field" id="nv_definetext-field">
+					<div id="nv_definetext-label" class="two columns alpha">
+						<label for="nv_definetext"><?php echo __('Terms list'); ?></label>
 					</div>
 					<div class="inputs five columns omega">
 						<p class="explanation">
-							<?php echo __('Input all terms below, one term per line. You can also drag and drop text files here, to paste their contents automatically.'); ?>
+							<?php echo __('Input all terms below, one term per line; a line consisting of a sequence of 3 hyphens will be displayed as an empty line and can be used as separator for subgroups of terms; a line starting with 3 asterisks will be displayed as an unselectable, bolded subgroup title. You can also drag and drop a text file here, to automatically paste its content.'); ?>
 						</p>
-						<textarea rows="15" columns="30" name="nv-definetext"></textarea>
+						<textarea rows="15" columns="30" name="nv_definetext" id="nv_definetext" placeholder="<?php echo __('Input all terms or drop a text file...') ?>" style="white-space: pre-wrap"></textarea>
 					</div>
 				</div>
 				<div id="create" class="field">
-					<?php echo $this->formSubmit('new-vocabulary', __('Create Vocabulary'), array('class' => 'submit green button', 'id'=>'nv-createbutton')); ?>
+					<?php echo $this->formSubmit('nv_add-button', __('Create Vocabulary'), array('class' => 'submit green button', 'id'=>'nv_add-button')); ?>
 				</div>
 				<?php echo $this->csrf;?>
 			</form>
@@ -198,38 +251,39 @@ jQuery(document).ready(function() {
 			<h2><?php echo __('Edit existing Vocabulary'); ?></h2>
 			<form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/edit'); ?>">
 				<div class="field">
-					<div id="ev-name-label" class="two columns alpha">
-						<label for="ev-name"><?php echo __('Name'); ?></label>
+					<div id="ev_name-label" class="two columns alpha">
+						<label for="ev_name"><?php echo __('Name'); ?></label>
 					</div>
 					<div class="inputs five columns omega">
 						<p class="explanation"><?php echo __('Select a Vocabulary to edit.'); ?></p>
-						<?php echo $this->formSelect('ev-name', null, array('id' => 'ev-name'), $this->form_vocab_options); ?>
+						<?php echo $this->formSelect('ev_name', null, array('id' => 'ev_name'), $this->form_vocab_options); ?>
 					</div>
 				</div>
-				<div class="field" id="ev-url-field">
-					<div id="ev-url-label" class="two columns alpha">
-						<label for="ev-url"><?php echo __('URL'); ?></label>
+				<div class="field" id="ev_url-field">
+					<div id="ev_url-label" class="two columns alpha">
+						<label for="ev_url"><?php echo __('URL'); ?></label>
 					</div>
 					<div class="inputs five columns omega">
 						<p class="explanation">
-							<?php echo __('If the vocabulary is stored in the cloud, this field shows this field shows the file URL for the vocabulary. Any web server or cloud service can host this file (we recommend GitPages). A plain text file is expected, with one term per line. To delete this vocabulary, empty the URL field and save.'); ?>
+							<?php echo __('If the vocabulary is stored in the cloud, this field shows the file URL for the vocabulary. Any web server or cloud service can host this file (we recommend GitPages).'); ?>
 						</p>
-						<input type="text" name="ev-url" id="ev-url">
+						<input type="text" name="ev_url" id="ev_url">
 					</div>
 				</div>
-				<div class="field" id="ev-edittext-field">
-					<div id="ev-edittext-label" class="two columns alpha">
-						<label for="ev-edittext"><?php echo __('Terms list'); ?></label>
+				<div class="field" id="ev_edittext-field">
+					<div id="ev_edittext-label" class="two columns alpha">
+						<label for="ev_edittext"><?php echo __('Terms list'); ?></label>
 					</div>
 					<div class="inputs five columns omega">
 						<p class="explanation">
-							<?php echo __('The vocabulary\'s terms are displayed here, one term per line. To delete this vocabulary, empty terms list and save.' ); ?>
+							<?php echo __('The vocabulary\'s terms are displayed here, one term per line; a line consisting of a sequence of 3 hyphens will be displayed as an empty line and can be used as separator for subgroups of terms; a line starting with 3 asterisks will be displayed as an unselectable, bolded subgroup title.'); ?>
 						</p>
-						<textarea rows="15" columns="30" name="ev-edittext" id="ev-edittext"></textarea>
+						<textarea rows="15" columns="30" name="ev_edittext" id="ev_edittext"></textarea>
 					</div>
 				</div>
 				<div id="editfield" class="field">
-					<?php echo $this->formSubmit('edit-vocabulary', __('Save Changes'), array('class' => 'submit green button', 'id'=>'ev-edit-button')); ?>
+					<?php echo $this->formSubmit('edit-vocabulary', __('Save Changes'), array('class' => 'submit green button', 'id'=>'ev_edit-button')); ?>
+					<a class="delete-confirm" id="ev_delete-link" href="<?php echo url('simple-vocab-plus/vocabulary/delete-confirm/id/'); ?>"><button id="ev_delete-button" class="red button" style="margin:0" type="button"><?php echo __('Delete Vocabulary') ?></button></a>
 				</div>
 				<?php echo $this->csrf;?>
 			</form>
@@ -259,11 +313,11 @@ jQuery(document).ready(function() {
 					<p class="explanation">
 						<?php echo __('Select an element to examine.'); ?>
 					</p>
-					<?php echo $this->formSelect('ex-element_id', null, array('id' => 'ex-element-id'), $this->form_element_options) ?>
+					<?php echo $this->formSelect('ex_element-id', null, array('id' => 'ex_element-id'), $this->form_element_options) ?>
 				</div>
 			</div>
 		</section>
-		<section id="texts" class="ten columns alpha"></section>
+		<section id="texts" class="nine columns alpha"></section>
 	</div>
 
 </div>
