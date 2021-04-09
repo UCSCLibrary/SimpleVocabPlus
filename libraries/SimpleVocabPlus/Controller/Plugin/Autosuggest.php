@@ -122,44 +122,52 @@ jQuery(document).bind('omeka:elementformload', function(event) {
 						if ($svpAssign->type == 'self') {
 							$select = $elementTextTable->getSelect();
 							$select->from(array(), 'text')
-									->where('record_type = ?', 'Item')
-									->where('element_id = ?', $element->id)
-									->group('text')
-									->order('text ASC');
+								->where('record_type = ?', 'Item')
+								->where('element_id = ?', $element->id)
+								->group('text')
+								->order('text ASC');
+							$this->_svpTerms[$element->id] = $elementTextTable->fetchObjects($select);
+						} elseif ($svpAssign->type == 'multi') {
+							$select = $elementTextTable->getSelect();
+							$select->from(array(), 'text')
+								->where('record_type = ?', 'Item')
+								->where('element_id IN (?)', $svpAssign->sources_id)
+								->group('text')
+								->order('text ASC');
 							$this->_svpTerms[$element->id] = $elementTextTable->fetchObjects($select);
 						} else { 
 							$select = $svpTermTable->getSelect();
 							$select->from(array(), array('text' => 'term'))
-									->where('vocab_id = ?', $svpAssign->vocab_id)
-									->order('id ASC');
+								->where('vocab_id = ?', $svpAssign->vocab_id)
+								->order('id ASC');
 							$this->_svpTerms[$element->id] = $svpTermTable->fetchObjects($select);
 						}
 					}
 
 					add_filter(
-								array('ElementInput', 'Item', $elementSet->name, $element->name),
-								array($this, 'filterElementInput')
-							);
-					// Add the File filter if configured to.
+						array('ElementInput', 'Item', $elementSet->name, $element->name),
+						array($this, 'filterElementInput')
+					);
+					// Add the file filter if configured to.
 					if ($filterFiles) {
 						add_filter(
-									array('ElementInput', 'File', $elementSet->name, $element->name),
-									array($this, 'filterElementInput')
-								);
+							array('ElementInput', 'File', $elementSet->name, $element->name),
+							array($this, 'filterElementInput')
+						);
 					}
-					// Add the Collection filter if configured to.
+					// Add the collection filter if configured to.
 					if ($filterCollections) {
 						add_filter(
-									array('ElementInput', 'Collection', $elementSet->name, $element->name),
-									array($this, 'filterElementInput')
-								);
+							array('ElementInput', 'Collection', $elementSet->name, $element->name),
+							array($this, 'filterElementInput')
+						);
 					}
-					// Add the Exhibit filter if configured to.
+					// Add the exhibit filter if configured to.
 					if ($filterExhibits) {
 						add_filter(
-									array('ElementInput', 'Exhibit', $elementSet->name, $element->name),
-									array($this, 'filterElementInput')
-								);
+							array('ElementInput', 'Exhibit', $elementSet->name, $element->name),
+							array($this, 'filterElementInput')
+						);
 					}
 				}
 			}
@@ -220,7 +228,7 @@ jQuery(document).bind('omeka:elementformload', function(event) {
 			$components['input'] = get_view()->formSelect(
 				$args['input_name_stem'] . '[text]', 
 				$args['value'], 
-				array('style' => 'width: 300px; ' . $hcolor), 
+				array('style' => $hcolor), 
 				$selectTerms
 			);
 			$components['html_checkbox'] = false;
