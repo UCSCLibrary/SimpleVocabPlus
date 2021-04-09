@@ -3,6 +3,7 @@
  * Simple Vocab Plus
  *
  * @copyright Copyright 2014 UCSC Library Digital Initiatives
+ * @copyright Copyright 2021 Daniele Binaghi
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU GPLv3
  */
 
@@ -34,7 +35,7 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
         $csrf = new Omeka_Form_SessionCsrf;
         $this->view->csrf = $csrf;
 
-        foreach(get_db()->getTable('SvpVocab')->findAll() as $vocab) {
+        foreach (get_db()->getTable('SvpVocab')->findAll() as $vocab) {
             $vocab->updateNow();
         }
     }
@@ -49,18 +50,18 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
     {
         $db = $this->_helper->db->getDb();
         $sql = "
-        SELECT es.name AS element_set_name,
-            e.id AS element_id,
-            e.name AS element_name,
-            it.name AS item_type_name,
-            gv.id AS gv_suggest_id
-        FROM {$db->ElementSet} es
-        JOIN {$db->Element} e ON es.id = e.element_set_id
-        LEFT JOIN {$db->ItemTypesElements} ite ON e.id = ite.element_id
-        LEFT JOIN {$db->ItemType} it ON ite.item_type_id = it.id
-        LEFT JOIN {$db->SvpAssign} gv ON e.id = gv.element_id
-        WHERE es.record_type IS NULL OR es.record_type = 'Item'
-        ORDER BY es.name, it.name, e.name";
+			SELECT es.name AS element_set_name,
+				e.id AS element_id,
+				e.name AS element_name,
+				it.name AS item_type_name,
+				gv.id AS gv_suggest_id
+			FROM {$db->ElementSet} es
+			JOIN {$db->Element} e ON es.id = e.element_set_id
+			LEFT JOIN {$db->ItemTypesElements} ite ON e.id = ite.element_id
+			LEFT JOIN {$db->ItemType} it ON ite.item_type_id = it.id
+			LEFT JOIN {$db->SvpAssign} gv ON e.id = gv.element_id
+			WHERE es.record_type IS NULL OR es.record_type = 'Item'
+			ORDER BY es.name, it.name, e.name";
         $elements = $db->fetchAll($sql);
         $options = array('' => __('Select Below'));
         foreach ($elements as $element) {
@@ -103,7 +104,7 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
      */
     private function _getAssignments()
     {
-        $svSuggestTable = $this->_helper->db->getTable('SvpAssign');
+        $svpSuggestTable = $this->_helper->db->getTable('SvpAssign');
         $svpVocabTable = $this->_helper->db->getTable('SvpVocab');
         $elementTable = $this->_helper->db->getTable('Element');
         $elementSetTable = $this->_helper->db->getTable('ElementSet');
@@ -111,28 +112,39 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
         $itemTypesElementsTable = $this->_helper->db->getTable('ItemTypesElements');
 
         $assignments = array();
-        foreach ($svSuggestTable->findAll() as $svSuggest) {
-            $element = $elementTable->find($svSuggest->element_id);
+        foreach ($svpSuggestTable->findAll() as $svpSuggest) {
+            $element = $elementTable->find($svpSuggest->element_id);
             $elementSet = $elementSetTable->find($element->element_set_id);
-            $elementSetName = $elementSet->name;
-            if( $itemTypesElements = $itemTypesElementsTable->findByElement($element->id)) {
+            $elementSetName = __($elementSet->name);
+            if ($itemTypesElements = $itemTypesElementsTable->findByElement($element->id)) {
                 $itemTypesElement = $itemTypesElements[0];
                 $itemType = $itemTypeTable->find($itemTypesElement->item_type_id);
-                $elementSetName.=': '.$itemType->name;
+                $elementSetName .= ': ' . $itemType->name;
             }
-            $authorityVocabulary = $svpVocabTable->find($svSuggest->vocab_id);
+            $authorityVocabulary = $svpVocabTable->find($svpSuggest->vocab_id);
             $authorityVocabularyName = $authorityVocabulary['name'];
+			if ($svpSuggest->sources_id != '') {
+				$sources_id = split(',', $svpSuggest->sources_id);
+				foreach ($sources_id as $source_id) {
+					$sources_names[] = __($elementTable->find($source_id)->name);
+				}
+				$sources_names = implode(', ', $sources_names);
+			} else {
+				$sources_names = '';
+			}
 
             $assignments[] = array(
-                'suggest_id' => $svSuggest->id,
+                'suggest_id' => $svpSuggest->id,
                 'element_set_name' => $elementSetName,
                 'element_set_id' => $elementSet->id,
                 'element_name' => $element->name,
-                'element_id' => $svSuggest->element_id,
+                'element_id' => $svpSuggest->element_id,
                 'authority_vocabulary' => __($authorityVocabularyName),
                 'authority_vocabulary_id' => $authorityVocabulary->id,
-                'type' => $svSuggest->type,
-                'enforced' => $svSuggest->enforced
+                'type' => __($svpSuggest->type),
+                'enforced' => __($svpSuggest->enforced),
+				'sources_id' => $svpSuggest->sources_id,
+				'sources_names' => $sources_names
             );
         }
         return $assignments;
@@ -146,11 +158,12 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
     public function elementTextsAction()
     {
         $elementId = $this->getRequest()->getParam('element_id');
-        $warningMessages = array('shortText' => __('Short text'),
-                                 'longText' => __('Long text'),
-                                 'containsNewlines' => __('Contains newlines'),                                 
-                                 'containsHTML' => __('Contains HTML code')
-                                );
+        $warningMessages = array(
+								'shortText' => __('Short text'),
+                                'longText' => __('Long text'),
+                                'containsNewlines' => __('Contains newlines'),                                 
+                                'containsHTML' => __('Contains HTML code')
+                            );
         
         // Get the local vocabulary's terms, if any
         $elementVocabTerms = $this->findElementTerms($elementId);
