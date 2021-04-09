@@ -1,0 +1,437 @@
+# Translation for the Simple Vocab Plus plugin for Omeka.
+# This file is distributed under the same license as the Omeka plugin.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Reference\n"
+"Report-Msgid-Bugs-To: https://github.com/UCSCLibrary/SimpleVocabPlus/issues\n"
+"POT-Creation-Date: 2021-04-09 00:00-0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: SimpleVocabPlusPlugin.php:200
+msgid "Simple Vocab Plus"
+msgstr ""
+
+#: SimpleVocabPlusPlugin.php:216
+msgid "
+"(Please note: this element has autosuggest activated using the Simple "
+"Vocab Plus plugin)"
+msgstr ""
+
+#: config_form.php:8
+msgid "Application scope"
+msgstr ""
+
+#: config_form.php:12
+msgid "Apply to Files"
+msgstr ""
+
+#: config_form.php:16
+msgid ""
+"If checked, plugin will be applied to Files metadata too "
+"(by default, this plugin only applies to Items metadata)."
+msgstr ""
+
+#: config_form.php:22
+msgid "Warnings"
+msgstr ""
+
+#: config_form.php:26
+msgid "Highlight autosuggest fields"
+msgstr ""
+
+#: config_form.php:30
+msgid "
+"Color hex code (e.g.: #ff0000) to highlight the fields that have autosuggest feature "
+"applied (blank means no highlight)."
+msgstr ""
+
+#: config_form.php:38
+msgid "Add autosuggest reminder"
+msgstr ""
+
+#: config_form.php:42
+msgid ""
+"Adds a notice to the description of fields that have autosuggest feature "
+"applied."
+msgstr ""
+
+#: index.php:72
+#: index.php:145
+msgid "Assign Vocabulary"
+msgstr ""
+
+#: index.php:73
+#: index.php:242
+msgid "Create Vocabulary"
+msgstr ""
+
+#: index.php:74
+msgid "Edit Vocabulary"
+msgstr ""
+
+#: index.php:75
+msgid "Examine Element"
+msgstr ""
+
+#: index.php:81
+msgid "Assign Vocabulary to Metadata Element"
+msgstr ""
+
+#: index.php:84
+#: index.php:158
+#: index.php:310
+msgid "Element"
+msgstr ""
+
+#: index.php:88
+msgid ""
+"Select an element to assign it a vocabulary. Elements already assigned a vocabulary "
+"are marked with an asterisk (*)."
+msgstr ""
+
+#: index.php:95
+msgid "Source"
+msgstr ""
+
+#: index.php:95
+msgid ""
+"Choose the source of terms (note: if uncertain of values' consistency, you might want to "
+"<a href='#tab4'><strong>examine them first</strong></a>"
+msgstr ""
+
+#: index.php:102
+msgid "Self assign: values are retrieved from the element's recorded ones"
+msgstr ""
+
+#: index.php:105
+msgid "Multiple assign: values are retrieved from multiple elements of the repository"
+msgstr ""
+
+#: index.php:108
+msgid "Vocabulary: values are retrieved from a local/remote custom vocabulary"
+msgstr ""
+
+#: index.php:113
+msgid "Source element(s)"
+msgstr ""
+
+#: index.php:117
+msgid "Select one or more elements to use as source."
+msgstr ""
+
+#: index.php:124
+msgid "Source vocabulary"
+msgstr ""
+
+#: index.php:128
+msgid "Select a vocabulary to enable the autosuggest feature for the above element."
+msgstr ""
+
+#: index.php:135
+msgid "Enforce values"
+msgstr ""
+
+#: index.php:139
+msgid ""
+"If selected, user will see a dropdown box and will have to choose one of the suggested values. Works "
+"only with local/remote vocabularies. Deselect the option to disable the feature."
+msgstr ""
+
+#: index.php:151
+msgid "Current Assignments"
+msgstr ""
+
+#: index.php:157
+msgid "Element Set"
+msgstr ""
+
+#: index.php:158
+msgid "Type"
+msgstr ""
+
+#: index.php:159
+msgid "Enforced"
+msgstr ""
+
+#: index.php:160
+msgid "Vocabulary"
+msgstr ""
+
+#: index.php:183
+msgid "There are no suggest assignments."
+msgstr ""
+
+#: index.php:193
+msgid "Create new Vocabulary"
+msgstr ""
+
+#: index.php:197
+#: index.php:255
+msgid "Name"
+msgstr ""
+
+#: index.php:200
+msgid "Provide a name for your new vocabulary."
+msgstr ""
+
+#: index.php:206
+msgid "Location"
+msgstr ""
+
+#: index.php:210
+msgid ""
+"Choose whether you would like the repository to store your new vocabulary's terms, "
+"or rather to store the vocabulary in the cloud (using Google Drive or GitPages or "
+"other similar services)."
+msgstr ""
+
+#: index.php:245
+msgid "Input all terms or drop a text file..."
+msgstr ""
+
+#: index.php:213
+msgid "Define vocabulary and manually edit it here"
+msgstr ""
+
+#: index.php:216
+msgid "Import vocabulary from the cloud"
+msgstr ""
+
+#: index.php:221
+#: index.php:264
+msgid "URL"
+msgstr ""
+
+#: index.php:225
+msgid ""
+"If the vocabulary is stored in the cloud, this field shows the file URL for the "
+"vocabulary; any web server or cloud service can host this file. A plain text file "
+"is expected with one term per line; a line consisting of a sequence of 3 hyphens "
+"will be displayed as an empty line and can be used as separator for subgroups of "
+"terms; a line starting with 3 asterisks will be displayed as an unselectable, "
+"bolded subgroup title."
+msgstr ""
+
+#: index.php:232
+#: index.php:275
+msgid "Terms list"
+msgstr ""
+
+#: index.php:238
+msgid ""
+"Input all terms below, one term per line; a line consisting of a sequence of 3 "
+"hyphens will be displayed as an empty line and can be used as separator for "
+"subgroups of terms; a line starting with 3 asterisks will be displayed as an "
+"unselectable, bolded subgroup title. You can also drag and drop a text file here, "
+"to automatically paste its content."
+msgstr ""
+
+#: index.php:251
+msgid "Edit existing Vocabulary"
+msgstr ""
+
+#: index.php:258
+msgid "Select a Vocabulary to edit."
+msgstr ""
+
+#: index.php:268
+msgid ""
+"If the vocabulary is stored in the cloud, this field shows the file URL for the "
+"vocabulary. Any web server or cloud service can host this file (we recommend GitPages)."
+msgstr ""
+
+#: index.php:279
+msgid ""
+"The vocabulary's terms are displayed here, one term per line; a line consisting of a "
+"sequence of 3 hyphens will be displayed as an empty line and can be used as separator "
+"for subgroups of terms; a line starting with 3 asterisks will be displayed as an "
+"unselectable, bolded subgroup title."
+msgstr ""
+
+#: index.php:285
+msgid "Save Changes"
+msgstr ""
+
+#: index.php:285
+msgid "Delete Vocabulary"
+msgstr ""
+
+#: index.php:294
+msgid "Examine Element's values"
+msgstr ""
+
+#: index.php:298
+msgid ""
+"Before creating a vocabulary with values retrieved from the ones stored in the "
+"repository for a particular element, you might want to examine their consistency. "
+"Consider in fact the following caveats:"
+msgstr ""
+
+#: index.php:301
+msgid "Vocabulary terms must not contain newlines (line breaks)."
+msgstr ""
+
+#: index.php:302
+msgid ""
+"Vocabulary terms are typically short and concise. If your existing texts are "
+"otherwise, avoid using a controlled vocabulary for this element."
+msgstr ""
+
+#: index.php:303
+msgid ""
+"Existing texts that are not in the vocabulary will be preserved - however, they cannot "
+"be selected in the item edit page, and will be deleted once you save the item."
+msgstr ""
+
+#: index.php:313
+msgid "Select an element to examine."
+msgstr ""
+
+# IndexController.php:94
+msgid "Select Below"
+msgstr ""
+
+# IndexController.php:150
+msgid "Short text"
+msgstr ""
+
+# IndexController.php:151
+msgid "Long text"
+msgstr ""
+
+# IndexController.php:152
+msgid "Contains newlines"
+msgstr ""
+
+# IndexController.php:153
+msgid "Contains HTML code"
+msgstr ""
+
+# SuggestController.php:29
+msgid "The element's suggest feature was successfully deleted."
+msgstr ""
+
+# SuggestController.php:35
+msgid "This will delete this Assignment, but not the assigned Vocabulary."
+msgstr ""
+
+# SuggestController.php:52
+msgid "Please select less source elements."
+msgstr ""
+
+# SuggestController.php:67
+msgid "local"
+msgstr ""
+
+# SuggestController.php:67
+msgid "remote"
+msgstr ""
+
+# SuggestController.php:72
+msgid "Please select an element to assign."
+msgstr ""
+
+# SuggestController.php:78
+msgid "Invalid suggest endpoint. No changes have been made."
+msgstr ""
+
+# SuggestController.php:89
+msgid "The element's suggest feature was successfully added."
+msgstr ""
+
+# VocabularyController.php:31
+msgid "You did not provide a name for your new vocabulary."
+msgstr ""
+
+# VocabularyController.php:34
+msgid "The name you provided for your new vocabulary is already in use."
+msgstr ""
+
+# VocabularyController.php:51
+msgid ""
+"Your vocabulary has been created successfully. You may now assign "
+"it to metadata elements."
+msgstr ""
+
+# VocabularyController.php:62
+msgid "No vocabulary was chosen for editing."
+msgstr ""
+
+# VocabularyController.php:66
+msgid "There was a problem editing your vocabulary."
+msgstr ""
+
+# VocabularyController.php:79
+msgid "Remote vocabulary edited successfully."
+msgstr ""
+
+# VocabularyController.php:85
+msgid "No changes were made to the vocabulary."
+msgstr ""
+
+# VocabularyController.php:87
+msgid "Local vocabulary edited successfully."
+msgstr ""
+
+# VocabularyController.php:98
+msgid ""
+"At least one element is still assigned to this vocabulary. Delete the "
+"assignments before trying to delete the vocabulary."
+msgstr ""
+
+# VocabularyController.php:102
+msgid "Vocabulary deleted successfully."
+msgstr ""
+
+# VocabularyController.php:109
+msgid "This will delete the Vocabulary \"%s\", but not the values already stored in the repository."
+msgstr ""
+
+# VocabularyController.php:142
+msgid "There was an error processing your request."
+msgstr ""
+
+# element-texts.ajax:2
+msgid "No texts for the selected element was found in the repository."
+msgstr ""
+
+# element-texts.ajax:4
+msgid ""
+"These are the values stored in the repository for the selected element; clicking on "
+"any of them results in a search for all Items including that particular value. "
+"Values not found in a local vocabulary assigned to the element will be marked in red "
+"(feature has to be enabled in plugin configuration)."
+msgstr ""
+
+# element-texts.ajax:7
+msgid "Count"
+msgstr ""
+
+# element-texts.ajax:8
+msgid "Value"
+msgstr ""
+
+# element-texts.ajax:9
+msgid "Warnings"
+msgstr ""
+
+# element-texts.ajax:26
+msgid "click to search for"
+msgstr ""
+
+# element-texts.ajax:26
+msgid "this page"
+msgstr ""
+
+# element-texts.ajax:26
+msgid "these pages"
+msgstr ""
