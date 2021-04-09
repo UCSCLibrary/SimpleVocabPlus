@@ -3,6 +3,7 @@
  * Simple Vocab Plus
  * 
  * @copyright Copyright 2014 UCSC Library Digital Initiatives
+ * @copyright Copyright 2021 Daniele Binaghi
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU GPLv3
  */
 
@@ -49,6 +50,16 @@ class SimpleVocabPlus_EndpointController extends Omeka_Controller_AbstractAction
 				$select->from(array(),'text')
 						->where('record_type = ?', 'Item')
 						->where('element_id = ?', $elementId)
+						->where('text like ?', $term . '%')
+						->group('text')
+						->order('text ASC');
+				$return = $elementTextTable->fetchCol($select);
+			} elseif ($svpAssign['type'] == 'multi') {
+				// case of values retrieved from multiple elements in repository's data
+				$select = $elementTextTable->getSelect();
+				$select->from(array(),'text')
+						->where('record_type = ?', 'Item')
+						->where('element_id = (?)', $svpAssign->sources_id)
 						->where('text like ?', $term . '%')
 						->group('text')
 						->order('text ASC');
