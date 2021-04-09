@@ -3,6 +3,7 @@
  * Simple Vocab Plus
  *
  * @copyright Copyright 2014 UCSC Library Digital Initiatives
+ * @copyright Copyright 2021 Daniele Binaghi
  * @license http://www.gnu.org/licenses/gpl-3.0.txt GNU GPLv3
  */
 
@@ -13,11 +14,19 @@
  */
 class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActionController
 {
+
+    public function init()
+    {
+        // Set the model class so this controller can perform some functions, 
+        // such as $this->findById()
+        $this->_helper->db->setDefaultModelName('SvpVocab');
+    }
+
 	public function addAction()
 	{
 		$this->_validatePost();
 
-		$name = trim($_REQUEST['nv-name']);
+		$name = trim($_REQUEST['nv_name']);
 		// Checks that an unambiguous name has been provided for the vocabulary 
 		if ($name == '') {
 			$this->_helper->flashMessenger(__('You did not provide a name for your new vocabulary.'), 'error');
@@ -27,19 +36,20 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 			$this->_helper->redirector('index', 'index');
 		}
 		
-		if ($_REQUEST['nv-local'] == 'local') {
+		$db = $this->_helper->db;
+		if ($_REQUEST['nv_local'] == 'local') {
 			// Local vocabulary
-			$text = $_REQUEST['nv-definetext'];
-			$vocab = $this->_helper->db->getTable('SvpVocab')->createVocab($name, 'local');
-			$success = $this->_helper->db->getTable('SvpTerm')->addFromText($vocab->id, $text);
-		} elseif ($_REQUEST['nv-local'] == 'remote') {
+			$text = $_REQUEST['nv_definetext'];
+			$vocab = $db->getTable('SvpVocab')->createVocab($name, 'local');
+			$success = $db->getTable('SvpTerm')->addFromText($vocab->id, $text);
+		} elseif ($_REQUEST['nv_local'] == 'remote') {
 			// Remote vocabulary
-			$url = $_REQUEST['nv-url'];
-			$vocab = $this->_helper->db->getTable('SvpVocab')->createVocab($name, $url);
+			$url = $_REQUEST['nv_url'];
+			$vocab = $db->getTable('SvpVocab')->createVocab($name, $url);
 			$vocab->updateNow();
 		}
 		$flash = $this->_helper->FlashMessenger;
-		$flash->addMessage(__('Your vocabulary has been created successfully. You may now assign it to metadata elements.'), 'success');
+		$flash->addMessage(__('Your new vocabulary has been created successfully. You may now assign it to metadata elements.'), 'success');
 		$this->_helper->redirector('index', 'index');
 	}
 
@@ -47,10 +57,9 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 	{
 		$this->_validatePost();
 		
-		if (isset($_REQUEST['ev-name'])) {
-			if ($_REQUEST['ev-name'] != '') {
-				$vocab_id = $_REQUEST['ev-name'];
-			} else {
+		if (isset($_REQUEST['ev_name'])) {
+			$vocab_id = $_REQUEST['ev_name'];
+			if ($vocab_id == '') {
 				$this->_helper->flashMessenger(__('No vocabulary was chosen for editing.'), 'error');
 				$this->_helper->redirector('index', 'index');
 			}
@@ -59,40 +68,47 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 			$this->_helper->redirector('index', 'index');
 		}
 		
-		$vocab_url = trim('' . $_REQUEST['ev-url']);
-		$vocab_text = trim('' . $_REQUEST['ev-edittext']);
+		$vocab_url = trim('' . $_REQUEST['ev_url']);
+		$vocab_text = trim('' . $_REQUEST['ev_edittext']);
+		$db = $this->_helper->db;
 		
-		if ($vocab_url == '' || ($vocab_url == 'local' && $vocab_text == '')) {
-			// delete vocabulary
-			if ($vocab = $this->_helper->db->getTable('SvpAssign')->find(array('vocab_id'=>$vocab_id))) {
-				$this->_helper->flashMessenger(__('At least one element is still assigned to this vocabulary. Delete the assignments before trying to delete the vocabulary.'), 'error');
-				$this->_helper->redirector('index', 'index');
-			} else {
-				$this->_helper->db->getTable('SvpVocab')->deleteVocab($vocab_id);
-				$this->_helper->flashMessenger(__('Vocabulary deleted successfully.'), 'success');
-				$this->_helper->redirector('index', 'index');
-			}
-		} elseif ($vocab_url != '' && $vocab_url != 'local') {
+		if ($vocab_url != '' && $vocab_url != 'local') {
 			// edit remote vocabulary
-			$vocab = $this->_helper->db->getTable('SvpVocab')->find($vocab_id);
+			$vocab = $db->getTable('SvpVocab')->find($vocab_id);
 			$vocab->url = $vocab_url;
 			$vocab->save();
 			$this->_helper->flashMessenger(__('Remote vocabulary edited successfully.'), 'success');
 			$this->_helper->redirector('index', 'index');
 		} else {
 			// edit local vocabulary
-			$possibleUpdates = $this->_helper->db->getTable('SvpTerm')->updateFromText($vocab_id, $vocab_text);
-			if ($possibleUpdates) {
-				//prompt about updates
-				$updates = $this->_promptUpdates($possibleUpdates);
-				//if there are updates
-				//update terms for all assigned records
-				$this->_updateRecords($vocab_id, $updates);
+			$updates = $db->getTable('SvpTerm')->updateFromText($vocab_id, $vocab_text);
+			if ($updates['add'] == $updates['delete']) {
+				$this->_helper->flashMessenger(__('No changes were made to the vocabulary.'), 'alert');
+			} else {
+				$this->_helper->flashMessenger(__('Local vocabulary edited successfully.'), 'success');
 			}
-			$this->_helper->flashMessenger(__('Local vocabulary edited successfully.'), 'success');
 			$this->_helper->redirector('index', 'index');
 		}
 	}
+
+	public function deleteAction()
+	{
+		$id = $this->getRequest()->getParam('id');
+		// delete vocabulary
+		if (!empty($this->_helper->db->getTable('SvpAssign')->findBy(array('vocab_id' => $id)))) {
+			$this->_helper->flashMessenger(__('At least one element is still assigned to this vocabulary. Delete the assignments before trying to delete the vocabulary.'), 'error');
+			$this->_helper->redirector('index', 'index');
+		} else {
+			$this->_helper->db->getTable('SvpVocab')->deleteVocab($id);
+			$this->_helper->flashMessenger(__('Vocabulary deleted successfully.'), 'success');
+			$this->_helper->redirector('index', 'index');
+		}
+	}
+	
+	protected function _getDeleteConfirmMessage($record)
+    {
+        return __('This will delete the Vocabulary "%s", but not the values already stored in the repository.', $record['name']);
+    }
 
 	public function getAction()
 	{
@@ -106,45 +122,6 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 		}
 		$this->_helper->viewRenderer->setNoRender();
 		echo json_encode($return);
-	}
-
-	private function _promptUpdates($possibleUpdates)
-	{
-		// this is only a test function.
-		// it'll work ok as long as there
-		// are the same number of deleted and added
-		// terms and they're all intended as
-		// updates. This code will have to be
-		// reorganized, since we will probably need an interactive
-		// dialog here
-
-		$length = count($possibleUpdates['add']) > count($possibleUpdates['delete'])
-			? count($possibleUpdates['delete'])
-			: count($possibleUpdates['add']);
-
-		for ($i=0; $i < $length; $i++) {
-			$updates[$possibleUpdates['delete'][$i]] = $possibleUpdates['add'][$i];
-		}
-		return $updates;
-	}
-
-	private function _updateRecords($vocab_id, $updates)
-	{
-		// find all assignments for this vocab
-		// run a sql query to update the element texts table
-		// for these elements when the old term is matched
-		// should be able to get it in a single query.
-		$db = $this->_helper->db;
-		foreach ($updates as $old => $new) {
-			$sql = "UPDATE `{$db->ElementText}` AS et
-				LEFT JOIN `{$db->SvpAssign}` AS sa
-					ON et.element_id = sa.element_id
-				SET et.text = REPLACE(et.text, ?, ?)
-				WHERE sa.vocab_id = ?
-			";
-			$bind = array($old, $new, (integer) $vocab_id);
-			$db->query($sql, $bind);
-		}
 	}
 
 	/**
