@@ -67,6 +67,17 @@
 	//]]>
 </script>
 <?php echo flash(); ?>
+<style type = "text/css">
+	table.centered td {
+		vertical-align: middle;
+	}
+	table.boldheaders thead th {
+		font-weight: bold;
+	}
+	table.striped tr:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+</style>
 <div id="tabs">
 	<ul>
 		<li><a href="#tab1"><?php echo __('Assign Vocabulary'); ?></a></li>
@@ -96,7 +107,7 @@
 					</div>
 					<div class="inputs five columns omega">
 						<p class="explanation"><?php
-							echo __("Choose the source of terms (note: if uncertain of values' consistency, you might want to <a href=\"#tab4\"><strong>examine them first</strong></a>):");
+							echo __("Choose the source of terms (note: if uncertain of values' consistency, you might want to <a href='#tab4'><strong>examine them first</strong></a>):");
 						?></p>
 						<input type="radio" name="av_source" value="self" id="av_self-radio">
 						<?php echo __('Self assign: values are retrieved from the element\'s recorded ones'); ?>
@@ -105,18 +116,18 @@
 						<?php echo __('Multiple assign: values are retrieved from multiple elements of the repository'); ?>
 						<br>
 						<input type="radio" name="av_source" value="vocab" id="av_vocab-radio">
-						<?php echo __('Vocabulary: values are retrieved from a local\remote custom vocabulary'); ?>
+						<?php echo __('Vocabulary: values are retrieved from a local/remote custom vocabulary'); ?>
 					</div>
 				</div>
 				<div class="field" id="av_multi-field">
 					<div id="multi-id-label" class="two columns alpha">
-						<label for="multi-id"><?php echo __('Source element'); ?></label>
+						<label for="multi-id"><?php echo __('Source element(s)'); ?></label>
 					</div>
 					<div class="inputs five columns omega">
 						<p class="explanation">
 							<?php echo __('Select one or more elements to use as source.'); ?>
 						</p>
-						<?php echo $this->formSelect('av_multi-id', null, array('id' => 'av_multi-id'), $this->form_element_options) ?>
+						<?php echo $this->formSelect('av_multi-id[]', null, array('id' => 'av_multi-id'), $this->form_element_options) ?>
 					</div>
 				</div>
 				<div class="field" id="av_vocab-field">
@@ -151,15 +162,16 @@
 				<legend style="font-weight: bold; padding: 5px"><?php echo __('Current Assignments'); ?></legend>
 				<div>
 				<?php if ($this->assignments): ?>
-					<table>
+					<table class="centered boldheaders striped">
 						<thead>
 							<tr>
 								<th><?php echo __('Element Set'); ?></th>
 								<th><?php echo __('Element'); ?></th>
 								<th><?php echo __('Type'); ?></th>
-								<th><?php echo __('Enforced'); ?></th>
 								<th><?php echo __('Vocabulary'); ?></th>
-								<th style="width:22%;"></th>
+								<th><?php echo __('Source element(s)'); ?></th>
+								<th><?php echo __('Enforced'); ?></th>
+								<th>&nbsp;</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -168,10 +180,11 @@
 								<td class="element_set_name" data-svp-element-set-id="<?php echo $assignment['element_set_id']; ?>"><?php echo __($assignment['element_set_name']); ?></td>
 								<td class="element_name" data-svp-element-id="<?php echo $assignment['element_id']; ?>"><?php echo __($assignment['element_name']); ?></td>
 								<td class="element_name" data-svp-type="<?php echo $assignment['type']; ?>"><?php echo __($assignment['type']); ?></td>
-								<td class="element_name" data-svp-enforced="<?php echo $assignment['enforced']; ?>"><?php echo ($assignment['enforced'] ? __('true') : __('false')); ?></td>
 								<td class="authority_vocabulary" data-svp-vocab-id="<?php echo $assignment['authority_vocabulary_id']; ?>">
 									<?php echo $assignment['authority_vocabulary']; ?>
 								</td>
+								<td class="element_name" data-svp-sources-id="<?php echo $assignment['sources_id']; ?>"><?php echo $assignment['sources_names']; ?></td>
+								<td class="element_name" data-svp-enforced="<?php echo $assignment['enforced']; ?>"><?php echo ($assignment['enforced'] ? __('true') : __('false')); ?></td>
 								<td>
 									<a class="delete-confirm right" href="<?php echo url('simple-vocab-plus/suggest/delete-confirm/id/' . $assignment['suggest_id']); ?>"><button class="red button" style="margin:0" type="button"><?php echo __('Delete') ?></button></a>
 								</td>
@@ -213,7 +226,7 @@
 						<?php echo __('Define vocabulary and manually edit it here'); ?>
 						<br>
 						<input type="radio" name="nv_local" value="remote" id="nv_cloud-radio">
-						<?php echo __('Import vocabulary from cloud'); ?>
+						<?php echo __('Import vocabulary from the cloud'); ?>
 					</div>
 				</div>
 				<div class="field" id="nv_url-field">
