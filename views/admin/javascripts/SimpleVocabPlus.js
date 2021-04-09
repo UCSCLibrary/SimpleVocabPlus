@@ -3,7 +3,6 @@ jQuery(document).ready(function() {
 	
 	jQuery('#av_multi-field').hide();
 	jQuery('#av_vocab-field').hide();
-	jQuery('#av_enforce-field').hide();
 	jQuery('#av_add-button').prop('disabled', 'disabled');
 	jQuery('#nv_definetext-field').hide();
 	jQuery('#nv_url-field').hide();
@@ -16,21 +15,18 @@ jQuery(document).ready(function() {
 	jQuery('#av_self-radio').click(function() {
 		jQuery('#av_multi-field').hide(300);
 		jQuery('#av_vocab-field').hide(300);
-		jQuery('#av_enforce-field').hide(300);
 		av_add_button_toggle();
 	});
 
 	jQuery('#av_multi-radio').click(function() {
 		jQuery('#av_multi-field').show(300);
 		jQuery('#av_vocab-field').hide(300);
-		jQuery('#av_enforce-field').hide(300);
 		av_add_button_toggle();
 	});
 
 	jQuery('#av_vocab-radio').click(function() {
 		jQuery('#av_multi-field').hide(300);
 		jQuery('#av_vocab-field').show(300);
-		jQuery('#av_enforce-field').show(300);
 		av_add_button_toggle();
 	});
 
