@@ -1,6 +1,9 @@
 jQuery(document).ready(function() {
 	var url = 'simple-vocab-plus/vocabulary/get/vocab/';
 	
+	jQuery('#av_multi-field').hide();
+	jQuery('#av_vocab-field').hide();
+	jQuery('#av_enforce-field').hide();
 	jQuery('#av_add-button').prop('disabled', 'disabled');
 	jQuery('#nv_definetext-field').hide();
 	jQuery('#nv_url-field').hide();
@@ -10,20 +13,32 @@ jQuery(document).ready(function() {
 	jQuery('#ev_edit-button').prop('disabled', 'disabled');
 	jQuery('#ev_delete-button').prop('disabled', 'disabled');
 
-	jQuery('#av_enforced').change(function() {
-		jQuery('#av_selfassign').prop('disabled', this.checked);
-		jQuery('#av_selfassign').prop('checked', false);
-		jQuery('#av_vocab-id').prop('disabled', false);
+	jQuery('#av_self-radio').click(function() {
+		jQuery('#av_multi-field').hide(300);
+		jQuery('#av_vocab-field').hide(300);
+		jQuery('#av_enforce-field').hide(300);
+		av_add_button_toggle();
 	});
 
-	jQuery('#av_selfassign').change(function() {
-		jQuery('#av_enforced').prop('disabled', this.checked);
-		jQuery('#av_enforced').prop('checked', false);
-		jQuery('#av_vocab-id').prop('disabled', this.checked);
+	jQuery('#av_multi-radio').click(function() {
+		jQuery('#av_multi-field').show(300);
+		jQuery('#av_vocab-field').hide(300);
+		jQuery('#av_enforce-field').hide(300);
+		av_add_button_toggle();
+	});
+
+	jQuery('#av_vocab-radio').click(function() {
+		jQuery('#av_multi-field').hide(300);
+		jQuery('#av_vocab-field').show(300);
+		jQuery('#av_enforce-field').show(300);
 		av_add_button_toggle();
 	});
 
 	jQuery('#av_element-id').change(function() {
+		av_add_button_toggle();
+	});
+
+	jQuery('#av_multi-id').change(function() {
 		av_add_button_toggle();
 	});
 
@@ -32,11 +47,15 @@ jQuery(document).ready(function() {
 	});
 
 	function av_add_button_toggle() {
-		if ((jQuery('#av_element-id').val() != '' && jQuery('#av_vocab-id').val() != '') || (jQuery('#av_element-id').val() != '' && jQuery('#av_selfassign').prop('checked') == true)) {
-			jQuery('#av_add-button').prop('disabled', false);
-		} else {
-			jQuery('#av_add-button').prop('disabled', 'disabled');
-		}		
+		var status = 'disabled';
+		if (jQuery('#av_element-id').val() != '') {
+			if (
+				jQuery('#av_self-radio').prop('checked') == true || 
+				(jQuery('#av_multi-radio').prop('checked') == true && jQuery('#av_multi-id').val() != '') ||
+				(jQuery('#av_vocab-radio').prop('checked') == true && jQuery('#av_vocab-id').val() != '')
+			) status = false;
+		}
+		jQuery('#av_add-button').prop('disabled', status);
 	}
 
 	jQuery('#nv_name').change(function() {
