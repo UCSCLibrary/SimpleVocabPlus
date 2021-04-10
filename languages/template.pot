@@ -8,6 +8,7 @@ msgstr ""
 "Project-Id-Version: Reference\n"
 "Report-Msgid-Bugs-To: https://github.com/UCSCLibrary/SimpleVocabPlus/issues\n"
 "POT-Creation-Date: 2021-04-09 00:00-0000\n"
+"PO-Revision-Date: 2021-04-10 08:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,42 +27,80 @@ msgid "
 "Vocab Plus plugin)"
 msgstr ""
 
-#: config_form.php:8
+#: config_form.php:11
 msgid "Application scope"
 msgstr ""
 
-#: config_form.php:12
-msgid "Apply to Files"
+#: config_form.php:15
+msgid "Apply to Collections"
 msgstr ""
 
-#: config_form.php:16
+#: config_form.php:19
 msgid ""
-"If checked, plugin will be applied to Files metadata too "
+"If checked, the plugin will apply to Collections metadata too "
 "(by default, this plugin only applies to Items metadata)."
 msgstr ""
 
-#: config_form.php:22
-msgid "Warnings"
+#: config_form.php:27
+msgid "Apply to Files"
 msgstr ""
 
-#: config_form.php:26
+#: config_form.php:31
+msgid ""
+"If checked, the plugin will apply to Files metadata too "
+"(by default, this plugin only applies to Items metadata)."
+msgstr ""
+
+#: config_form.php:39
+msgid "Apply to Exhibit"
+msgstr ""
+
+#: config_form.php:44
+msgid ""
+"If checked, the plugin will apply to Exhibits metadata too "
+"(by default, this plugin only applies to Items metadata)."
+msgstr ""
+
+#: config_form.php:49
+msgid ""
+"The %s plugin is not installed or active. Install and activate the plugin "
+"in order to be able to configure notifications for new Exhibits."
+msgstr ""
+
+#: config_form.php:55
+msgid "Alerts"
+msgstr ""
+
+#: config_form.php:59
 msgid "Highlight autosuggest fields"
 msgstr ""
 
-#: config_form.php:30
+#: config_form.php:63
 msgid "
 "Color hex code (e.g.: #ff0000) to highlight the fields that have autosuggest feature "
 "applied (blank means no highlight)."
 msgstr ""
 
-#: config_form.php:38
+#: config_form.php:71
 msgid "Add autosuggest reminder"
 msgstr ""
 
-#: config_form.php:42
+#: config_form.php:75
 msgid ""
 "Adds a notice to the description of fields that have autosuggest feature "
 "applied."
+msgstr ""
+
+#: config_form.php:81
+msgid "Checks"
+msgstr ""
+
+#: config_form.php:85
+msgid "Compare element values"
+msgstr ""
+
+#: config_form.php:89
+msgid "When examining an element, compare the recorded values with the vocabulary's terms."
 msgstr ""
 
 #: index.php:72

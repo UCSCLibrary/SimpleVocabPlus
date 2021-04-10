@@ -10,6 +10,7 @@ msgstr ""
 "POT-Creation-Date: 2020-02-01 11:54+0200\n"
 "PO-Revision-Date: 2020-02-01 12:06+0200\n"
 "PO-Revision-Date: 2021-04-07 10:50+0200\n"
+"PO-Revision-Date: 2021-04-10 08:53+0200\n"
 "Last-Translator: Daniele Binaghi <admin@bitoteko.it>\n"
 "Language-Team: Italian\n"
 "Language: it\n"
@@ -34,27 +35,60 @@ msgstr ""
 msgid "Application scope"
 msgstr "Intervallo di applicazione"
 
-#: config_form.php:12
-msgid "Apply to Files"
-msgstr "Applica a file"
+#: config_form.php:15
+msgid "Apply to Collections"
+msgstr "Applica alle collezioni"
 
-#: config_form.php:16
+#: config_form.php:19
 msgid ""
-"If checked, plugin will be applied to Files metadata too "
+"If checked, the plugin will apply to Collections metadata too "
 "(by default, this plugin only applies to Items metadata)."
 msgstr ""
-"Se selezionata, il plugin verrà applicato anche ai metadata dei file (per "
-"impostazione predefinita, questo plugin viene applicato solo ai metadati documenti)."
+"Se selezionata, il plugin sarà applicato anche ai metadati delle "
+"collezioni (per default, viene applicato solo ai metadati dei documenti)."
 
-#: config_form.php:22
-msgid "Warnings"
+#: config_form.php:27
+msgid "Apply to Files"
+msgstr "Applica ai file"
+
+#: config_form.php:31
+msgid ""
+"If checked, the plugin will apply to Files metadata too "
+"(by default, this plugin only applies to Items metadata)."
+msgstr ""
+"Se selezionata, il plugin sarà applicato anche ai metadati dei "
+"file (per default, viene applicato solo ai metadati dei documenti)."
+
+#: config_form.php:39
+msgid "Apply to Exhibit"
+msgstr "Applica alle esposizioni"
+
+#: config_form.php:44
+msgid ""
+"If checked, the plugin will apply to Exhibits metadata too "
+"(by default, this plugin only applies to Items metadata)."
+msgstr ""
+"Se selezionata, il plugin sarà applicato anche ai metadati delle "
+"esposizioni (per default, viene applicato solo ai metadati dei documenti)."
+
+#: config_form.php:49
+msgid ""
+"The %s plugin is not installed or active. Install "
+"and activate the plugin in order to be able to configure notifications "
+"for new Exhibits.
+msgstr ""
+"Il plugin %s non è installato o attivo. Installare ed attivare "
+"il plugin per poter configurare le notifiche per nuove esposizioni."
+
+#: config_form.php:55
+msgid "Alerts"
 msgstr "Notifiche"
 
-#: config_form.php:26
+#: config_form.php:59
 msgid "Highlight autosuggest fields"
 msgstr "Evidenzia campi autosuggerimento"
 
-#: config_form.php:30
+#: config_form.php:63
 msgid "
 "Color hex code (e.g.: #ff0000) to highlight the fields that have autosuggest feature "
 "applied (blank means no highlight)."
@@ -62,17 +96,29 @@ msgstr ""
 "Codice esadecimale (p.e.: #ff0000) del colore da usarsi per evidenziare i campi che "
 "hanno la funzionalità di autosuggerimento applicata (vuoto significa nessuna evidenziazione)."
 
-#: config_form.php:38
+#: config_form.php:71
 msgid "Add autosuggest reminder"
 msgstr "Aggiungi nota autosuggerimento"
 
-#: config_form.php:42
+#: config_form.php:75
 msgid ""
 "Adds a notice to the description of fields that have autosuggest feature "
 "applied."
 msgstr ""
 "Aggiunge una notifica alla descrizione dei campi che hanno la funzionalità "
 "di autosuggerimento applicata."
+
+#: config_form.php:81
+msgid "Checks"
+msgstr "Controlli"
+
+#: config_form.php:85
+msgid "Compare element values"
+msgstr "Compara valori elementi"
+
+#: config_form.php:89
+msgid "When examining an element, compare the recorded values with the vocabulary's terms."
+msgstr "Durante l'esame di un elemento, comparare i valori registristrati con i termini del vocabolario."
 
 #: index.php:72
 #: index.php:145
