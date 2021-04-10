@@ -106,9 +106,9 @@
 						<label for="nv_local"><?php echo __('Source'); ?></label>
 					</div>
 					<div class="inputs five columns omega">
-						<p class="explanation"><?php
-							echo __("Choose the source of terms (note: if uncertain of values' consistency, you might want to <a href='#tab4'><strong>examine them first</strong></a>):");
-						?></p>
+						<p class="explanation">
+							<?php echo __('Choose the source of terms (note: if uncertain of values\' consistency, you might want to <a href=\'#tab4\'><strong>examine them first</strong></a>).');	?>
+						</p>
 						<input type="radio" name="av_source" value="self" id="av_self-radio">
 						<?php echo __('Self assign: values are retrieved from the element\'s recorded ones'); ?>
 						<br>
