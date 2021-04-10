@@ -27,7 +27,7 @@ msgid "
 "Vocab Plus plugin)"
 msgstr ""
 
-#: config_form.php:11
+#: config_form.php:8
 msgid "Application scope"
 msgstr ""
 
@@ -63,8 +63,9 @@ msgstr ""
 
 #: config_form.php:49
 msgid ""
-"The %s plugin is not installed or active. Install and activate the plugin "
-"in order to be able to configure notifications for new Exhibits."
+"The %s plugin is not installed or active. Install "
+"and activate the plugin in order to be able to configure notifications "
+"for new Exhibits."
 msgstr ""
 
 #: config_form.php:55
@@ -103,154 +104,159 @@ msgstr ""
 msgid "When examining an element, compare the recorded values with the vocabulary's terms."
 msgstr ""
 
-#: index.php:72
-#: index.php:145
+#: index.php:83
+#: index.php:156
 msgid "Assign Vocabulary"
 msgstr ""
 
-#: index.php:73
-#: index.php:242
+#: index.php:84
+#: index.php:265
 msgid "Create Vocabulary"
 msgstr ""
 
-#: index.php:74
+#: index.php:85
 msgid "Edit Vocabulary"
 msgstr ""
 
-#: index.php:75
+#: index.php:86
 msgid "Examine Element"
 msgstr ""
 
-#: index.php:81
+#: index.php:92
 msgid "Assign Vocabulary to Metadata Element"
 msgstr ""
 
-#: index.php:84
-#: index.php:158
-#: index.php:310
+#: index.php:95
+#: index.php:169
+#: index.php:333
 msgid "Element"
 msgstr ""
 
-#: index.php:88
+#: index.php:99
 msgid ""
 "Select an element to assign it a vocabulary. Elements already assigned a vocabulary "
 "are marked with an asterisk (*)."
 msgstr ""
 
-#: index.php:95
+#: index.php:106
 msgid "Source"
 msgstr ""
 
-#: index.php:95
+#: index.php:110
 msgid ""
 "Choose the source of terms (note: if uncertain of values' consistency, you might want to "
 "<a href='#tab4'><strong>examine them first</strong></a>"
 msgstr ""
 
-#: index.php:102
+#: index.php:113
 msgid "Self assign: values are retrieved from the element's recorded ones"
 msgstr ""
 
-#: index.php:105
+#: index.php:116
 msgid "Multiple assign: values are retrieved from multiple elements of the repository"
 msgstr ""
 
-#: index.php:108
+#: index.php:119
 msgid "Vocabulary: values are retrieved from a local/remote custom vocabulary"
 msgstr ""
 
-#: index.php:113
+#: index.php:124
+#: index.php:172
 msgid "Source element(s)"
 msgstr ""
 
-#: index.php:117
+#: index.php:128
 msgid "Select one or more elements to use as source."
 msgstr ""
 
-#: index.php:124
+#: index.php:135
 msgid "Source vocabulary"
 msgstr ""
 
-#: index.php:128
+#: index.php:139
 msgid "Select a vocabulary to enable the autosuggest feature for the above element."
 msgstr ""
 
-#: index.php:135
+#: index.php:146
 msgid "Enforce values"
 msgstr ""
 
-#: index.php:139
+#: index.php:150
 msgid ""
 "If selected, user will see a dropdown box and will have to choose one of the suggested values. Works "
 "only with local/remote vocabularies. Deselect the option to disable the feature."
 msgstr ""
 
-#: index.php:151
+#: index.php:162
 msgid "Current Assignments"
 msgstr ""
 
-#: index.php:157
+#: index.php:168
 msgid "Element Set"
 msgstr ""
 
-#: index.php:158
+#: index.php:170
 msgid "Type"
 msgstr ""
 
-#: index.php:159
-msgid "Enforced"
-msgstr ""
-
-#: index.php:160
+#: index.php:171
 msgid "Vocabulary"
 msgstr ""
 
-#: index.php:183
-msgid "There are no suggest assignments."
+#: index.php:173
+msgid "Enforced"
 msgstr ""
 
-#: index.php:193
-msgid "Create new Vocabulary"
+#: index.php:196
+msgid "yes"
 msgstr ""
 
-#: index.php:197
-#: index.php:255
-msgid "Name"
-msgstr ""
-
-#: index.php:200
-msgid "Provide a name for your new vocabulary."
+#: index.php:196
+msgid "no"
 msgstr ""
 
 #: index.php:206
+msgid "There are no suggest assignments."
+msgstr ""
+
+#: index.php:216
+msgid "Create new Vocabulary"
+msgstr ""
+
+#: index.php:229
+#: index.php:278
+msgid "Name"
+msgstr ""
+
+#: index.php:223
+msgid "Provide a name for your new vocabulary."
+msgstr ""
+
+#: index.php:229
 msgid "Location"
 msgstr ""
 
-#: index.php:210
+#: index.php:233
 msgid ""
 "Choose whether you would like the repository to store your new vocabulary's terms, "
 "or rather to store the vocabulary in the cloud (using Google Drive or GitPages or "
 "other similar services)."
 msgstr ""
 
-#: index.php:245
-msgid "Input all terms or drop a text file..."
-msgstr ""
-
-#: index.php:213
+#: index.php:236
 msgid "Define vocabulary and manually edit it here"
 msgstr ""
 
-#: index.php:216
+#: index.php:239
 msgid "Import vocabulary from the cloud"
 msgstr ""
 
-#: index.php:221
-#: index.php:264
+#: index.php:244
+#: index.php:287
 msgid "URL"
 msgstr ""
 
-#: index.php:225
+#: index.php:248
 msgid ""
 "If the vocabulary is stored in the cloud, this field shows the file URL for the "
 "vocabulary; any web server or cloud service can host this file. A plain text file "
@@ -259,13 +265,14 @@ msgid ""
 "terms; a line starting with 3 asterisks will be displayed as an unselectable, "
 "bolded subgroup title."
 msgstr ""
+"verrà mostrata come titolo di un sottogruppo, in grassetto e non selezionabile.
 
-#: index.php:232
-#: index.php:275
+#: index.php:255
+#: index.php:298
 msgid "Terms list"
 msgstr ""
 
-#: index.php:238
+#: index.php:259
 msgid ""
 "Input all terms below, one term per line; a line consisting of a sequence of 3 "
 "hyphens will be displayed as an empty line and can be used as separator for "
@@ -274,21 +281,25 @@ msgid ""
 "to automatically paste its content."
 msgstr ""
 
-#: index.php:251
+#: index.php:261
+msgid "Input all terms or drop a text file..."
+msgstr ""
+
+#: index.php:274
 msgid "Edit existing Vocabulary"
 msgstr ""
 
-#: index.php:258
+#: index.php:281
 msgid "Select a Vocabulary to edit."
 msgstr ""
 
-#: index.php:268
+#: index.php:291
 msgid ""
 "If the vocabulary is stored in the cloud, this field shows the file URL for the "
 "vocabulary. Any web server or cloud service can host this file (we recommend GitPages)."
 msgstr ""
 
-#: index.php:279
+#: index.php:302
 msgid ""
 "The vocabulary's terms are displayed here, one term per line; a line consisting of a "
 "sequence of 3 hyphens will be displayed as an empty line and can be used as separator "
@@ -296,42 +307,43 @@ msgid ""
 "unselectable, bolded subgroup title."
 msgstr ""
 
-#: index.php:285
+#: index.php:308
 msgid "Save Changes"
 msgstr ""
 
-#: index.php:285
+#: index.php:309
 msgid "Delete Vocabulary"
 msgstr ""
 
-#: index.php:294
+#: index.php:318
 msgid "Examine Element's values"
 msgstr ""
 
-#: index.php:298
+#: index.php:322
 msgid ""
 "Before creating a vocabulary with values retrieved from the ones stored in the "
 "repository for a particular element, you might want to examine their consistency. "
 "Consider in fact the following caveats:"
 msgstr ""
+"le seguenti indicazioni:" 
 
-#: index.php:301
+#: index.php:325
 msgid "Vocabulary terms must not contain newlines (line breaks)."
 msgstr ""
 
-#: index.php:302
+#: index.php:326
 msgid ""
 "Vocabulary terms are typically short and concise. If your existing texts are "
 "otherwise, avoid using a controlled vocabulary for this element."
 msgstr ""
 
-#: index.php:303
+#: index.php:327
 msgid ""
 "Existing texts that are not in the vocabulary will be preserved - however, they cannot "
 "be selected in the item edit page, and will be deleted once you save the item."
 msgstr ""
 
-#: index.php:313
+#: index.php:337
 msgid "Select an element to examine."
 msgstr ""
 
