@@ -145,7 +145,7 @@ msgstr ""
 #: index.php:110
 msgid ""
 "Choose the source of terms (note: if uncertain of values' consistency, you might want to "
-"<a href='#tab4'><strong>examine them first</strong></a>"
+"<a href='#tab4'><strong>examine them first</strong></a>)."
 msgstr ""
 
 #: index.php:113
