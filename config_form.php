@@ -12,25 +12,25 @@ $view = get_view();
 
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('simple_vocab_plus_files', __('Apply to Files')); ?>
+		<?php echo $view->formLabel('simple_vocab_plus_collections', __('Apply to Collections')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
-			<?php echo __('If checked, the plugin will be applied to Files metadata too (by default, this plugin only applies to Items metadata).'); ?>
+			<?php echo __('If checked, the plugin will apply to Collections metadata too (by default, this plugin only applies to Items metadata).'); ?>
 		</p>
-		<?php echo $view->formCheckbox('simple_vocab_plus_files', $simple_vocab_plus_files, null, array('1', '0')); ?>
+		<?php echo $view->formCheckbox('simple_vocab_plus_collections', $simple_vocab_plus_collections, null, array('1', '0')); ?>
 	</div>
 </div>
 
 <div class="field">
 	<div class="two columns alpha">
-		<?php echo $view->formLabel('simple_vocab_plus_collections', __('Apply to Collections')); ?>
+		<?php echo $view->formLabel('simple_vocab_plus_files', __('Apply to Files')); ?>
 	</div>
 	<div class="inputs five columns omega">
 		<p class="explanation">
-			<?php echo __('If checked, the plugin will be applied to Collections metadata too (by default, this plugin only applies to Items metadata).'); ?>
+			<?php echo __('If checked, the plugin will apply to Files metadata too (by default, this plugin only applies to Items metadata).'); ?>
 		</p>
-		<?php echo $view->formCheckbox('simple_vocab_plus_collections', $simple_vocab_plus_collections, null, array('1', '0')); ?>
+		<?php echo $view->formCheckbox('simple_vocab_plus_files', $simple_vocab_plus_files, null, array('1', '0')); ?>
 	</div>
 </div>
 
@@ -41,12 +41,12 @@ $view = get_view();
 	<div class="inputs five columns omega">
 <?php if (plugin_is_active('ExhibitBuilder')): ?>
 		<p class="explanation">
-			<?php echo __('If checked, the plugin will be applied to Exhibits metadata too (by default, this plugin only applies to Items metadata).'); ?>
+			<?php echo __('If checked, the plugin will apply to Exhibits metadata too (by default, this plugin only applies to Items metadata).'); ?>
 		</p>
 		<?php echo $view->formCheckbox('simple_vocab_plus_exhibits', $simple_vocab_plus_exhibits, null, array('1', '0')); ?>
 <?php else: ?>
 		<p class="explanation">
-			<?php echo __('The Exhibit Builder plugin is not installed or active. Install and activate the plugin in order to be able to configure notifications for new Exhibits.'); ?>
+			<?php echo __('The %s plugin is not installed or active. Install and activate the plugin in order to be able to configure notifications for new Exhibits.', '<a href="https://omeka.org/classic/plugins/ExhibitBuilder/">Exhibit Builder</a>'); ?>
 		</p>
 <?php endif ?>
 	</div>
