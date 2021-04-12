@@ -35,8 +35,14 @@ class SimpleVocabPlus_Controller_Plugin_Autosuggest extends Zend_Controller_Plug
 	/**
 	 * Cached vocab terms.
 	 */
-	protected $_svpTerms;
+	protected $_svpSuggestedTerms;
 	protected $_elementText;
+
+    public function __construct()
+    {
+        $this->backgroundColor = get_option('simple_vocab_plus_fields_highlight');
+		$this->backgroundColorString = (preg_match('/#([a-f0-9]{3}){1,2}\b/i', $this->backgroundColor) ? 'background-color: ' . $this->backgroundColor : '');
+    }
 
 	/**
 	 * Add autosuggest only during defined routes.
@@ -119,28 +125,31 @@ jQuery(document).bind('omeka:elementformload', function(event) {
 						$view->headScript()->captureEnd();
 					} else {	
 						// Retrieve values to populate select box.
-						if ($svpAssign->type == 'self') {
-							$select = $elementTextTable->getSelect();
-							$select->from(array(), 'text')
-								->where('record_type = ?', 'Item')
-								->where('element_id = ?', $element->id)
-								->group('text')
-								->order('text ASC');
-							$this->_svpTerms[$element->id] = $elementTextTable->fetchObjects($select);
-						} elseif ($svpAssign->type == 'multi') {
-							$select = $elementTextTable->getSelect();
-							$select->from(array(), 'text')
-								->where('record_type = ?', 'Item')
-								->where('element_id IN (?)', $svpAssign->sources_id)
-								->group('text')
-								->order('text ASC');
-							$this->_svpTerms[$element->id] = $elementTextTable->fetchObjects($select);
-						} else { 
-							$select = $svpTermTable->getSelect();
-							$select->from(array(), array('text' => 'term'))
-								->where('vocab_id = ?', $svpAssign->vocab_id)
-								->order('id ASC');
-							$this->_svpTerms[$element->id] = $svpTermTable->fetchObjects($select);
+						switch ($svpAssign->type) {
+							case 'self':
+								$select = $elementTextTable->getSelect();
+								$select->from(array(), 'text')
+									->where('record_type = ?', 'Item')
+									->where('element_id = ?', $element->id)
+									->group('text')
+									->order('text ASC');
+								$this->_svpSuggestedTerms[$element->id] = $elementTextTable->fetchObjects($select);
+								break;
+							case 'multi':
+								$select = $elementTextTable->getSelect();
+								$select->from(array(), 'text')
+									->where('record_type = ?', 'Item')
+									->where('element_id IN (?)', $svpAssign->sources_id)
+									->group('text')
+									->order('text ASC');
+								$this->_svpSuggestedTerms[$element->id] = $elementTextTable->fetchObjects($select);
+								break;
+							default:
+								$select = $svpTermTable->getSelect();
+								$select->from(array(), array('text' => 'term'))
+									->where('vocab_id = ?', $svpAssign->vocab_id)
+									->order('id ASC');
+								$this->_svpSuggestedTerms[$element->id] = $svpTermTable->fetchObjects($select);
 						}
 					}
 
@@ -183,57 +192,59 @@ jQuery(document).bind('omeka:elementformload', function(event) {
 	 */
 	public function filterElementInput($components, $args)
 	{
-		$hcolor = get_option('simple_vocab_plus_fields_highlight');
-		$hcolor = (preg_match('/#([a-f0-9]{3}){1,2}\b/i', $hcolor) ? 'background-color: ' . $hcolor : '');
-		
 		// Use the cached vocab terms
-		if (empty($this->_svpTerms[$args['element']->id])) {
+		if (empty($this->_svpSuggestedTerms[$args['element']->id])) {
 			// case autosuggest, values not enforced
 			$components['input'] = get_view()->formTextarea(
 				$args['input_name_stem'] . '[text]',
 				$args['value'],
-				array('cols' => 50, 'rows' => 3, 'style' => $hcolor)
+				array('cols' => 50, 'rows' => 3, 'style' => $this->backgroundColorString)
 			);
 		} else {
 			// case autosuggest, values enforced
-			$selectTerms = array('' => __('Select Below'));
-			$iBlanks = 1;
-			$terms_count = count($this->_svpTerms[$args['element']->id]);
-
-			for ($i = 0; $i < $terms_count; $i++) {
-				$term = $this->_svpTerms[$args['element']->id][$i]['text'];
-				if ($term == '---') {
-					$selectTerms[str_repeat(' ', $iBlanks)] = array();
-					$iBlanks++;
-				} elseif (substr($term, 0, 3) == '***') {
-					$stem = substr($term, 3);
-					$subterms = array();
-					$i++;
-					while ($i < $terms_count) {
-						$term = $this->_svpTerms[$args['element']->id][$i]['text'];
-						if ($term != '---' && substr($term, 0, 3) != '***') {
-							$subterms[$term] = $term;
-							$i++;
-						} else {
-							$i = $i - 1;
-							break;
-						}
-					}
-					$selectTerms[$stem] = $subterms;
-				} else {
-					$selectTerms[$term] = $term;
-				}
-			}
-			
 			$components['input'] = get_view()->formSelect(
 				$args['input_name_stem'] . '[text]', 
 				$args['value'], 
-				array('style' => $hcolor), 
-				$selectTerms
+				array('style' => $this->backgroundColorString), 
+				$this->getTermsList($this->_svpSuggestedTerms[$args['element']->id])
 			);
 			$components['html_checkbox'] = false;
 		}
 		
 		return $components;
+	}
+	
+	private function getTermsList($terms)
+	{
+		$selectTerms = array('' => __('Select Below'));
+		$blanks_count = 1;
+		$terms_count = count($terms);
+
+		for ($i = 0; $i < $terms_count; $i++) {
+			$term_text = $terms[$i]['text'];
+			if ($term_text == '---') {
+				$selectTerms[str_repeat(' ', $blanks_count)] = array();
+				$blanks_count++;
+			} elseif (substr($term_text, 0, 3) == '***') {
+				$stem = substr($term_text, 3);
+				$subterms = array();
+				$i++;
+				while ($i < $terms_count) {
+					$term_text = $terms[$i]['text'];
+					if ($term_text != '---' && substr($term_text, 0, 3) != '***') {
+						$subterms[$term_text] = $term_text;
+						$i++;
+					} else {
+						$i = $i - 1;
+						break;
+					}
+				}
+				$selectTerms[$stem] = $subterms;
+			} else {
+				$selectTerms[$term_text] = $term_text;
+			}
+		}
+
+		return $selectTerms;
 	}
 }
