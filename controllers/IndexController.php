@@ -125,10 +125,11 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
             $authorityVocabularyName = $authorityVocabulary['name'];
 			if ($svpSuggest->sources_id != '') {
 				$sources_id = split(',', $svpSuggest->sources_id);
+				$sources_name = array();
 				foreach ($sources_id as $source_id) {
-					$sources_names[] = __($elementTable->find($source_id)->name);
+					$sources_name[] = __($elementTable->find($source_id)->name);
 				}
-				$sources_names = implode(', ', $sources_names);
+				$sources_names = implode(', ', $sources_name);
 			} else {
 				$sources_names = '';
 			}
@@ -172,11 +173,12 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
         $elementTexts = array();
         $comparisonEnabled = get_option('simple_vocab_plus_values_compare');
         foreach ($this->findElementTexts($elementId) as $elementText) {
+			$text = htmlspecialchars($elementText->text, ENT_QUOTES);
             $warnings = array();
-            if (strlen($elementText->text) < 3) {
+            if (strlen($text) < 3) {
                 $warnings[] = $warningMessages['shortText'];
             }
-            if (strlen($elementText->text) > 100) {
+            if (strlen($text) > 100) {
                 $warnings[] = $warningMessages['longText'];
             }
             if (strstr($elementText->text, "\n")) {
@@ -188,7 +190,7 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
             $elementTexts[] = array('element_id' => $elementId, 
                                     'count' => $elementText->count, 
                                     'warnings' => $warnings, 
-                                    'text' => ($comparisonEnabled ? (in_array($elementText->text, $elementVocabTerms) ? $elementText->text : '***' . $elementText->text . '***') : $elementText->text));
+                                    'text' => ($comparisonEnabled ? (in_array($elementText->text, $elementVocabTerms) ? $text : '***' . $text . '***') : $text));
         }
         
         $this->view->element_texts = $elementTexts;
