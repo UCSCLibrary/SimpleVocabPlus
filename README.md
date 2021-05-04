@@ -10,6 +10,7 @@ and with a user interface optimized too.
 New functions: 
 - chance to use the values already stored in the repository for the same element as
 suggestions;
+- chance to use values from multiple fields as suggestions;
 - chance to check the values stored for a specific element;
 - chance to force the use of a list of values (similar to the dropdown feature of the
 [Simple Vocab] original plugin.
