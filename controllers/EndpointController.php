@@ -43,26 +43,26 @@ class SimpleVocabPlus_EndpointController extends Omeka_Controller_AbstractAction
 		$return = array();
 		$termTable = $this->_helper->db->getTable('SvpTerm');
 		$elementTextTable = $this->_helper->db->getTable('ElementText');
-		foreach($svpAssigns as $svpAssign) {
+		foreach ($svpAssigns as $svpAssign) {
 			if ($svpAssign['type'] == 'self') {
 				// case of values retrieved from repository's data
 				$select = $elementTextTable->getSelect();
 				$select->from(array(),'text')
-						->where('record_type = ?', 'Item')
-						->where('element_id = ?', $elementId)
-						->where('text like ?', $term . '%')
-						->group('text')
-						->order('text ASC');
+					->where('record_type = ?', 'Item')
+					->where('element_id = ?', $elementId)
+					->where('text LIKE ?', $term . '%')
+					->group('text')
+					->order('text ASC');
 				$return = $elementTextTable->fetchCol($select);
 			} elseif ($svpAssign['type'] == 'multi') {
 				// case of values retrieved from multiple elements in repository's data
 				$select = $elementTextTable->getSelect();
 				$select->from(array(),'text')
-						->where('record_type = ?', 'Item')
-						->where('element_id = (?)', $svpAssign->sources_id)
-						->where('text like ?', $term . '%')
-						->group('text')
-						->order('text ASC');
+					->where('record_type = ?', 'Item')
+					->where('element_id IN (' . $svpAssign->sources_id . ')')
+					->where('text LIKE ?', $term . '%')
+					->group('text')
+					->order('text ASC');
 				$return = $elementTextTable->fetchCol($select);
 			} else {
 				// case of values retrieved from vocabulary (local or remote)
