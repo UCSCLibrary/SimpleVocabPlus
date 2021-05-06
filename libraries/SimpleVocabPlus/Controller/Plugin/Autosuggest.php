@@ -81,7 +81,7 @@ class SimpleVocabPlus_Controller_Plugin_Autosuggest extends Zend_Controller_Plug
 		}
 
 		$filterExhibits = (get_option('simple_vocab_plus_exhibits') && plugin_is_active('ExhibitBuilder'));
-		if (filterExhibits) {
+		if ($filterExhibits) {
 			// Add the exhibit add/edit route if configured to.
 			$this->_defaultRoutes[] = array(
 				'module' => 'default',
