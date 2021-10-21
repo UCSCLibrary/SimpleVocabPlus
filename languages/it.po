@@ -163,10 +163,10 @@ msgstr "Origine"
 #: index.php:110
 msgid ""
 "Choose the source of terms (note: if uncertain of values' consistency, you might want to "
-"<a href='#tab4'><strong>examine them first</strong></a>)."
+"%sexamine them first%s)."
 msgstr ""
 "Scegliere la sorgente dei termini (nota: se si hanno delle riserve sulla consistenza dei "
-"valori, è meglio <a href='#tab4'><strong>esaminarli prima</strong></a>)."
+"valori, è meglio %sesaminarli prima%s)."
 
 #: index.php:113
 msgid "Self assign: values are retrieved from the element's recorded ones"
