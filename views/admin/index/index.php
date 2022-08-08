@@ -88,7 +88,7 @@
 	
 	<div id="tab1" style="height:1%; overflow:hidden">
 		<form method="post" action="<?php echo url('simple-vocab-plus/suggest/add'); ?>">
-			<section class="nine columns alpha">
+			<section class="eight columns alpha">
 				<h2><?php echo __('Assign Vocabulary to Metadata Element'); ?></h2>
 				<div class="field">
 					<div id="element-id-label" class="two columns alpha">
@@ -98,7 +98,7 @@
 						<p class="explanation">
 							<?php echo __('Select an element to assign it a vocabulary. Elements already assigned a vocabulary are marked with an asterisk (*).'); ?>
 						</p>
-						<?php echo $this->formSelect('av_element-id', null, array('id' => 'av_element-id'), $this->form_element_options_marked) ?>
+						<?php echo $this->formSelect('av_element-id', null, array('id' => 'av_element-id'), $this->form_element_options) ?>
 					</div>
 				</div>
 				<div class="field">
@@ -107,7 +107,7 @@
 					</div>
 					<div class="inputs five columns omega">
 						<p class="explanation">
-							<?php echo __('Choose the source of terms (note: if uncertain of values\' consistency, you might want to <a href=\'#tab4\'><strong>examine them first</strong></a>).');	?>
+							<?php echo __('Choose the source of terms (note: if uncertain of values\' consistency, you might want to <a href=\'#tab4\'><strong>examine them first</strong></a>).'); ?>
 						</p>
 						<input type="radio" name="av_source" value="self" id="av_self-radio">
 						<?php echo __('Self assign: values are retrieved from the element\'s recorded ones'); ?>
@@ -157,7 +157,7 @@
 				</div>
 			</section>
 			<?php echo $this->csrf; ?>
-			<section class="nine columns alpha">
+			<section class="eight columns alpha">
 			<fieldset id="fieldset-svpAssignmentsSet" class="svpFieldset" style="border: 1px solid #cccccc; padding: 15px; margin: 7px">
 				<legend style="font-weight: bold; padding: 5px"><?php echo __('Current Assignments'); ?></legend>
 				<div>
@@ -177,14 +177,24 @@
 						<tbody>
 							<?php foreach ($this->assignments as $assignment): ?>
 							<tr>
-								<td class="element_set_name" data-svp-element-set-id="<?php echo $assignment['element_set_id']; ?>"><?php echo __($assignment['element_set_name']); ?></td>
-								<td class="element_name" data-svp-element-id="<?php echo $assignment['element_id']; ?>"><?php echo __($assignment['element_name']); ?></td>
-								<td class="element_name" data-svp-type="<?php echo $assignment['type']; ?>"><?php echo __($assignment['type']); ?></td>
+								<td class="element_set_name" data-svp-element-set-id="<?php echo $assignment['element_set_id']; ?>">
+									<?php echo __($assignment['element_set_name']); ?>
+								</td>
+								<td class="element_name" data-svp-element-id="<?php echo $assignment['element_id']; ?>">
+									<?php echo __($assignment['element_name']); ?>
+								</td>
+								<td class="element_name" data-svp-type="<?php echo $assignment['type']; ?>">
+									<?php echo __($assignment['type']); ?>
+								</td>
 								<td class="authority_vocabulary" data-svp-vocab-id="<?php echo $assignment['authority_vocabulary_id']; ?>">
 									<?php echo $assignment['authority_vocabulary']; ?>
 								</td>
-								<td class="element_name" data-svp-sources-id="<?php echo $assignment['sources_id']; ?>"><?php echo $assignment['sources_names']; ?></td>
-								<td class="element_name" data-svp-enforced="<?php echo $assignment['enforced']; ?>"><?php echo ($assignment['enforced'] ? __('true') : __('false')); ?></td>
+								<td class="element_name" data-svp-sources-id="<?php echo $assignment['sources_id']; ?>">
+									<?php echo $assignment['sources_names']; ?>
+								</td>
+								<td class="element_name" data-svp-enforced="<?php echo $assignment['enforced']; ?>">
+									<?php echo ($assignment['enforced'] ? __('yes') : __('no')); ?>
+								</td>
 								<td>
 									<a class="delete-confirm right" href="<?php echo url('simple-vocab-plus/suggest/delete-confirm/id/' . $assignment['suggest_id']); ?>"><button class="red button" style="margin:0" type="button"><?php echo __('Delete') ?></button></a>
 								</td>
@@ -202,7 +212,7 @@
 	</div>
 	
 	<div id="tab2" style="height:1%; overflow:hidden">
-		<section class="ten columns alpha" id="tab2" style="height:1%; overflow:hidden">
+		<section class="eight columns alpha" id="tab2" style="height:1%; overflow:hidden">
 			<h2><?php echo __('Create new Vocabulary'); ?></h2>
 			<form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/add'); ?>">
 				<div class="field" id="nv_name-field">
@@ -260,7 +270,7 @@
 	</div>
 	
 	<div id="tab3" style="height:1%; overflow:hidden">
-		<section class="ten columns alpha">
+		<section class="eight columns alpha">
 			<h2><?php echo __('Edit existing Vocabulary'); ?></h2>
 			<form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/edit'); ?>">
 				<div class="field">
@@ -304,19 +314,17 @@
 	</div>
 	
 	<div id="tab4" style="height:1%; overflow:hidden">
-		<section class="ten columns alpha">
+		<section class="eight columns alpha">
 			<h2><?php echo __('Examine Element\'s values'); ?></h2>
 			<div class="field">
-				<div class="inputs seven columns alpha">
-					<p class="explanation">
-						<?php echo __('Before creating a vocabulary with values retrieved from the ones stored in the repository for a particular element, you might want to examine their consistency. Consider in fact the following caveats:'); ?>
-					</p>
-					<ul>
-						<li><?php echo __('Vocabulary terms must not contain newlines (line breaks).'); ?></li>
-						<li><?php echo __('Vocabulary terms are typically short and concise. If your existing texts are otherwise, avoid using a controlled vocabulary for this element.'); ?></li>
-						<li><?php echo __('Existing texts that are not in the vocabulary will be preserved - however, they cannot be selected in the item edit page, and will be deleted once you save the item.'); ?></li>
-					</ul>
-				</div>
+				<p class="explanation">
+					<?php echo __('Before creating a vocabulary with values retrieved from the ones stored in the repository for a particular element, you might want to examine their consistency. Consider in fact the following caveats:'); ?>
+				</p>
+				<ul>
+					<li><?php echo __('Vocabulary terms must not contain newlines (line breaks).'); ?></li>
+					<li><?php echo __('Vocabulary terms are typically short and concise. If your existing texts are otherwise, avoid using a controlled vocabulary for this element.'); ?></li>
+					<li><?php echo __('Existing texts that are not in the vocabulary will be preserved - however, they cannot be selected in the item edit page, and will be deleted once you save the item.'); ?></li>
+				</ul>
 			</div>
 			<div class="field">
 				<div id="ex-element-id-label" class="two columns alpha">
@@ -330,7 +338,7 @@
 				</div>
 			</div>
 		</section>
-		<section id="texts" class="nine columns alpha"></section>
+		<section id="texts" class="eight columns alpha"></section>
 	</div>
 
 </div>
