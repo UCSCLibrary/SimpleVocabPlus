@@ -118,7 +118,7 @@ msgstr "Compara valori elementi"
 
 #: config_form.php:89
 msgid "When examining an element, compare the recorded values with the vocabulary's terms."
-msgstr "Durante l'esame di un elemento, comparare i valori registristrati con i termini del vocabolario."
+msgstr "Durante l'esame di un elemento, comparare i valori registrati con i termini del vocabolario."
 
 #: index.php:83
 #: index.php:156
