@@ -50,31 +50,30 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
     {
         $db = $this->_helper->db->getDb();
         $sql = "
-            SELECT es.name AS element_set_name,
-                e.id AS element_id,
-                e.name AS element_name,
-                gv.id AS gv_suggest_id
-            FROM {$db->ElementSet} es
-            JOIN {$db->Element} e ON es.id = e.element_set_id
-            LEFT JOIN {$db->SvpAssign} gv ON e.id = gv.element_id
-            WHERE es.record_type IS NULL OR es.record_type = 'Item'
-            ORDER BY es.name, e.name";
+			SELECT es.name AS element_set_name,
+				e.id AS element_id,
+				e.name AS element_name,
+				it.name AS item_type_name,
+				gv.id AS gv_suggest_id
+			FROM {$db->ElementSet} es
+			JOIN {$db->Element} e ON es.id = e.element_set_id
+			LEFT JOIN {$db->ItemTypesElements} ite ON e.id = ite.element_id
+			LEFT JOIN {$db->ItemType} it ON ite.item_type_id = it.id
+			LEFT JOIN {$db->SvpAssign} gv ON e.id = gv.element_id
+			WHERE es.record_type IS NULL OR es.record_type = 'Item'
+			ORDER BY es.name, it.name, e.name";
         $elements = $db->fetchAll($sql);
         $options = array('' => __('Select Below'));
-
-        // create groups of elements by element set
         foreach ($elements as $element) {
-            $optGroup = __($element['element_set_name']);
+            $optGroup = $element['item_type_name']
+                ? __('Item Type') . ': ' . __($element['item_type_name'])
+                : __($element['element_set_name']);
             $value = __($element['element_name']);
-            if ($marked && $element['gv_suggest_id'] != '') $value .= ' *';
-            if ($value != '') $options[$optGroup][$element['element_id']] = $value;
+            if ($marked && $element['gv_suggest_id']) {
+                $value .= ' *';
+            }
+            $options[$optGroup][$element['element_id']] = $value;
         }
-
-        // sort alphabetically element names in each element set
-        foreach ($options as &$option) {
-            asort($option);
-        }
-
         return $options;
     }
 
@@ -123,7 +122,7 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
                 $elementSetName .= ': ' . $itemType->name;
             }
             $authorityVocabulary = $svpVocabTable->find($svpSuggest->vocab_id);
-            $authorityVocabularyName = $authorityVocabulary['name'];
+            $authorityVocabularyName = (isset($authorityVocabulary['name']) ? $authorityVocabulary['name'] : '');
 			if ($svpSuggest->sources_id != '') {
 				$sources_id = split(',', $svpSuggest->sources_id);
 				$sources_name = array();
@@ -142,7 +141,7 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
                 'element_name' => $element->name,
                 'element_id' => $svpSuggest->element_id,
                 'authority_vocabulary' => __($authorityVocabularyName),
-                'authority_vocabulary_id' => $authorityVocabulary->id,
+                'authority_vocabulary_id' => (isset($authorityVocabulary->id) ? $authorityVocabulary->id : ''),
                 'type' => __($svpSuggest->type),
                 'enforced' => __($svpSuggest->enforced),
 				'sources_id' => $svpSuggest->sources_id,
