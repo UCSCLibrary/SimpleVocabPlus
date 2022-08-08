@@ -66,18 +66,9 @@
 	});
 	//]]>
 </script>
+
 <?php echo flash(); ?>
-<style type = "text/css">
-	table.centered td {
-		vertical-align: middle;
-	}
-	table.boldheaders thead th {
-		font-weight: bold;
-	}
-	table.striped tr:nth-child(even) {
-		background-color: #f2f2f2;
-	}
-</style>
+
 <div id="tabs">
 	<ul>
 		<li><a href="#tab1"><?php echo __('Assign Vocabulary'); ?></a></li>
