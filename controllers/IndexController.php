@@ -91,7 +91,7 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
             $options[$vocab['id']] = $vocab['name'];
         }
         
-        arsort($options);
+        if (!empty($options)) arsort($options);
         
         $options[''] = __('Select Below');
         
