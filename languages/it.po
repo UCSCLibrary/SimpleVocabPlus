@@ -518,7 +518,7 @@ msgid ""
 msgstr ""
 "Questi sono i valori registrati nell'archivio per l'elemento selezionato; cliccando su "
 "uno qualsiasi di essi si realizzare una ricerca di tutti i Documenti che includono quel "
-"particolare valore. I valori non rivenuti nel vocabolario locale assegnato all'elemento "
+"particolare valore. I valori non rinvenuti nel vocabolario locale assegnato all'elemento "
 "verranno marcati in rosso (la funzionalità dev'essere attivata nella configurazione del "
 "plugin)." 
 
