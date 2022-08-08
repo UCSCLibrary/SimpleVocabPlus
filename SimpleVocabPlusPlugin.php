@@ -152,7 +152,7 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 	 */
 	public function hookAdminHead() {
 		queue_js_file('SimpleVocabPlus');
-		queue_css_string('.ui-tabs-active.ui-state-active {background: none repeat scroll 0 0 #f9f9f9;}');
+		queue_css_file('SimpleVocabPlus');
 		
 		$filesApplyToo = get_option('simple_vocab_plus_files');
 		$collectionsApplyToo = get_option('simple_vocab_plus_files');
