@@ -145,7 +145,7 @@ msgstr ""
 #: index.php:110
 msgid ""
 "Choose the source of terms (note: if uncertain of values' consistency, you might want to "
-"%sexamine them first%s)."
+"<a href='#tab4'><strong>examine them first</strong></a>)."
 msgstr ""
 
 #: index.php:113
@@ -409,7 +409,7 @@ msgstr ""
 
 # VocabularyController.php:51
 msgid ""
-"Your vocabulary has been created successfully. You may now assign "
+"Your new vocabulary has been created successfully. You may now assign "
 "it to metadata elements."
 msgstr ""
 
