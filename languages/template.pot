@@ -452,7 +452,7 @@ msgid "There was an error processing your request."
 msgstr ""
 
 # element-texts.ajax:2
-msgid "No texts for the selected element was found in the repository."
+msgid "No value for the selected element was found in the repository."
 msgstr ""
 
 # element-texts.ajax:4
