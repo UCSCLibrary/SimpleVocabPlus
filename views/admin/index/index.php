@@ -1,7 +1,12 @@
 <?php echo head(array('title' => 'Simple Vocabulary Plus')); ?>
+
+<script type="text/javascript" src="/omeka/admin/themes/default/javascripts/tabs.js?v=3.0.3" charset="utf-8"></script>
+
 <script type="text/javascript" charset="utf-8">
 	//<![CDATA[
 	jQuery(document).ready(function() {
+		Omeka.Tabs.initialize();
+
 		jQuery('#av_element-id').change(function() {
 			jQuery.post(
 				<?php echo js_escape(url('simple-vocab-plus/endpoint/vocab')); ?>,
@@ -21,16 +26,7 @@
 				}
 			});
 		});
-		
-		jQuery('#tabs').tabs({
-			create: function() {
-				var widget = jQuery(this).data('ui-tabs');
-				jQuery(window).on('hashchange', function() {
-					widget.option('active', widget._getIndex(location.hash));
-				});
-			}
-		});
-	
+			
 		jQuery('#nv_definetext').on({
 			'dragenter dragover': function(event) {
 				event.preventDefault();
@@ -69,17 +65,16 @@
 
 <?php echo flash(); ?>
 
-<div id="tabs">
-	<ul>
-		<li><a href="#tab1"><?php echo __('Assign Vocabulary'); ?></a></li>
-		<li><a href="#tab2"><?php echo __('Create Vocabulary'); ?></a></li>
-		<li><a href="#tab3"><?php echo __('Edit Vocabulary'); ?></a></li>
-		<li><a href="#tab4"><?php echo __('Examine Element'); ?></a></li>
-	</ul>
+<ul id="section-nav" class="navigation tabs">
+	<li><a href="#tab1" class="active"><?php echo __('Assign Vocabulary'); ?></a></li>
+	<li><a href="#tab2" class=""><?php echo __('Create Vocabulary'); ?></a></li>
+	<li><a href="#tab3" class=""><?php echo __('Edit Vocabulary'); ?></a></li>
+	<li><a href="#tab4" class=""><?php echo __('Examine Element'); ?></a></li>
+</ul>
 	
 	<div id="tab1" style="height:1%; overflow:hidden">
 		<form method="post" action="<?php echo url('simple-vocab-plus/suggest/add'); ?>">
-			<section class="eight columns alpha">
+			<section class="nine columns alpha">
 				<h2><?php echo __('Assign Vocabulary to Metadata Element'); ?></h2>
 				<div class="field">
 					<div id="element-id-label" class="two columns alpha">
@@ -148,10 +143,10 @@
 				</div>
 			</section>
 			<?php echo $this->csrf; ?>
-			<section class="eight columns alpha">
+			<section class="nine columns alpha">
 			<fieldset id="fieldset-svpAssignmentsSet" class="svpFieldset" style="border: 1px solid #cccccc; padding: 15px; margin: 7px">
 				<legend style="font-weight: bold; padding: 5px"><?php echo __('Current Assignments'); ?></legend>
-				<div>
+				<div style="overflow: auto">
 				<?php if ($this->assignments): ?>
 					<table class="centered boldheaders striped">
 						<thead>
@@ -203,7 +198,7 @@
 	</div>
 	
 	<div id="tab2" style="height:1%; overflow:hidden">
-		<section class="eight columns alpha" id="tab2" style="height:1%; overflow:hidden">
+		<section class="nine columns alpha">
 			<h2><?php echo __('Create new Vocabulary'); ?></h2>
 			<form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/add'); ?>">
 				<div class="field" id="nv_name-field">
@@ -261,7 +256,7 @@
 	</div>
 	
 	<div id="tab3" style="height:1%; overflow:hidden">
-		<section class="eight columns alpha">
+		<section class="nine columns alpha">
 			<h2><?php echo __('Edit existing Vocabulary'); ?></h2>
 			<form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/edit'); ?>">
 				<div class="field">
@@ -305,17 +300,17 @@
 	</div>
 	
 	<div id="tab4" style="height:1%; overflow:hidden">
-		<section class="eight columns alpha">
+		<section class="nine columns alpha">
 			<h2><?php echo __('Examine Element\'s values'); ?></h2>
 			<div class="field">
 				<p class="explanation">
 					<?php echo __('Before creating a vocabulary with values retrieved from the ones stored in the repository for a particular element, you might want to examine their consistency. Consider in fact the following caveats:'); ?>
 				</p>
-				<ul>
+				<ol>
 					<li><?php echo __('Vocabulary terms must not contain newlines (line breaks).'); ?></li>
 					<li><?php echo __('Vocabulary terms are typically short and concise. If your existing texts are otherwise, avoid using a controlled vocabulary for this element.'); ?></li>
 					<li><?php echo __('Existing texts that are not in the vocabulary will be preserved - however, they cannot be selected in the item edit page, and will be deleted once you save the item.'); ?></li>
-				</ul>
+				</ol>
 			</div>
 			<div class="field">
 				<div id="ex-element-id-label" class="two columns alpha">
@@ -329,9 +324,7 @@
 				</div>
 			</div>
 		</section>
-		<section id="texts" class="eight columns alpha"></section>
+		<section id="texts" class="nine columns alpha"></section>
 	</div>
 
-</div>
-<?php
-echo foot();
+<?php echo foot(); ?>
