@@ -306,7 +306,7 @@
 	</div>
 	
 	<div id="tab4" style="height:1%; overflow:hidden">
-		<section class="nine columns alpha">
+		<section class="eight columns alpha">
 			<h2><?php echo __('Examine Element\'s values'); ?></h2>
 			<div class="field">
 				<p class="explanation">
@@ -330,7 +330,7 @@
 				</div>
 			</div>
 		</section>
-		<section id="texts" class="nine columns alpha"></section>
+		<section id="texts" class="eight columns alpha"></section>
 	</div>
 
 <?php echo foot(); ?>
