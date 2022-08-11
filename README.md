@@ -1,11 +1,10 @@
 Simple Vocab Plus (plugin for Omeka)
 ====================================
 
-This [Omeka] 2.1+ plugin allows administrators to create, edit, and update 
-controlled vocabularies either defined in the repository itself or in the cloud. 
+This [Omeka] 2.1+ plugin allows administrators to create, edit and update 
+controlled vocabularies, either defined in the repository itself or in the cloud. 
 
-This is an improved fork of the [Simple Vocab Plus] plugin, adding more functions, extending the scope 
-and with a user interface optimized too.
+Version 3.1.2 offers new functions and extends the scope of the original plugin.
 
 New functions: 
 - chance to use the values already stored in the repository for the same element as
@@ -13,20 +12,13 @@ suggestions;
 - chance to use values from multiple fields as suggestions;
 - chance to check the values stored for a specific element;
 - chance to force the use of a list of values (similar to the dropdown feature of the
-[Simple Vocab] original plugin.
+[Simple Vocab] original plugin).
 
 Scope extended:
 - option to enable plugin functionality for Collections too;
 - option to enable plugin functionality for Exhibits too (if relative plugin is installed and working).
 
 If you use this plugin, please take a moment to submit feedback about your experience, so we can keep making Omeka better: [User Survey].
-
-
-To Do
-------------
-
-Add a chance of merging content of two or more fields into a single suggestion list (f.i.: from Creator and Contributor); merged list should be checked for unicity.
-An extra control could check if fields contents are too similar and maybe one of them contains typo (f.i.: Doe, John and Doe John); unfortunately, proximity function used on database risk to be quite slow.
 
 
 Installation
@@ -83,7 +75,7 @@ Copyright
 
 * Copyright UCSC Library Digital Initiatives, 2014-2016
 * Copyright Daniel Berthereau, 2016 (see [Daniel-KM] on GitHub)
-* Copyright Daniele Binaghi, 2020-2021 (see [DBinaghi] on GitHub)
+* Copyright Daniele Binaghi, 2020-2022 (see [DBinaghi] on GitHub)
 
 
 [Simple Vocab Plus]: https://github.com/UCSCLibrary/SimpleVocabPlus
