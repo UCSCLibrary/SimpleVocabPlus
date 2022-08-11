@@ -462,7 +462,7 @@ msgid ""
 "Your new vocabulary has been created successfully. You may now assign "
 "it to metadata elements."
 msgstr ""
-"Il tuo vocabolario è stato creato correttamente. Puoi ora assegnarlo "
+"Il tuo nuovo vocabolario è stato creato correttamente. Puoi ora assegnarlo "
 "agli elementi metadati."
 
 # VocabularyController.php:62
