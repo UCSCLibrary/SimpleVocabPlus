@@ -47,7 +47,7 @@ class SimpleVocabPlus_SuggestController extends Omeka_Controller_AbstractActionC
 
 		$element_id = $this->getRequest()->getParam('av_element-id');
 		$enforced = $this->getRequest()->getParam('av_enforced');
-		$sources_id = implode(',', $this->getRequest()->getParam('av_multi-id'));
+		$sources_id = ($this->getRequest()->getParam('av_multi-id') !== null ? implode(',', $this->getRequest()->getParam('av_multi-id')) : '');
 		// Do not process too many sources.
 		if (strlen($sources_id) > 100) {
 			$this->_helper->flashMessenger(__('Please select less source elements.'), 'error');
