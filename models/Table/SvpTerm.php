@@ -18,11 +18,11 @@ class Table_SvpTerm extends Omeka_Db_Table
 
 	public function updateFromText($vocab_id, $text)
 	{
-		// set this to all rows
-		$deleted = array();
 		$added = array();
+		$deleted = array();
 		$termObjs = $this->findBy(array('vocab_id' => $vocab_id));
 		$terms = $this->_parseText($text);
+
 		foreach ($termObjs as $termObj) {
 			$deleted[] = trim($termObj->term);
 		}
@@ -54,12 +54,10 @@ class Table_SvpTerm extends Omeka_Db_Table
 			$svpTerm->save();
 		}
 
-		if (!empty($added) && !empty($deleted)) {
-			return array(
-				'add' => array_values($added),
-				'delete' => array_values($deleted),
-			);
-		}
+		return array(
+			'add' => array_values($added),
+			'delete' => array_values($deleted),
+		);
 
 		return false;
 	}
