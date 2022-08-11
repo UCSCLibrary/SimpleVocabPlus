@@ -1,6 +1,9 @@
 <?php if (!$element_texts): ?>
-<p class="error"><?php echo __('No value for the selected element was found in the repository.'); ?></p>
+
+<p class="error flash"><?php echo __('No value for the selected element was found in the repository.'); ?></p>
+
 <?php else: ?>
+
 <p class="info"><?php echo __('These are the values stored in the repository for the selected element; clicking on any of them results in a search for all Items including that particular value. Values not found in a local vocabulary assigned to the element will be marked in red (feature has to be enabled in plugin configuration).'); ?></p>
 <table class="centered boldheaders striped">
 	<thead>
@@ -34,4 +37,5 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
+
 <?php endif; ?>
