@@ -124,7 +124,7 @@ class SimpleVocabPlus_IndexController extends Omeka_Controller_AbstractActionCon
             $authorityVocabulary = $svpVocabTable->find($svpSuggest->vocab_id);
             $authorityVocabularyName = (isset($authorityVocabulary['name']) ? $authorityVocabulary['name'] : '');
 			if ($svpSuggest->sources_id != '') {
-				$sources_id = split(',', $svpSuggest->sources_id);
+				$sources_id = explode(',', $svpSuggest->sources_id);
 				$sources_name = array();
 				foreach ($sources_id as $source_id) {
 					$sources_name[] = __($elementTable->find($source_id)->name);
