@@ -94,7 +94,7 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 			$this->_db->query($sql1);
 			$sql2 = "UPDATE `{$this->_db->SvpAssign}` 
 					RIGHT JOIN `{$this->_db->SvpVocab}` ON `{$this->_db->SvpAssign}`.vocab_id = `{$this->_db->SvpVocab}`.id
-					SET `{$this->_db->SvpAssign}`.type = 'local', `{$this->_db->SvpAssign}`.enforced = false,
+					SET `{$this->_db->SvpAssign}`.type = 'local', `{$this->_db->SvpAssign}`.enforced = false
 					WHERE `{$this->_db->SvpVocab}`.url = 'local'";
 			$this->_db->query($sql2);
 			$sql3 = "UPDATE `{$this->_db->SvpAssign}`
@@ -110,14 +110,12 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 			set_option('simple_vocab_plus_values_compare', '0');
 
             $message = __('Database has been updated correctly.');
-            throw new Omeka_Plugin_Exception($message);
         } elseif (version_compare($oldVersion, '3.1', '<')) {
 			$sql1 = "ALTER TABLE `{$this->_db->SvpAssign}`
 					ADD COLUMN `sources_id` varchar(100) NOT NULL AFTER `vocab_id`"; 
 			$this->_db->query($sql1);
 
             $message = __('Database has been updated correctly.');
-            throw new Omeka_Plugin_Exception($message);
 		}
     }
 
