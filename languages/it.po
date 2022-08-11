@@ -163,10 +163,10 @@ msgstr "Origine"
 #: index.php:110
 msgid ""
 "Choose the source of terms (note: if uncertain of values' consistency, you might want to "
-"%sexamine them first%s)."
+"<a href='#tab4'><strong>examine them first</strong></a>)."
 msgstr ""
 "Scegliere la sorgente dei termini (nota: se si hanno delle riserve sulla consistenza dei "
-"valori, è meglio %sesaminarli prima%s)."
+"valori, è meglio <a href='#tab4'><strong>sesaminarli prima</strong></a>)."
 
 #: index.php:113
 msgid "Self assign: values are retrieved from the element's recorded ones"
@@ -459,7 +459,7 @@ msgstr "Il nome fornito per il tuo nuovo vocabolario è già in uso."
 
 # VocabularyController.php:51
 msgid ""
-"Your vocabulary has been created successfully. You may now assign "
+"Your new vocabulary has been created successfully. You may now assign "
 "it to metadata elements."
 msgstr ""
 "Il tuo vocabolario è stato creato correttamente. Puoi ora assegnarlo "
