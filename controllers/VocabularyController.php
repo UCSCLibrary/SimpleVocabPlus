@@ -82,7 +82,7 @@ class SimpleVocabPlus_VocabularyController extends Omeka_Controller_AbstractActi
 		} else {
 			// edit local vocabulary
 			$updates = $db->getTable('SvpTerm')->updateFromText($vocab_id, $vocab_text);
-			if ($updates['add'] == $updates['delete']) {
+			if (empty($updates['add']) && empty($updates['delete'])) {
 				$this->_helper->flashMessenger(__('No changes were made to the vocabulary.'), 'alert');
 			} else {
 				$this->_helper->flashMessenger(__('Local vocabulary edited successfully.'), 'success');
