@@ -66,15 +66,15 @@
 <?php echo flash(); ?>
 
 <ul id="section-nav" class="navigation tabs">
-	<li><a href="#tab1" class="active"><?php echo __('Assign Vocabulary'); ?></a></li>
-	<li><a href="#tab2" class=""><?php echo __('Create Vocabulary'); ?></a></li>
-	<li><a href="#tab3" class=""><?php echo __('Edit Vocabulary'); ?></a></li>
-	<li><a href="#tab4" class=""><?php echo __('Examine Element'); ?></a></li>
+	<li><a href="#tab1"><?php echo __('Assign Vocabulary'); ?></a></li>
+	<li><a href="#tab2"><?php echo __('Create Vocabulary'); ?></a></li>
+	<li><a href="#tab3"><?php echo __('Edit Vocabulary'); ?></a></li>
+	<li><a href="#tab4"><?php echo __('Examine Element'); ?></a></li>
 </ul>
 	
 	<div id="tab1" style="height:1%; overflow:hidden">
 		<form method="post" action="<?php echo url('simple-vocab-plus/suggest/add'); ?>">
-			<section class="nine columns alpha">
+			<section class="seven columns alpha">
 				<h2><?php echo __('Assign Vocabulary to Metadata Element'); ?></h2>
 				<div class="field">
 					<div id="element-id-label" class="two columns alpha">
@@ -138,7 +138,9 @@
 						<?php echo $this->formCheckbox('av_enforced', null, '0', array('1', '0')) ?>
 					</div>
 				</div>
-				<div id="assign" class="field">
+			</section>
+			<section class="three columns omega">
+				<div id="assign" class="panel">
 					<?php echo $this->formSubmit('av_add-button', __('Assign Vocabulary'), array('class' => 'submit green button', 'id'=>'av_add-button')); ?>
 				</div>
 			</section>
@@ -198,9 +200,9 @@
 	</div>
 	
 	<div id="tab2" style="height:1%; overflow:hidden">
-		<section class="nine columns alpha">
-			<h2><?php echo __('Create new Vocabulary'); ?></h2>
-			<form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/add'); ?>">
+		<form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/add'); ?>">
+			<section class="seven columns alpha">
+				<h2><?php echo __('Create new Vocabulary'); ?></h2>
 				<div class="field" id="nv_name-field">
 					<div id="nv_name-label" class="two columns alpha">
 						<label for="nv_name"><?php echo __('Name'); ?></label>
@@ -247,18 +249,20 @@
 						<textarea rows="15" columns="30" name="nv_definetext" id="nv_definetext" placeholder="<?php echo __('Input all terms or drop a text file...') ?>" style="white-space: pre-wrap"></textarea>
 					</div>
 				</div>
-				<div id="create" class="field">
+			</section>
+			<section class="three columns omega">
+				<div id="assign" class="panel">
 					<?php echo $this->formSubmit('nv_add-button', __('Create Vocabulary'), array('class' => 'submit green button', 'id'=>'nv_add-button')); ?>
 				</div>
-				<?php echo $this->csrf;?>
-			</form>
-		</section>
+			</section>
+			<?php echo $this->csrf;?>
+		</form>
 	</div>
 	
 	<div id="tab3" style="height:1%; overflow:hidden">
-		<section class="nine columns alpha">
-			<h2><?php echo __('Edit existing Vocabulary'); ?></h2>
-			<form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/edit'); ?>">
+		<form method="post" action="<?php echo url('simple-vocab-plus/vocabulary/edit'); ?>">
+			<section class="seven columns alpha">
+				<h2><?php echo __('Edit existing Vocabulary'); ?></h2>
 				<div class="field">
 					<div id="ev_name-label" class="two columns alpha">
 						<label for="ev_name"><?php echo __('Name'); ?></label>
@@ -290,13 +294,15 @@
 						<textarea rows="15" columns="30" name="ev_edittext" id="ev_edittext"></textarea>
 					</div>
 				</div>
-				<div id="editfield" class="field">
+			</section>
+			<section class="three columns omega">
+				<div id="editfield" class="panel">
 					<?php echo $this->formSubmit('edit-vocabulary', __('Save Changes'), array('class' => 'submit green button', 'id'=>'ev_edit-button')); ?>
 					<a class="delete-confirm" id="ev_delete-link" href="<?php echo url('simple-vocab-plus/vocabulary/delete-confirm/id/'); ?>"><button id="ev_delete-button" class="red button" style="margin:0" type="button"><?php echo __('Delete Vocabulary') ?></button></a>
 				</div>
-				<?php echo $this->csrf;?>
-			</form>
-		</section>
+			</section>
+			<?php echo $this->csrf;?>
+		</form>
 	</div>
 	
 	<div id="tab4" style="height:1%; overflow:hidden">
