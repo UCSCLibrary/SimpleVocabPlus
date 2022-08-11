@@ -110,7 +110,9 @@ class SimpleVocabPlusPlugin extends Omeka_Plugin_AbstractPlugin
 			set_option('simple_vocab_plus_values_compare', '0');
 
             $message = __('Database has been updated correctly.');
-        } elseif (version_compare($oldVersion, '3.1', '<')) {
+        }
+
+		if (version_compare($oldVersion, '3.1', '<')) {
 			$sql1 = "ALTER TABLE `{$this->_db->SvpAssign}`
 					ADD COLUMN `sources_id` varchar(100) NOT NULL AFTER `vocab_id`"; 
 			$this->_db->query($sql1);
