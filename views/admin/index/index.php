@@ -84,7 +84,7 @@
 						<p class="explanation">
 							<?php echo __('Select an element to assign it a vocabulary. Elements already assigned a vocabulary are marked with an asterisk (*).'); ?>
 						</p>
-						<?php echo $this->formSelect('av_element-id', null, array('id' => 'av_element-id'), $this->form_element_options) ?>
+						<?php echo $this->formSelect('av_element-id', null, array('id' => 'av_element-id'), $this->form_element_options_marked) ?>
 					</div>
 				</div>
 				<div class="field">
