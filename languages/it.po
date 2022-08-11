@@ -506,8 +506,8 @@ msgid "There was an error processing your request."
 msgstr "Si è verificato un errore nella lavorazione della tua richiesta."
 
 # element-texts.ajax:2
-msgid "No texts for the selected element was found in the repository."
-msgstr "Non è stato trovato nell'archivio alcun testo per l'elemento selezionato."
+msgid "No value for the selected element was found in the repository."
+msgstr "Non è stato trovato nell'archivio alcun valore per l'elemento selezionato."
 
 # element-texts.ajax:4
 msgid ""
