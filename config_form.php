@@ -1,10 +1,10 @@
 <?php
-$simple_vocab_plus_files				= get_option('simple_vocab_plus_files');
-$simple_vocab_plus_collections			= get_option('simple_vocab_plus_collections');
-$simple_vocab_plus_exhibits				= get_option('simple_vocab_plus_exhibits');
-$simple_vocab_plus_fields_highlight		= get_option('simple_vocab_plus_fields_highlight');
+$simple_vocab_plus_files		= get_option('simple_vocab_plus_files');
+$simple_vocab_plus_collections		= get_option('simple_vocab_plus_collections');
+$simple_vocab_plus_exhibits		= get_option('simple_vocab_plus_exhibits');
+$simple_vocab_plus_fields_highlight	= get_option('simple_vocab_plus_fields_highlight');
 $simple_vocab_plus_fields_description	= get_option('simple_vocab_plus_fields_description');
-$simple_vocab_plus_values_compare		= get_option('simple_vocab_plus_values_compare');
+$simple_vocab_plus_values_compare	= get_option('simple_vocab_plus_values_compare');
 $view = get_view();
 ?>
 
@@ -62,7 +62,7 @@ $view = get_view();
 		<p class="explanation">
 			<?php echo __('Color hex code (e.g.: #ff0000) to highlight the fields that have autosuggest feature applied (blank means no highlight).'); ?>
 		</p>
-		<?php echo $view->formText('simple_vocab_plus_fields_highlight', $simple_vocab_plus_fields_highlight, array('title'=>__('pound sign (#) followed by six hex values'),'pattern'=>'^#[0-9a-f]{6}$')); ?>
+		<?php echo $view->formText('simple_vocab_plus_fields_highlight', $simple_vocab_plus_fields_highlight, array('title'=>__('pound sign (#) followed by six hex values'),'pattern'=>'^#[0-9a-fA-F]{6}$')); ?>
 	</div>
 </div>
 
