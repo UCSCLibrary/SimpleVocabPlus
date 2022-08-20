@@ -1,0 +1,11 @@
+table.centered td {
+	vertical-align: middle;
+}
+
+table.boldheaders thead th {
+	font-weight: bold;
+}
+
+table.striped tr:nth-child(even) {
+	background-color: #f2f2f2;
+}

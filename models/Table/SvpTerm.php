@@ -1,70 +1,73 @@
 <?php
 class Table_SvpTerm extends Omeka_Db_Table
 {
-    public function addFromText($vocab_id, $text)
-    {
-        $terms = $this->_parseText($text);
-        foreach($terms as $term) {
-            $term = trim($term);
-            $svpTerm = new SvpTerm();
-            $svpTerm->vocab_id = $vocab_id;
-            $svpTerm->term = $term;
-            $svpTerm->save();
-        }
-        return true;
-    }
+	public function addFromText($vocab_id, $text)
+	{
+		$terms = $this->_parseText($text);
+		foreach($terms as $term) {
+			$term = trim($term);
+			if ($term != '') {
+				$svpTerm = new SvpTerm();
+				$svpTerm->vocab_id = $vocab_id;
+				$svpTerm->term = $term;
+				$svpTerm->save();
+			}
+		}
+		return true;
+	}
 
-    public function updateFromText($vocab_id, $text)
-    {
-        // set this to all rows
-        $deleted = array();
-        $added = array();
-        $termObjs = $this->findBy(array('vocab_id' => $vocab_id));
-        $terms = $this->_parseText($text);
-        foreach ($termObjs as $termObj) {
-            $deleted[] = trim($termObj->term);
-        }
+	public function updateFromText($vocab_id, $text)
+	{
+		$added = array();
+		$deleted = array();
+		$termObjs = $this->findBy(array('vocab_id' => $vocab_id));
+		$terms = $this->_parseText($text);
 
-        foreach ($terms as $term) {
-            $i = array_search(trim($term), $deleted);
-            if ($i !== false) {
-                unset($deleted[$i]);
-            } else {
-                $added[] = $term;
-            }
-        }
+		foreach ($termObjs as $termObj) {
+			$deleted[] = trim($termObj->term);
+		}
 
-        $db = $this->_db;
-        foreach ($deleted as $delete) {
-            $sql = "DELETE FROM `{$db->SvpTerm}` WHERE vocab_id = ? AND term = ?";
-            $bind = array($vocab_id, trim($delete));
-            get_db()->query($sql, $bind);
-        }
+		foreach ($terms as $term) {
+			$term = trim($term);
+			if ($term != '') {
+				$i = array_search(trim($term), $deleted);
+				if ($i !== false) {
+					unset($deleted[$i]);
+				} else {
+					$added[] = $term;
+				}
+			}
+		}
 
-        foreach ($added as $add) {
-            $term = trim($term);
-            $svpTerm = new SvpTerm();
-            $svpTerm->vocab_id = $vocab_id;
-            $svpTerm->term = $add;
-            $svpTerm->save();
-        }
+		$db = $this->_db;
+		foreach ($deleted as $delete) {
+			$sql = "DELETE FROM `{$db->SvpTerm}` WHERE vocab_id = ? AND term = ?";
+			$bind = array($vocab_id, trim($delete));
+			get_db()->query($sql, $bind);
+		}
 
-        if (!empty($added) && !empty($deleted)) {
-            return array(
-                'add' => array_values($added),
-                'delete' => array_values($deleted),
-            );
-        }
+		foreach ($added as $add) {
+			$term = trim($term);
+			$svpTerm = new SvpTerm();
+			$svpTerm->vocab_id = $vocab_id;
+			$svpTerm->term = $add;
+			$svpTerm->save();
+		}
 
-        return false;
-    }
+		return array(
+			'add' => array_values($added),
+			'delete' => array_values($deleted),
+		);
 
-    private function _parseText($text)
-    {
-        $text = str_replace("\n\r", "\n", $text);
-        $text = str_replace("\r", '', $text);
-        $terms = explode("\n", $text);
-        $terms = array_map('trim', $terms);
-        return $terms;
-    }
+		return false;
+	}
+
+	private function _parseText($text)
+	{
+		$text = str_replace("\n\r", "\n", $text);
+		$text = str_replace("\r", '', $text);
+		$terms = explode("\n", $text);
+		$terms = array_map('trim', $terms);
+		return $terms;
+	}
 }

@@ -1,14 +1,24 @@
 Simple Vocab Plus (plugin for Omeka)
 ====================================
 
-This [Omeka] 2.1+ plugin allows administrators to create, edit, and update 
-controlled vocabularies either defined in Omeka or in the cloud. 
+This [Omeka] 2.1+ plugin allows administrators to create, edit and update 
+controlled vocabularies, either defined in the repository itself or in the cloud. 
 
-[Simple Vocab Plus] is an improved fork of the official [Simple Vocab].
-The user interface is optimized too.
+Version 3.1.2 offers new functions and extends the scope of the original plugin.
 
-If you use this plugin, please take a moment to submit feedback about your 
-experience, so we can keep making Omeka better: [User Survey].
+New functions: 
+- chance to use the values already stored in the repository for the same element as
+suggestions;
+- chance to use values from multiple fields as suggestions;
+- chance to check the values stored for a specific element;
+- chance to force the use of a list of values (similar to the dropdown feature of the
+[Simple Vocab] original plugin).
+
+Scope extended:
+- option to enable plugin functionality for Collections too;
+- option to enable plugin functionality for Exhibits too (if relative plugin is installed and working).
+
+If you use this plugin, please take a moment to submit feedback about your experience, so we can keep making Omeka better: [User Survey].
 
 
 Installation
@@ -17,6 +27,12 @@ Installation
 Uncompress files and rename plugin folder "SimpleVocabPlus".
 
 Then install it like any other Omeka plugin.
+
+
+Configuration
+-------------
+
+The brand new configuration panel allows to extend the plugin's functionality to files, collections and exhibits metadata, and to highlight the fields that are using the autosuggest feature.
 
 
 Warning
@@ -59,6 +75,7 @@ Copyright
 
 * Copyright UCSC Library Digital Initiatives, 2014-2016
 * Copyright Daniel Berthereau, 2016 (see [Daniel-KM] on GitHub)
+* Copyright Daniele Binaghi, 2020-2022 (see [DBinaghi] on GitHub)
 
 
 [Simple Vocab Plus]: https://github.com/UCSCLibrary/SimpleVocabPlus
@@ -68,3 +85,4 @@ Copyright
 [plugin issues]: https://github.com/UCSCLibrary/SimpleVocabPlus/issues
 [GNU/GPL v3]: https://www.gnu.org/licenses/gpl-3.0.html
 [Daniel-KM]: https://github.com/Daniel-KM
+[DBinaghi]: https://github.com/DBinaghi

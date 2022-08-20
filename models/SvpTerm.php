@@ -6,7 +6,7 @@
  */
 class SvpTerm extends Omeka_Record_AbstractRecord
 {
-    public $id;
-    public $vocab_id;
-    public $term;
+	public $id;
+	public $vocab_id;
+	public $term;
 }

@@ -1,0 +1,547 @@
+# Translation for the Simple Vocab Plus plugin for Omeka.
+# Copyright (C) 2020 Daniele Binaghi
+# This file is distributed under the same license as the Omeka package.
+# Daniele Binaghi <admin@bitoteko.it>, 2020
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple Vocab Plus\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-01 11:54+0200\n"
+"PO-Revision-Date: 2020-02-01 12:06+0200\n"
+"PO-Revision-Date: 2021-04-07 10:50+0200\n"
+"PO-Revision-Date: 2021-04-10 08:53+0200\n"
+"Last-Translator: Daniele Binaghi <admin@bitoteko.it>\n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: SimpleVocabPlusPlugin.php:200
+msgid "Simple Vocab Plus"
+msgstr "Simple Vocab Plus"
+
+#: SimpleVocabPlusPlugin.php:216
+msgid "
+"(Please note: this element has autosuggest activated using the Simple "
+"Vocab Plus plugin)"
+msgstr ""
+"(Attenzione: questo elemento ha la funzione di suggerimento attivata "
+"usando il plugin Simple Vocab Plus)"
+
+#: config_form.php:8
+msgid "Application scope"
+msgstr "Intervallo di applicazione"
+
+#: config_form.php:15
+msgid "Apply to Collections"
+msgstr "Applica alle collezioni"
+
+#: config_form.php:19
+msgid ""
+"If checked, the plugin will apply to Collections metadata too "
+"(by default, this plugin only applies to Items metadata)."
+msgstr ""
+"Se selezionata, il plugin sarà applicato anche ai metadati delle "
+"collezioni (per default, viene applicato solo ai metadati dei documenti)."
+
+#: config_form.php:27
+msgid "Apply to Files"
+msgstr "Applica ai file"
+
+#: config_form.php:31
+msgid ""
+"If checked, the plugin will apply to Files metadata too "
+"(by default, this plugin only applies to Items metadata)."
+msgstr ""
+"Se selezionata, il plugin sarà applicato anche ai metadati dei "
+"file (per default, viene applicato solo ai metadati dei documenti)."
+
+#: config_form.php:39
+msgid "Apply to Exhibit"
+msgstr "Applica alle esposizioni"
+
+#: config_form.php:44
+msgid ""
+"If checked, the plugin will apply to Exhibits metadata too "
+"(by default, this plugin only applies to Items metadata)."
+msgstr ""
+"Se selezionata, il plugin sarà applicato anche ai metadati delle "
+"esposizioni (per default, viene applicato solo ai metadati dei documenti)."
+
+#: config_form.php:49
+msgid ""
+"The %s plugin is not installed or active. Install "
+"and activate the plugin in order to be able to configure notifications "
+"for new Exhibits."
+msgstr ""
+"Il plugin %s non è installato o attivo. Installare ed attivare "
+"il plugin per poter configurare le notifiche per nuove esposizioni."
+
+#: config_form.php:55
+msgid "Alerts"
+msgstr "Notifiche"
+
+#: config_form.php:59
+msgid "Highlight autosuggest fields"
+msgstr "Evidenzia campi autosuggerimento"
+
+#: config_form.php:63
+msgid "
+"Color hex code (e.g.: #ff0000) to highlight the fields that have autosuggest feature "
+"applied (blank means no highlight)."
+msgstr ""
+"Codice esadecimale (p.e.: #ff0000) del colore da usarsi per evidenziare i campi che "
+"hanno la funzionalità di autosuggerimento applicata (vuoto significa nessuna evidenziazione)."
+
+#: config_form.php:71
+msgid "Add autosuggest reminder"
+msgstr "Aggiungi nota autosuggerimento"
+
+#: config_form.php:75
+msgid ""
+"Adds a notice to the description of fields that have autosuggest feature "
+"applied."
+msgstr ""
+"Aggiunge una notifica alla descrizione dei campi che hanno la funzionalità "
+"di autosuggerimento applicata."
+
+#: config_form.php:81
+msgid "Checks"
+msgstr "Controlli"
+
+#: config_form.php:85
+msgid "Compare element values"
+msgstr "Compara valori elementi"
+
+#: config_form.php:89
+msgid "When examining an element, compare the recorded values with the vocabulary's terms."
+msgstr "Durante l'esame di un elemento, comparare i valori registrati con i termini del vocabolario."
+
+#: index.php:83
+#: index.php:156
+msgid "Assign Vocabulary"
+msgstr "Assegna vocabolario"
+
+#: index.php:84
+#: index.php:265
+msgid "Create Vocabulary"
+msgstr "Crea vocabolario"
+
+#: index.php:85
+msgid "Edit Vocabulary"
+msgstr "Modifica vocabolario"
+
+#: index.php:86
+msgid "Examine Element"
+msgstr "Esamina elemento"
+
+#: index.php:92
+msgid "Assign Vocabulary to Metadata Element"
+msgstr "Assegna vocabolario ad un elemento dei metadati"
+
+#: index.php:95
+#: index.php:169
+#: index.php:333
+msgid "Element"
+msgstr "Elemento"
+
+#: index.php:99
+msgid ""
+"Select an element to assign it a vocabulary. Elements already assigned a vocabulary "
+"are marked with an asterisk (*)."
+msgstr ""
+"Selezionare un elemento al quale assegnare un vocabolario. Gli elementi "
+"ai quali è già assegnato un vocabolario sono indicati con un asterisco (*)."
+
+#: index.php:106
+msgid "Source"
+msgstr "Origine"
+
+#: index.php:110
+msgid ""
+"Choose the source of terms (note: if uncertain of values' consistency, you might want to "
+"<a href='#tab4'><strong>examine them first</strong></a>)."
+msgstr ""
+"Scegliere la sorgente dei termini (nota: se si hanno delle riserve sulla consistenza dei "
+"valori, è meglio <a href='#tab4'><strong>sesaminarli prima</strong></a>)."
+
+#: index.php:113
+msgid "Self assign: values are retrieved from the element's recorded ones"
+msgstr "Autoassegna: i valori sono recuperati da quelli già presenti in archivio"
+
+#: index.php:116
+msgid "Multiple assign: values are retrieved from multiple elements of the repository"
+msgstr "Assegnazione multipla: i valori sono recuperati da più elementi dell'archivio"
+
+#: index.php:119
+msgid "Vocabulary: values are retrieved from a local/remote custom vocabulary"
+msgstr "Vocabolario: i valori sono recuperati da un vocabolario personalizzato locale/remoto"
+
+#: index.php:124
+#: index.php:172
+msgid "Source element(s)"
+msgstr "Elemento/i sorgente"
+
+#: index.php:128
+msgid "Select one or more elements to use as source."
+msgstr "Selezionare uno o più elementi da usare come sorgenti."
+
+#: index.php:135
+msgid "Source vocabulary"
+msgstr "Vocabolario sorgente"
+
+#: index.php:139
+msgid "Select a vocabulary to enable the autosuggest feature for the above element."
+msgstr "Seleziona un vocabolario per abilitare la funzionalità di autosuggerimento per l'elemento indicato sopra."
+
+#: index.php:146
+msgid "Enforce values"
+msgstr "Forza valori"
+
+#: index.php:150
+msgid ""
+"If selected, user will see a dropdown box and will have to choose one of the suggested values. Works "
+"only with local/remote vocabularies. Deselect the option to disable the feature."
+msgstr ""
+"Se selezionata, l'utente vedrà una casella di riepilogo a discesa e dovrà scegliere uno dei valori "
+"suggeriti. Funziona solo con vocabolari locali/remoti. Deselezionare l'opzione per disabilitare la funzione."
+
+#: index.php:162
+msgid "Current Assignments"
+msgstr "Assegnazioni correnti"
+
+#: index.php:168
+msgid "Element Set"
+msgstr "Insieme di elementi"
+
+#: index.php:170
+msgid "Type"
+msgstr "Tipologia"
+
+#: index.php:171
+msgid "Vocabulary"
+msgstr "Vocabolario"
+
+#: index.php:173
+msgid "Enforced"
+msgstr "Forzato"
+
+#: index.php:196
+msgid "yes"
+msgstr "sì"
+
+#: index.php:196
+msgid "no"
+msgstr "no"
+
+#: index.php:206
+msgid "There are no suggest assignments."
+msgstr "Non esistono assegnazioni di suggerimenti."
+
+#: index.php:216
+msgid "Create new Vocabulary"
+msgstr "Crea un nuovo vocabolario"
+
+#: index.php:229
+#: index.php:278
+msgid "Name"
+msgstr "Nome"
+
+#: index.php:223
+msgid "Provide a name for your new vocabulary."
+msgstr "Fornisci un nome per il tuo nuovo vocabolario."
+
+#: index.php:229
+msgid "Location"
+msgstr "Collocazione"
+
+#: index.php:233
+msgid ""
+"Choose whether you would like the repository to store your new vocabulary's terms, "
+"or rather to store the vocabulary in the cloud (using Google Drive or GitPages or "
+"other similar services)."
+msgstr ""
+"Scegli se vuoi che l'archivio conservi i termini del tuo nuovo vocabolario, oppure "
+"se vuoi conservare il vocabolario nel cloud (usando Google Drive o GitPages o altri "
+"servizi similari)."
+
+#: index.php:236
+msgid "Define vocabulary and manually edit it here"
+msgstr "Definisci il vocabolario e modificalo manualmente qui"
+
+#: index.php:239
+msgid "Import vocabulary from the cloud"
+msgstr "Importa il vocabolario dal cloud"
+
+#: index.php:244
+#: index.php:287
+msgid "URL"
+msgstr "URL"
+
+#: index.php:248
+msgid ""
+"If the vocabulary is stored in the cloud, this field shows the file URL for the "
+"vocabulary; any web server or cloud service can host this file. A plain text file "
+"is expected with one term per line; a line consisting of a sequence of 3 hyphens "
+"will be displayed as an empty line and can be used as separator for subgroups of "
+"terms; a line starting with 3 asterisks will be displayed as an unselectable, "
+"bolded subgroup title."
+msgstr ""
+"Se il vocabolario è conservato nel cloud, questo campo mostra l'URL del file "
+"vocabolario; qualsiasi server web o servizio cloud può ospitare questo file. È "
+"atteso un file di testo semplice, con un termine per riga; una riga formata da una "
+"sequenza di 3 trattini sarà mostrata come una riga vuota e può essere usata "
+"come separatore per sottogruppi di termini; una riga che comincia con 3 asterischi "
+"verrà mostrata come titolo di un sottogruppo, in grassetto e non selezionabile.
+
+#: index.php:255
+#: index.php:298
+msgid "Terms list"
+msgstr "Lista termini"
+
+#: index.php:259
+msgid ""
+"Input all terms below, one term per line; a line consisting of a sequence of 3 "
+"hyphens will be displayed as an empty line and can be used as separator for "
+"subgroups of terms; a line starting with 3 asterisks will be displayed as an "
+"unselectable, bolded subgroup title. You can also drag and drop a text file here, "
+"to automatically paste its content."
+msgstr ""
+"Inserisci tutti i termini qui sotto, un termine per riga; una riga formata da una "
+"sequenza di 3 trattini sarà mostrata come una riga vuota e può essere usata "
+"come separatore per sottogruppi di termini; una riga che comincia con 3 asterischi "
+"verrà mostrata come titolo di un sottogruppo, in grassetto e non selezionabile. Puoi "
+"anche trascinare e rilasciare qui un file di testo, incollandone automaticamente il "
+"contenuto."
+
+#: index.php:261
+msgid "Input all terms or drop a text file..."
+msgstr "Inserisci tutti i termini o rilascia un file di testo..."
+
+#: index.php:274
+msgid "Edit existing Vocabulary"
+msgstr "Modifica vocabolario esistente"
+
+#: index.php:281
+msgid "Select a Vocabulary to edit."
+msgstr "Seleziona un vocabolario da modificare."
+
+#: index.php:291
+msgid ""
+"If the vocabulary is stored in the cloud, this field shows the file URL for the "
+"vocabulary. Any web server or cloud service can host this file (we recommend GitPages)."
+msgstr ""
+"Se il vocabolario è conservato nel cloud, questo campo mostra l'URL del file "
+"vocabolario. Ogni server web o servizio cloud può ospitare questo file (noi "
+"raccomandiamo GitPages)."
+
+#: index.php:302
+msgid ""
+"The vocabulary's terms are displayed here, one term per line; a line consisting of a "
+"sequence of 3 hyphens will be displayed as an empty line and can be used as separator "
+"for subgroups of terms; a line starting with 3 asterisks will be displayed as an "
+"unselectable, bolded subgroup title."
+msgstr ""
+"I termini del vocabolario vengono mostrati qui, un termine per riga; una riga formata "
+"da una sequenza di 3 trattini sarà mostrata come una riga vuota e può essere usata "
+"come separatore per sottogruppi di termini; una riga che comincia con 3 asterischi "
+"verrà mostrata come titolo di un sottogruppo, in grassetto e non selezionabile."
+
+#: index.php:308
+msgid "Save Changes"
+msgstr "Salva le modifiche"
+
+#: index.php:309
+msgid "Delete Vocabulary"
+msgstr "Elimina vocabolario"
+
+#: index.php:318
+msgid "Examine Element's values"
+msgstr "Esamina i valori di un elemento"
+
+#: index.php:322
+msgid ""
+"Before creating a vocabulary with values retrieved from the ones stored in the "
+"repository for a particular element, you might want to examine their consistency. "
+"Consider in fact the following caveats:"
+msgstr ""
+"Prima di creare un vocabolario con valori ottenuti da quelli presenti nell'archivio "
+"per un dato elemento, potresti voler esaminare la loro consistenza. Considera infatti "
+"le seguenti indicazioni:" 
+
+#: index.php:325
+msgid "Vocabulary terms must not contain newlines (line breaks)."
+msgstr "Un vocabolario non deve contenere rimandi a capo (interruzioni di riga)."
+
+#: index.php:326
+msgid ""
+"Vocabulary terms are typically short and concise. If your existing texts are "
+"otherwise, avoid using a controlled vocabulary for this element."
+msgstr ""
+"I termini del vocabolario sono solitamente corti e concisi. Se i testi preesistenti "
+"non lo sono, si suggerisce di non utilizzare un vocabolario controllato per questo elemento."
+
+#: index.php:327
+msgid ""
+"Existing texts that are not in the vocabulary will be preserved - however, they cannot "
+"be selected in the item edit page, and will be deleted once you save the item."
+msgstr ""
+"I testi preesistenti che non sono nel vocabolario verranno preservati - non potranno "
+"però essere selezionati nella pagina di modifica, e saranno cancellati una volta che "
+"il documento verrà salvato."
+
+#: index.php:337
+msgid "Select an element to examine."
+msgstr "Seleziona un elemento da esaminare."
+
+# IndexController.php:94
+msgid "Select Below"
+msgstr "Seleziona sotto"
+
+# IndexController.php:150
+msgid "Short text"
+msgstr "Testo corto"
+
+# IndexController.php:151
+msgid "Long text"
+msgstr "Testo lungo"
+
+# IndexController.php:152
+msgid "Contains newlines"
+msgstr "Contiene rimandi a capo"
+
+# IndexController.php:153
+msgid "Contains HTML code"
+msgstr "Contiene codice HTML"
+
+# SuggestController.php:29
+msgid "The element's suggest feature was successfully deleted."
+msgstr "La funzionalità di suggerimento per l'elemento è stata eliminata correttamente."
+
+# SuggestController.php:35
+msgid "This will delete this Assignment, but not the assigned Vocabulary."
+msgstr "Questo cancellerà questa assegnazione, ma non il vocabolario associato"
+
+# SuggestController.php:52
+msgid "Please select less source elements."
+msgstr "Si prega di selezionare meno elementi sorgente."
+
+# SuggestController.php:67
+msgid "local"
+msgstr "locale"
+
+# SuggestController.php:67
+msgid "remote"
+msgstr "remoto"
+
+# SuggestController.php:72
+msgid "Please select an element to assign."
+msgstr "Si prega di selezionare un elemento da assegnare."
+
+# SuggestController.php:78
+msgid "Invalid suggest endpoint. No changes have been made."
+msgstr "Parametro di suggerimento invalido. Nessuna modifica è stata effettuata."
+
+# SuggestController.php:89
+msgid "The element's suggest feature was successfully added."
+msgstr "La funzionalità di suggerimento per l'elemento è stata aggiunta correttamente."
+
+# VocabularyController.php:31
+msgid "You did not provide a name for your new vocabulary."
+msgstr "Non hai fornito un nome per il tuo nuovo vocabolario."
+
+# VocabularyController.php:34
+msgid "The name you provided for your new vocabulary is already in use."
+msgstr "Il nome fornito per il tuo nuovo vocabolario è già in uso."
+
+# VocabularyController.php:51
+msgid ""
+"Your new vocabulary has been created successfully. You may now assign "
+"it to metadata elements."
+msgstr ""
+"Il tuo nuovo vocabolario è stato creato correttamente. Puoi ora assegnarlo "
+"agli elementi metadati."
+
+# VocabularyController.php:62
+msgid "No vocabulary was chosen for editing."
+msgstr "Non è stato scelto alcun vocabolario per la modifica."
+
+# VocabularyController.php:66
+msgid "There was a problem editing your vocabulary."
+msgstr "Si è verificato un problema durante la modifica del tuo vocabolario."
+
+# VocabularyController.php:79
+msgid "Remote vocabulary edited successfully."
+msgstr "Vocabolario remoto modificato correttamente."
+
+# VocabularyController.php:85
+msgid "No changes were made to the vocabulary."
+msgstr "Nessuna modifica è stata apportata al vocabolario."
+
+# VocabularyController.php:87
+msgid "Local vocabulary edited successfully."
+msgstr "Vocabolario locale modificato correttamente."
+
+# VocabularyController.php:98
+msgid ""
+"At least one element is still assigned to this vocabulary. Delete the "
+"assignments before trying to delete the vocabulary."
+msgstr ""
+"Almeno un elemento è ancora assegnato a questo vocabolario. Cancella la "
+"assegnazione prima di provare a cancellare il vocabolario."
+
+# VocabularyController.php:102
+msgid "Vocabulary deleted successfully."
+msgstr "Vocabolario cancellato correttamente."
+
+# VocabularyController.php:109
+msgid "This will delete the Vocabulary \"%s\", but not the values already stored in the repository."
+msgstr "Questo cancellerà il vocabolario \"%s\", ma non i valori già registrati nell'archivio."
+
+# VocabularyController.php:142
+msgid "There was an error processing your request."
+msgstr "Si è verificato un errore nella lavorazione della tua richiesta."
+
+# element-texts.ajax:2
+msgid "No value for the selected element was found in the repository."
+msgstr "Non è stato trovato nell'archivio alcun valore per l'elemento selezionato."
+
+# element-texts.ajax:4
+msgid ""
+"These are the values stored in the repository for the selected element; clicking on "
+"any of them results in a search for all Items including that particular value. "
+"Values not found in a local vocabulary assigned to the element will be marked in red "
+"(feature has to be enabled in plugin configuration)."
+msgstr ""
+"Questi sono i valori registrati nell'archivio per l'elemento selezionato; cliccando su "
+"uno qualsiasi di essi si realizzare una ricerca di tutti i Documenti che includono quel "
+"particolare valore. I valori non rinvenuti nel vocabolario locale assegnato all'elemento "
+"verranno marcati in rosso (la funzionalità dev'essere attivata nella configurazione del "
+"plugin)." 
+
+# element-texts.ajax:7
+msgid "Count"
+msgstr "Conteggio"
+
+# element-texts.ajax:8
+msgid "Value"
+msgstr "Valore"
+
+# element-texts.ajax:9
+msgid "Warnings"
+msgstr "Avvertimenti"
+
+# element-texts.ajax:26
+msgid "click to search for"
+msgstr "clicca per cercare"
+
+# element-texts.ajax:26
+msgid "this page"
+msgstr "questa pagina"
+
+# element-texts.ajax:26
+msgid "these pages"
+msgstr "queste pagine"
